@@ -8,7 +8,9 @@
 
 ## Development
 
-首先创建配置文件,PHP 的 composer 会帮助你创建它.
+后端项目 <https://github.com/honraytech/VueThink>。
+
+首先创建配置文件。
 
 ```
 # local

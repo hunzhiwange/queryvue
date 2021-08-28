@@ -8,7 +8,9 @@ This app is base on [VueThink](https://github.com/honraytech/VueThink)、[VueEle
 
 ## Development
 
-First to create config file,PHP composer will help you.
+Backend projectt <https://github.com/honraytech/VueThink>。
+
+First to create config file.
 
 ```
 # local
