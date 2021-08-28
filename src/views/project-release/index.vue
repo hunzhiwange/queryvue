@@ -3,7 +3,7 @@
         <div class="min-form" v-show="minForm">
             <Card :bordered="false">
                 <p slot="title">
-                    {{ formItem.id ? __('编辑资源') : __('新增资源') }}
+                    {{ formItem.id ? __('编辑项目发行版') : __('新增项目发行版') }}
                 </p>
                 <div class="min-form-inner">
                     <div class="min-form-body">
@@ -13,8 +13,15 @@
                                     <FormItem :label="__('名字')" prop="name">
                                         <i-input v-model.trim="formItem.name" placeholder=""></i-input>
                                     </FormItem>
-                                    <FormItem :label="__('编号')" prop="num">
-                                        <i-input v-model.trim="formItem.num" placeholder=""> </i-input>
+                                    <FormItem :label="__('排序')" prop="sort">
+                                        <i-input type="number" v-model.number="formItem.sort" placeholder=""> </i-input>
+                                    </FormItem>
+                                    <FormItem :label="__('所属项目')" prop="project_id">
+                                        <i-select v-model="formItem.project_id">
+                                            <i-option v-for="item in projects" :value="item.id" :key="item.id">{{
+                                                item.name
+                                            }}</i-option>
+                                        </i-select>
                                     </FormItem>
                                     <FormItem :label="__('状态')">
                                         <i-switch
@@ -70,14 +77,14 @@
                             type="primary"
                             icon="md-eye"
                             @click="statusMany(1)"
-                            v-if="utils.permission('resource_status_button')"
+                            v-if="utils.permission('project_release_status_button')"
                             >{{ __('启用') }}</i-button
                         >
                         <i-button
                             type="primary"
                             icon="md-eye-off"
                             @click="statusMany(0)"
-                            v-if="utils.permission('resource_status_button')"
+                            v-if="utils.permission('project_release_status_button')"
                             >{{ __('禁用') }}</i-button
                         >
                     </ButtonGroup>

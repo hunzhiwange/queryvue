@@ -4,7 +4,7 @@
             <i-col span="18">
                 <Row :gutter="16">
                     <i-col span="6">
-                        <i-input @on-search="search()" search v-model="searchForm.key" :placeholder="'ID,'+__('名字') + ',' + __('编号')" clearable>
+                        <i-input @on-search="search()" search v-model="searchForm.key" :placeholder="'ID,'+__('名字')" clearable>
                         </i-input>
                     </i-col>
                     <i-col span="4">
@@ -50,7 +50,7 @@
                     type="text"
                     @click="add()"
                     class="add-extra"
-                    v-if="utils.permission('resource_add_button')"
+                    v-if="utils.permission('project_release_add_button')"
                     ><Icon type="md-add-circle"></Icon> {{ __('新增') }}</i-button
                 >
             </i-col>

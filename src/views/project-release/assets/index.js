@@ -4,7 +4,8 @@ import search from '../search/index'
 const resetForm = {
     id: null,
     name: '',
-    num: '',
+    project_id: '',
+    sort: 0,
     status: 1,
 }
 
@@ -32,15 +33,39 @@ export default {
                     key: 'name',
                 },
                 {
-                    title: this.__('编号'),
-                    key: 'num',
+                    title: this.__('排序'),
+                    key: 'sort',
                     render: (h, params) => {
-                        return <tag color="default">{params.row.num}</tag>
+                        return <tag color="default">{params.row.sort}</tag>
+                    },
+                },
+                {
+                    title: this.__('所属项目'),
+                    key: 'project',
+                    render: (h, params) => {
+                        return <div>{params.row.project.name}</div>
                     },
                 },
                 {
                     title: this.__('创建时间'),
                     key: 'create_at',
+                },
+                {
+                    title: this.__('是否发布'),
+                    key: 'completed_enum',
+                    width: 120,
+                    render: (h, params) => {
+                        return <Badge status={2 === params.row.completed ? 'success' : 'default'} text={params.row.completed_enum} />
+                    },
+                },
+                {
+                    title: this.__('发布时间'),
+                    key: 'completed_date',
+                    render: (h, params) => {
+                        return <div>
+                            { 2 == params.row.completed ? params.row.completed_date : '' }
+                            </div>
+                    },
                 },
                 {
                     title: this.__('状态'),
@@ -63,13 +88,13 @@ export default {
                                     <i-button
                                         type="text"
                                         onClick={() => this.edit(params)}
-                                        v-show={utils.permission('resource_edit_button')}>
+                                        v-show={utils.permission('project_release_edit_button')}>
                                         {this.__('编辑')}
                                     </i-button>
                                     <i-button
                                         type="text"
                                         onClick={() => this.remove(params)}
-                                        v-show={utils.permission('resource_delete_button')}>
+                                        v-show={utils.permission('project_release_delete_button')}>
                                         {this.__('删除')}
                                     </i-button>
                                 </buttonGroup>
@@ -89,18 +114,19 @@ export default {
                 name: [
                     {
                         required: true,
-                        message: this.__('请输入资源名字'),
+                        message: this.__('请输入项目发行版名字'),
                     },
                 ],
-                num: [
+                project_id: [
                     {
                         required: true,
-                        message: this.__('请输入资源编号'),
+                        message: this.__('请输入选择所属项目'),
                     },
                 ],
             },
             loading: false,
             selectedData: [],
+            projects: [],
         }
     },
     methods: {
@@ -126,10 +152,10 @@ export default {
         remove(params) {
             this.$Modal.confirm({
                 title: this.__('提示'),
-                content: this.__('确认删除该资源?'),
+                content: this.__('确认删除该项目发行版?'),
                 onOk: () => {
                     this.loadingTable = !this.loadingTable
-                    this.apiDelete('resource', params.row.id).then(res => {
+                    this.apiDelete('project-release', params.row.id).then(res => {
                         this.data.splice(params.index, 1)
                         this.loadingTable = !this.loadingTable
                         utils.success(res.message)
@@ -153,7 +179,7 @@ export default {
                 status: type,
             }
 
-            this.apiPost('resource/status', data).then(res => {
+            this.apiPost('project-release/status', data).then(res => {
                 this.data.forEach((item, index) => {
                     if (selected.includes(item.id)) {
                         this.$set(this.data[index], 'status', type)
@@ -172,12 +198,9 @@ export default {
             this.selectedData = ids
         },
         init: function() {
-            this.apiGet('resource').then(res => {
-                this.data = res.data
-                this.total = res.page.total_record
-                this.page = res.page.current_page
-                this.pageSize = res.page.per_page
-                this.loadingTable = false
+            this.$refs.search.search()
+            this.apiGet('project', {status: 1}).then(res => {
+                this.projects = res.data
             })
         },
         handleSubmit(form) {
@@ -185,17 +208,17 @@ export default {
                 if (pass) {
                     this.loading = !this.loading
                     if (!this.formItem.id) {
-                        this.saveResource(form)
+                        this.saveProjectRelease(form)
                     } else {
-                        this.updateResource(form)
+                        this.updateProjectRelease(form)
                     }
                 }
             })
         },
-        saveResource(form) {
+        saveProjectRelease(form) {
             var formData = this.formItem
 
-            this.apiPost('resource', formData).then(
+            this.apiPost('project-release', formData).then(
                 res => {
                     let addNode = Object.assign({}, this.formItem, res)
 
@@ -211,10 +234,10 @@ export default {
                 }
             )
         },
-        updateResource(form) {
+        updateProjectRelease(form) {
             var formData = this.formItem
 
-            this.apiPut('resource', this.formItem.id, formData).then(
+            this.apiPut('project-release', this.formItem.id, formData).then(
                 res => {
                     this.data.forEach((item, index) => {
                         if (item.id === this.formItem.id) {

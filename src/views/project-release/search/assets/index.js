@@ -30,7 +30,7 @@ export default {
                 this.searchForm.size = pageSize
             }
 
-            this.apiGet('resource', this.searchForm).then(res => {
+            this.apiGet('project-release', this.searchForm).then(res => {
                 this.$emit('getDataFromSearch', res)
             })
         },
