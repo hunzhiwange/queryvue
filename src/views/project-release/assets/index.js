@@ -138,13 +138,16 @@ export default {
             this.loadingTable = false
         },
         edit(params) {
-            let row = {}
-            Object.assign(row, params.row)
+            let row = params.row
             delete row._index
             delete row._rowKey
             this.minForm = true
             this.formItem.id = row.id
-            Object.assign(this.formItem, row)
+            Object.keys(this.formItem).forEach(key => {
+                if (row.hasOwnProperty(key)) {
+                    this.formItem[key] = row[key]
+                }
+            })
         },
         add: function() {
             this.minForm = true
