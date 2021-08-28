@@ -11,6 +11,7 @@
                 <FormItem :label="__('确认密码')" prop="confirm_pwd">
                     <i-input
                         type="password"
+                        password
                         v-model.trim="form.confirm_pwd"
                         placeholder=""
                         auto-complete="off"

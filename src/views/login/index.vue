@@ -41,6 +41,7 @@
                                         <FormItem prop="password">
                                             <i-input
                                                 type="password"
+                                                password
                                                 v-model.trim="form.password"
                                                 :placeholder="__('密码')"
                                                 size="large"

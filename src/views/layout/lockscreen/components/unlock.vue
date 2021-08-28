@@ -16,6 +16,7 @@
                             ref="inputEle"
                             v-model="password"
                             class="unlock-input"
+                            password
                             type="password"
                             :placeholder="__('密码同登录密码')"
                         />
