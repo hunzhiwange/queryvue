@@ -252,7 +252,10 @@ export default {
             this.favorProjectIds = favorProjectIds
         },
         edit(params) {
-            let row = params.row
+            let row = {}
+            Object.assign(row, params.row)
+            delete row._index
+            delete row._rowKey
             this.minForm = true
             this.formItem.id = row.id
             Object.assign(this.formItem, row)
