@@ -8,7 +8,7 @@ This app is base on [VueThink](https://github.com/honraytech/VueThink)、[VueEle
 
 ## Development
 
-Backend projectt <https://github.com/honraytech/VueThink>。
+Backend project <https://github.com/hunzhiwange/queryphp>。
 
 First to create config file.
 

@@ -8,7 +8,7 @@
 
 ## Development
 
-后端项目 <https://github.com/honraytech/VueThink>。
+后端项目 <https://github.com/hunzhiwange/queryphp>。
 
 首先创建配置文件。
 
