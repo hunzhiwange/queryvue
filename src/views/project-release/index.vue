@@ -16,7 +16,7 @@
                                     <FormItem :label="__('排序')" prop="sort">
                                         <i-input type="number" v-model.number="formItem.sort" placeholder=""> </i-input>
                                     </FormItem>
-                                    <FormItem :label="__('所属项目')" prop="project_id">
+                                    <FormItem v-if="!formItem.id" :label="__('所属项目')" prop="project_id">
                                         <i-select v-model="formItem.project_id">
                                             <i-option v-for="item in projects" :value="item.id" :key="item.id">{{
                                                 item.name

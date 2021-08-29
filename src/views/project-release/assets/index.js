@@ -139,8 +139,6 @@ export default {
         },
         edit(params) {
             let row = params.row
-            delete row._index
-            delete row._rowKey
             this.minForm = true
             this.formItem.id = row.id
             Object.keys(this.formItem).forEach(key => {
@@ -225,13 +223,9 @@ export default {
 
             this.apiPost('project-release', formData).then(
                 res => {
-                    let addNode = Object.assign({}, this.formItem, res)
-
-                    this.data.unshift(addNode)
-
+                    this.refresh()
                     this.loading = !this.loading
                     this.cancelMinForm(form)
-
                     utils.success(res.message)
                 },
                 () => {
@@ -240,19 +234,14 @@ export default {
             )
         },
         updateProjectRelease(form) {
-            var formData = this.formItem
+            let formData = Object.assign({}, this.formItem)
+            delete formData.project_id
 
             this.apiPut('project-release', this.formItem.id, formData).then(
                 res => {
-                    this.data.forEach((item, index) => {
-                        if (item.id === this.formItem.id) {
-                            this.$set(this.data, index, res)
-                        }
-                    })
-
+                    this.refresh()
                     this.loading = !this.loading
                     this.cancelMinForm(form)
-
                     utils.success(res.message)
                 },
                 () => {
@@ -277,6 +266,9 @@ export default {
         },
         reset() {
             this.formItem = resetForm
+        },
+        refresh() {
+            this.$refs.search.search()
         },
     },
     computed: {},
