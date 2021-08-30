@@ -3,7 +3,7 @@
         <div class="min-form" v-show="minForm">
             <Card :bordered="false">
                 <p slot="title">
-                    {{ formItem.id ? __('编辑项目发行') : __('新增项目发行') }}
+                    {{ formItem.id ? __('编辑项目模块') : __('新增项目模块') }}
                 </p>
                 <div class="min-form-inner">
                     <div class="min-form-body">
@@ -15,6 +15,9 @@
                                     </FormItem>
                                     <FormItem :label="__('排序')" prop="sort">
                                         <i-input type="number" v-model.number="formItem.sort" placeholder=""> </i-input>
+                                    </FormItem>
+                                    <FormItem :label="__('颜色')" prop="color">
+                                        <ColorPicker v-model="formItem.color" recommend />
                                     </FormItem>
                                     <FormItem v-if="!formItem.id" :label="__('所属项目')" prop="project_id">
                                         <i-select v-model="formItem.project_id">
@@ -77,14 +80,14 @@
                             type="primary"
                             icon="md-eye"
                             @click="statusMany(1)"
-                            v-if="utils.permission('project_release_status_button')"
+                            v-if="utils.permission('project_module_status_button')"
                             >{{ __('启用') }}</i-button
                         >
                         <i-button
                             type="primary"
                             icon="md-eye-off"
                             @click="statusMany(0)"
-                            v-if="utils.permission('project_release_status_button')"
+                            v-if="utils.permission('project_module_status_button')"
                             >{{ __('禁用') }}</i-button
                         >
                     </ButtonGroup>

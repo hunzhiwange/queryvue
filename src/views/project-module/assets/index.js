@@ -4,6 +4,7 @@ import search from '../search/index'
 const resetForm = {
     id: null,
     name: '',
+    color: '',
     project_id: '',
     sort: 0,
     status: 1,
@@ -40,6 +41,13 @@ export default {
                     },
                 },
                 {
+                    title: this.__('颜色'),
+                    key: 'color',
+                    render: (h, params) => {
+                        return <Badge color={params.row.color} text={params.row.color} />
+                    },
+                },
+                {
                     title: this.__('所属项目'),
                     key: 'project',
                     render: (h, params) => {
@@ -49,23 +57,6 @@ export default {
                 {
                     title: this.__('创建时间'),
                     key: 'create_at',
-                },
-                {
-                    title: this.__('是否发布'),
-                    key: 'completed_enum',
-                    width: 120,
-                    render: (h, params) => {
-                        return <Badge status={2 === params.row.completed ? 'success' : 'default'} text={params.row.completed_enum} />
-                    },
-                },
-                {
-                    title: this.__('发布时间'),
-                    key: 'completed_date',
-                    render: (h, params) => {
-                        return <div>
-                            { 2 == params.row.completed ? params.row.completed_date : '' }
-                            </div>
-                    },
                 },
                 {
                     title: this.__('状态'),
@@ -88,13 +79,13 @@ export default {
                                     <i-button
                                         type="text"
                                         onClick={() => this.edit(params)}
-                                        v-show={utils.permission('project_release_edit_button')}>
+                                        v-show={utils.permission('project_module_edit_button')}>
                                         {this.__('编辑')}
                                     </i-button>
                                     <i-button
                                         type="text"
                                         onClick={() => this.remove(params)}
-                                        v-show={utils.permission('project_release_delete_button')}>
+                                        v-show={utils.permission('project_module_delete_button')}>
                                         {this.__('删除')}
                                     </i-button>
                                 </buttonGroup>
@@ -114,7 +105,13 @@ export default {
                 name: [
                     {
                         required: true,
-                        message: this.__('请输入项目发行名字'),
+                        message: this.__('请输入项目模块名字'),
+                    },
+                ],
+                color: [
+                    {
+                        required: true,
+                        message: this.__('请输入颜色'),
                     },
                 ],
                 project_id: [
@@ -155,10 +152,10 @@ export default {
         remove(params) {
             this.$Modal.confirm({
                 title: this.__('提示'),
-                content: this.__('确认删除该项目发行?'),
+                content: this.__('确认删除该项目模块?'),
                 onOk: () => {
                     this.loadingTable = !this.loadingTable
-                    this.apiDelete('project-release', params.row.id).then(res => {
+                    this.apiDelete('project-module', params.row.id).then(res => {
                         this.data.splice(params.index, 1)
                         this.loadingTable = !this.loadingTable
                         utils.success(res.message)
@@ -182,7 +179,7 @@ export default {
                 status: type,
             }
 
-            this.apiPost('project-release/status', data).then(res => {
+            this.apiPost('project-module/status', data).then(res => {
                 this.data.forEach((item, index) => {
                     if (selected.includes(item.id)) {
                         this.$set(this.data[index], 'status', type)
@@ -211,17 +208,17 @@ export default {
                 if (pass) {
                     this.loading = !this.loading
                     if (!this.formItem.id) {
-                        this.saveProjectRelease(form)
+                        this.saveProjectModule(form)
                     } else {
-                        this.updateProjectRelease(form)
+                        this.updateProjectModule(form)
                     }
                 }
             })
         },
-        saveProjectRelease(form) {
+        saveProjectModule(form) {
             var formData = this.formItem
 
-            this.apiPost('project-release', formData).then(
+            this.apiPost('project-module', formData).then(
                 res => {
                     this.refresh()
                     this.loading = !this.loading
@@ -233,11 +230,11 @@ export default {
                 }
             )
         },
-        updateProjectRelease(form) {
+        updateProjectModule(form) {
             let formData = Object.assign({}, this.formItem)
             delete formData.project_id
 
-            this.apiPut('project-release', this.formItem.id, formData).then(
+            this.apiPut('project-module', this.formItem.id, formData).then(
                 res => {
                     this.refresh()
                     this.loading = !this.loading

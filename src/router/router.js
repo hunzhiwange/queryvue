@@ -156,14 +156,14 @@ let appRouterData = [
                 component: importRouter('project-release/index'),
             },
             {
-                path: 'permission',
+                path: 'release',
                 icon: '',
-                name: 'permission_index',
+                name: 'project_module_index',
                 meta: {
-                    title: __('权限管理'),
-                    par: ['permission'],
+                    title: __('项目模块'),
+                    par: ['project'],
                 },
-                component: importRouter('permission/index'),
+                component: importRouter('project-module/index'),
             },
             {
                 path: 'resource',
