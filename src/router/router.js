@@ -156,7 +156,7 @@ let appRouterData = [
                 component: importRouter('project-release/index'),
             },
             {
-                path: 'release',
+                path: 'module',
                 icon: '',
                 name: 'project_module_index',
                 meta: {
@@ -166,14 +166,14 @@ let appRouterData = [
                 component: importRouter('project-module/index'),
             },
             {
-                path: 'resource',
+                path: 'tag',
                 icon: '',
-                name: 'resource_index',
+                name: 'project_tag_index',
                 meta: {
-                    title: __('资源管理'),
-                    par: ['permission'],
+                    title: __('项目标签'),
+                    par: ['project'],
                 },
-                component: importRouter('resource/index'),
+                component: importRouter('project-tag/index'),
             },
         ],
     },
