@@ -117,7 +117,7 @@ export default {
                 project_id: [
                     {
                         required: true,
-                        message: this.__('请输入选择所属项目'),
+                        message: this.__('请选择所属项目'),
                     },
                 ],
             },

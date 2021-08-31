@@ -84,7 +84,7 @@ export const otherRouter = {
             component: importRouter('message/message'),
         },
         {
-            path:"/project/:id",
+            path:"/project/brower/:id",
             meta: {
                 title: __('任务看板'),
             },
@@ -174,6 +174,16 @@ let appRouterData = [
                     par: ['project'],
                 },
                 component: importRouter('project-tag/index'),
+            },
+            {
+                path: 'type',
+                icon: '',
+                name: 'project_type_index',
+                meta: {
+                    title: __('项目类型'),
+                    par: ['project'],
+                },
+                component: importRouter('project-type/index'),
             },
         ],
     },

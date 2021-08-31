@@ -1,11 +1,14 @@
 import http from '@/utils/http'
 import search from '../search/index'
+import {validateAlphaDash} from '@/utils/validate'
 
 const resetForm = {
     id: null,
     name: '',
+    num: '',
     color: '',
-    project_id: '',
+    icon: '',
+    content_type: '',
     sort: 0,
     status: 1,
 }
@@ -34,6 +37,17 @@ export default {
                     key: 'name',
                 },
                 {
+                    title: this.__('编号'),
+                    key: 'num',
+                    render: (h, params) => {
+                        return <tag color="default">{params.row.num}</tag>
+                    },
+                },
+                {
+                    title: this.__('内容类型'),
+                    key: 'content_type_enum',
+                },
+                {
                     title: this.__('排序'),
                     key: 'sort',
                     render: (h, params) => {
@@ -48,11 +62,8 @@ export default {
                     },
                 },
                 {
-                    title: this.__('所属项目'),
-                    key: 'project',
-                    render: (h, params) => {
-                        return <div>{params.row.project.name}</div>
-                    },
+                    title: this.__('图标'),
+                    key: 'icon',
                 },
                 {
                     title: this.__('创建时间'),
@@ -79,13 +90,13 @@ export default {
                                     <i-button
                                         type="text"
                                         onClick={() => this.edit(params)}
-                                        v-show={utils.permission('project_module_edit_button')}>
+                                        v-show={utils.permission('project_type_edit_button')}>
                                         {this.__('编辑')}
                                     </i-button>
                                     <i-button
                                         type="text"
                                         onClick={() => this.remove(params)}
-                                        v-show={utils.permission('project_module_delete_button')}>
+                                        v-show={utils.permission('project_type_delete_button')}>
                                         {this.__('删除')}
                                     </i-button>
                                 </buttonGroup>
@@ -105,7 +116,25 @@ export default {
                 name: [
                     {
                         required: true,
-                        message: this.__('请输入项目模块名字'),
+                        message: this.__('请输入项目类型名字'),
+                    },
+                ],
+                num: [
+                    {
+                        required: true,
+                        message: this.__('请输入项目编号'),
+                    },
+                    {
+                        validator: validateAlphaDash,
+                    },
+                ],
+                icon: [
+                    {
+                        required: true,
+                        message: this.__('请输入项目图标'),
+                    },
+                    {
+                        validator: validateAlphaDash,
                     },
                 ],
                 color: [
@@ -114,16 +143,17 @@ export default {
                         message: this.__('请输入颜色'),
                     },
                 ],
-                project_id: [
+                content_type: [
                     {
                         required: true,
-                        message: this.__('请选择所属项目'),
+                        message: this.__('请选择内容类型'),
                     },
                 ],
             },
             loading: false,
             selectedData: [],
             projects: [],
+            projectTypeContentType: {},
         }
     },
     methods: {
@@ -152,10 +182,10 @@ export default {
         remove(params) {
             this.$Modal.confirm({
                 title: this.__('提示'),
-                content: this.__('确认删除该项目模块?'),
+                content: this.__('确认删除该项目类型?'),
                 onOk: () => {
                     this.loadingTable = !this.loadingTable
-                    this.apiDelete('project-module', params.row.id).then(res => {
+                    this.apiDelete('project-type', params.row.id).then(res => {
                         this.data.splice(params.index, 1)
                         this.loadingTable = !this.loadingTable
                         utils.success(res.message)
@@ -179,7 +209,7 @@ export default {
                 status: type,
             }
 
-            this.apiPost('project-module/status', data).then(res => {
+            this.apiPost('project-type/status', data).then(res => {
                 this.data.forEach((item, index) => {
                     if (selected.includes(item.id)) {
                         this.$set(this.data[index], 'status', type)
@@ -199,8 +229,8 @@ export default {
         },
         init: function() {
             this.$refs.search.search()
-            this.apiGet('project', {status: 1}).then(res => {
-                this.projects = res.data
+            this.apiGet('search', {project_type: ['content_type']}).then(res => {
+                this.projectTypeContentType = res['project_type']['content_type']
             })
         },
         handleSubmit(form) {
@@ -208,17 +238,17 @@ export default {
                 if (pass) {
                     this.loading = !this.loading
                     if (!this.formItem.id) {
-                        this.saveProjectModule(form)
+                        this.saveProjectType(form)
                     } else {
-                        this.updateProjectModule(form)
+                        this.updateProjectType(form)
                     }
                 }
             })
         },
-        saveProjectModule(form) {
+        saveProjectType(form) {
             var formData = this.formItem
 
-            this.apiPost('project-module', formData).then(
+            this.apiPost('project-type', formData).then(
                 res => {
                     this.refresh()
                     this.loading = !this.loading
@@ -230,11 +260,11 @@ export default {
                 }
             )
         },
-        updateProjectModule(form) {
+        updateProjectType(form) {
             let formData = Object.assign({}, this.formItem)
             delete formData.project_id
 
-            this.apiPut('project-module', this.formItem.id, formData).then(
+            this.apiPut('project-type', this.formItem.id, formData).then(
                 res => {
                     this.refresh()
                     this.loading = !this.loading
