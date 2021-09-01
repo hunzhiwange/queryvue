@@ -13,22 +13,32 @@
                                     <FormItem :label="__('名字')" prop="name">
                                         <i-input v-model.trim="formItem.name" placeholder=""></i-input>
                                     </FormItem>
+                                </i-col>
+                                <i-col span="12">
                                     <FormItem :label="__('编号')" prop="num">
                                         <i-input v-model.trim="formItem.num" placeholder=""></i-input>
                                     </FormItem>
                                 </i-col>
+                            </Row>
+                            <Row :gutter="16">
                                 <i-col span="12">
                                     <FormItem :label="__('图标')" prop="icon">
                                         <i-input v-model.trim="formItem.icon" placeholder=""></i-input>
                                     </FormItem>
+                                </i-col>
+                                <i-col span="12">
                                     <FormItem :label="__('排序')" prop="sort">
                                         <i-input type="number" v-model.number="formItem.sort" placeholder=""> </i-input>
                                     </FormItem>
                                 </i-col>
+                            </Row>
+                            <Row :gutter="16">
                                 <i-col span="12">
                                     <FormItem :label="__('颜色')" prop="color">
                                         <ColorPicker v-model="formItem.color" recommend />
                                     </FormItem>
+                                </i-col>
+                                <i-col span="12">
                                     <FormItem :label="__('状态')">
                                         <i-switch
                                             v-model="formItem.status"
@@ -41,14 +51,19 @@
                                         </i-switch>
                                     </FormItem>
                                 </i-col>
+                            </Row>
+                            <Row :gutter="16">
                                 <i-col span="12">
-                                    <FormItem v-if="!formItem.id" :label="__('内容类型')" prop="content_type">
-                                        <i-select v-model="formItem.content_type">
-                                            <i-option v-for="(value,key) in projectTypeContentType" :value="key" :key="key">{{
+                                    <FormItem :label="__('内容类型')" prop="content_type">
+                                        <i-select :disabled="!!formItem.id" v-model="formItem.content_type">
+                                            <i-option v-for="(value,key) in projectTypeContentType" :value="Number(key)" :key="key">{{
                                                 value
                                             }}</i-option>
                                         </i-select>
                                     </FormItem>
+                                </i-col>
+                                <i-col span="12">
+                                    &nbsp;
                                 </i-col>
                             </Row>
                         </i-form>

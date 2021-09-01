@@ -14,9 +14,11 @@
                                         <i-input
                                             v-model.trim="formItem.name"
                                             placeholder=""
-                                            :disabled="formItem.id ? true : false"
+                                            :disabled="!!formItem.id"
                                         ></i-input>
                                     </FormItem>
+                                </i-col>
+                                <i-col span="12">
                                     <FormItem :label="__('密码')" prop="password">
                                         <i-input
                                             type="password"
@@ -27,10 +29,14 @@
                                         ></i-input>
                                     </FormItem>
                                 </i-col>
+                            </Row>
+                            <Row :gutter="16">
                                 <i-col span="12">
                                     <FormItem :label="__('编号')" prop="num">
                                         <i-input v-model="formItem.num" placeholder=""></i-input>
                                     </FormItem>
+                                </i-col>
+                                <i-col span="12">
                                     <FormItem :label="__('状态')">
                                         <i-switch
                                             v-model="formItem.status"

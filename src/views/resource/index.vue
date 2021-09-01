@@ -13,9 +13,15 @@
                                     <FormItem :label="__('名字')" prop="name">
                                         <i-input v-model.trim="formItem.name" placeholder=""></i-input>
                                     </FormItem>
+                                </i-col>
+                                <i-col span="12">
                                     <FormItem :label="__('编号')" prop="num">
                                         <i-input v-model.trim="formItem.num" placeholder=""> </i-input>
                                     </FormItem>
+                                </i-col>
+                            </Row>
+                            <Row :gutter="16">
+                                <i-col span="12">
                                     <FormItem :label="__('状态')">
                                         <i-switch
                                             v-model="formItem.status"
@@ -28,7 +34,7 @@
                                         </i-switch>
                                     </FormItem>
                                 </i-col>
-                                <i-col span="12"> </i-col>
+                                <i-col span="12">&nbsp;</i-col>
                             </Row>
                         </i-form>
                     </div>

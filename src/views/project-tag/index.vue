@@ -13,19 +13,31 @@
                                     <FormItem :label="__('名字')" prop="name">
                                         <i-input v-model.trim="formItem.name" placeholder=""></i-input>
                                     </FormItem>
+                                </i-col>
+                                <i-col span="12">
                                     <FormItem :label="__('排序')" prop="sort">
                                         <i-input type="number" v-model.number="formItem.sort" placeholder=""> </i-input>
                                     </FormItem>
+                                </i-col>
+                            </Row>
+                            <Row :gutter="16">
+                                <i-col span="12">
                                     <FormItem :label="__('颜色')" prop="color">
                                         <ColorPicker v-model="formItem.color" recommend />
                                     </FormItem>
-                                    <FormItem v-if="!formItem.id" :label="__('所属项目')" prop="project_id">
-                                        <i-select v-model="formItem.project_id">
+                                </i-col>
+                                <i-col span="12">
+                                    <FormItem :label="__('所属项目')" prop="project_id">
+                                        <i-select :disabled="!!formItem.id" v-model="formItem.project_id">
                                             <i-option v-for="item in projects" :value="item.id" :key="item.id">{{
                                                 item.name
                                             }}</i-option>
                                         </i-select>
                                     </FormItem>
+                                </i-col>
+                            </Row>
+                            <Row :gutter="16">
+                                <i-col span="12">
                                     <FormItem :label="__('状态')">
                                         <i-switch
                                             v-model="formItem.status"
@@ -38,7 +50,7 @@
                                         </i-switch>
                                     </FormItem>
                                 </i-col>
-                                <i-col span="12"> </i-col>
+                                <i-col span="12">&nbsp;</i-col>
                             </Row>
                         </i-form>
                     </div>

@@ -14,14 +14,22 @@
                                         <i-input
                                             v-model.trim="formItem.name"
                                             placeholder=""
-                                            :disabled="formItem.id ? true : false"
                                         ></i-input>
                                     </FormItem>
+                                </i-col>
+                                <i-col span="12">
+                                    <FormItem :label="__('编号')" prop="num">
+                                        <i-input v-model="formItem.num" placeholder=""></i-input>
+                                    </FormItem>
+                                </i-col>
+                            </Row>
+                            <Row :gutter="16">
+                                <i-col span="12">
                                     <FormItem :label="__('项目模板')">
                                         <Select v-model="seletedProjectTemplate">
                                             <Option v-for="item in projectTemplate" :value="item.key" :key="item.key">{{ item.title }}</Option>
                                         </Select>
-                                        <div class="m-t-20" style="height:200px;overflow:auto;">
+                                        <div class="m-t-20" style="height:100px;overflow:auto;">
                                             <Steps :current="0" direction="vertical">
                                                 <Step v-for="item in seletedProjectTemplateData.data" :value="item.tag" :key="item.tag" :title="item.title" :content="item.description"></Step>
                                             </Steps>
@@ -29,9 +37,6 @@
                                     </FormItem>
                                 </i-col>
                                 <i-col span="12">
-                                    <FormItem :label="__('编号')" prop="num">
-                                        <i-input v-model="formItem.num" placeholder=""></i-input>
-                                    </FormItem>
                                     <FormItem :label="__('状态')">
                                         <i-switch
                                             v-model="formItem.status"
