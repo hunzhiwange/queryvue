@@ -293,55 +293,16 @@ export default {
             projectTemplate: projectTemplate,
             seletedProjectTemplate: 'soft',
             dragList: [],
-            dragList2: [{
-                list: message.map((name, index) => {
-                    return {
-                        name,
-                        order: index + 1,
-                        fixed: false
-                    };
-                }),
-                order: 10001,
-                name: "委托阶段",
-                fixed: false
-            }, {
-                list: message2.map((name, index) => {
-                    return {
-                        name,
-                        order: index + 20,
-                        fixed: false
-                    };
-                }),
-                order: 10003,
-                name: "准备阶段",
-                fixed: false
-            }, {
-                list: message3.map((name, index) => {
-                    return {
-                        name,
-                        order: index + 40,
-                        fixed: false
-                    };
-                }),
-                order: 10005,
-                name: "起诉阶段",
-                fixed: false
-            }, {
-                list: message4.map((name, index) => {
-                    return {
-                        name,
-                        order: index + 60,
-                        fixed: false
-                    };
-                }),
-                order: 10005,
-                name: "结案阶段",
-                fixed: false
-            }],
             editable: true,
             order: 1000,
             single: false,
             projectLabels: [],
+            projects: [],
+            project: {
+                id: 0,
+                num: '',
+                name: this.__('请选择项目'),
+            },
         }
     },
     methods: {
@@ -535,10 +496,16 @@ export default {
 
             this.selectedData = ids
         },
-        init: function() {
-            this.apiGet('project-label', {project_ids: [1]}).then(res => {
-                this.projectLabels = res.data
-                this.$refs.search.search()
+        init: function(num) {
+            this.apiGet('project', {status: 1}).then(res => {
+                this.projects = res.data
+            })
+            this.apiGet('project/show', {num: num}).then(res => {
+                this.project = res
+                this.apiGet('project-label', {project_ids: [res.id]}).then(res => {
+                    this.projectLabels = res.data
+                    this.$refs.search.search()
+                })
             })
         },
         handleSubmit(form) {
@@ -765,6 +732,11 @@ export default {
             })
         },
     },
+    watch: {
+        $route(to, from) {
+            this.init(to.params.num)
+        }
+    },
     computed: {
         seletedProjectTemplateData: function () {
             let selecedData = this.projectTemplate.find(item => {
@@ -786,7 +758,7 @@ export default {
         },
     },
     mounted: function() {
-        this.init()
+        this.init(this.$route.params.num)
     },
     mixins: [http],
 }

@@ -110,58 +110,53 @@
         </div>
 
         <div class="wrap">
-
             <div class="fixed-footer-offset2">
-            <div class="project-navigation">
-                        <Menu mode="horizontal" theme2="light" active-name="1">
-                            <Row>
+                <div class="project-navigation">
+                    <Menu mode="horizontal" theme2="light" active-name="1">
+                        <Row>
                             <Col span="18">
-                            <Submenu name="1">
-                                <template slot="title">
+                                <Submenu name="project">
+                                    <template slot="title">
+                                        <Icon type="md-git-branch" />
+                                        {{ project.name }}
+                                    </template>
+                                    <MenuItem :to="'/project/brower/'+item.num" v-for="item in projects" :key="item.id" :name="'project-'+item.id">{{ item.name }}</MenuItem>
+                                </Submenu>
+                                <MenuItem name="1">
                                     <Icon type="ios-paper" />
-                                    选择项目
-                                </template>
-                                <MenuItem name="1-1">文章管理</MenuItem>
-                                <MenuItem name="1-2">评论管理</MenuItem>
-                                <MenuItem name="1-3">举报管理</MenuItem>
-                            </Submenu>
-                            <MenuItem name="1">
-                                <Icon type="ios-paper" />
-                                任务
-                            </MenuItem>
-                            <MenuItem name="2">
-                                <Icon type="ios-people" />
-                                文件
-                            </MenuItem>
-                            <MenuItem name="3">
-                                <Icon type="ios-construct" />
-                                概览
-                            </MenuItem>
-                            <MenuItem name="4">
-                                <Icon type="ios-construct" />
-                                版本
-                            </MenuItem>
+                                    任务
+                                </MenuItem>
+                                <MenuItem name="2">
+                                    <Icon type="ios-people" />
+                                    文件
+                                </MenuItem>
+                                <MenuItem name="3">
+                                    <Icon type="ios-construct" />
+                                    概览
+                                </MenuItem>
+                                <MenuItem name="4">
+                                    <Icon type="ios-construct" />
+                                    版本
+                                </MenuItem>
                             </Col>
                             <Col span="6" >
-                            <div class="pull-right">
-                            <MenuItem name="11">
-                                <Icon type="ios-paper" />
-                                筛选
-                            </MenuItem>
-                            <MenuItem name="22">
-                                <Icon type="ios-people" />
-                                用户
-                            </MenuItem>
-                            <MenuItem name="33">
-                                <Icon type="ios-construct" />
-                                菜单
-                            </MenuItem>
-                            </div>
+                                <div class="pull-right">
+                                    <MenuItem name="11">
+                                        <Icon type="ios-paper" />
+                                        筛选
+                                    </MenuItem>
+                                    <MenuItem name="22">
+                                        <Icon type="ios-people" />
+                                        用户
+                                    </MenuItem>
+                                    <MenuItem name="33">
+                                        <Icon type="ios-construct" />
+                                        菜单
+                                    </MenuItem>
+                                </div>
                             </Col>
-                             </Row>
-                        </Menu>
-
-
+                            </Row>
+                    </Menu>
                 </div>
             </div>
             <div style="display:none;" class="fixed-footer-offset2 ">

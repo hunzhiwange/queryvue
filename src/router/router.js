@@ -84,7 +84,7 @@ export const otherRouter = {
             component: importRouter('message/message'),
         },
         {
-            path:"/project/brower/:id",
+            path:"/project/brower/:num",
             meta: {
                 title: __('任务看板'),
             },

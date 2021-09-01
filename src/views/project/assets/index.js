@@ -45,6 +45,9 @@ export default {
                 {
                     title: this.__('名字'),
                     key: 'name',
+                    render: (h, params) => {
+                        return <router-link to={'/project/brower/' + params.row.num}>{params.row.name}</router-link>
+                    },
                 },
                 {
                     title: this.__('编号'),
