@@ -211,7 +211,16 @@ export default {
                 onOk: () => {
                     this.loading = !this.loading
                     this.apiDelete('permission', nodeData.id).then(res => {
-                        this.init()
+                        const parentKey = root.find(el => el === node).parent
+                        if (parentKey !== undefined) {
+                            const parent = root.find(el => el.nodeKey === parentKey).node
+                            const index = parent.children.indexOf(nodeData)
+                            parent.children.splice(index, 1)
+                        } else {
+                            const nowNode = this.dataTree.find(el => el.nodeKey === node.nodeKey)
+                            const index = this.dataTree.indexOf(nowNode)
+                            this.dataTree.splice(index, 1)
+                        }
                         this.loading = !this.loading
                         utils.success(res.message)
                     }, () => {
@@ -374,9 +383,20 @@ export default {
             inputData.pid = this.parsePid(inputData.pid)
             this.apiPost('permission', inputData).then(
                 res => {
-                    this.init()
+                    let addNode = Object.assign({}, this.formItem, res)
+
+                    if (this.currentParentData) {
+                        let children = this.currentParentData.children || []
+                        children.push(addNode)
+                        this.$set(this.currentParentData, 'children', children)
+                        this.$set(this.currentParentData, 'expand', true)
+                    } else {
+                        this.dataTree.push(addNode)
+                    }
+
                     this.loading = !this.loading
                     this.cancelMinForm(form)
+
                     utils.success(res.message)
                 },
                 res => {
@@ -389,9 +409,45 @@ export default {
             inputData.pid = this.parsePid(inputData.pid)
             this.apiPut('permission', this.formItem.id, inputData).then(
                 res => {
-                    this.init()
+                    const parentKey = this.formItem.pid[this.formItem.pid.length - 1]
+                    const oldParentKey = this.oldEditPid[this.oldEditPid.length - 1]
+
+                    this.$set(this.currentParentData, 'status', this.formItem.status)
+                    this.$set(this.currentParentData, 'num', this.formItem.num)
+
+                    if (parentKey === oldParentKey) {
+                        this.$set(this.currentParentData, 'name', this.formItem.name)
+                    } else {
+                        // new parent
+                        if (parentKey != -1) {
+                            let parent = this.nodeRoot.find(el => el.node.id === parentKey).node
+                            let children = parent.children || []
+                            children.push(this.currentParentData)
+                            this.$set(parent, 'children', children)
+                            this.$set(parent, 'expand', true)
+                        } else {
+                            this.$set(this.currentParentData, 'type', 'app')
+                            this.dataTree.push(this.currentParentData)
+                        }
+
+                        // old parent
+                        if (oldParentKey != -1) {
+                            let oldParent = this.nodeRoot.find(el => el.node.id === oldParentKey).node
+                            const index = oldParent.children.indexOf(this.currentParentData)
+                            oldParent.children.splice(index, 1)
+                            this.$set(oldParent, 'children', oldParent.children)
+                            this.$set(oldParent, 'expand', false)
+                        } else {
+                            const index = this.dataTree.indexOf(this.currentParentData)
+                            this.dataTree.splice(index, 1)
+                        }
+                    }
+
+                    // 清空临时根节点数据，已无用
+                    this.nodeRoot = []
                     this.loading = !this.loading
                     this.cancelMinForm(form)
+
                     utils.success(res.message)
                 },
                 res => {

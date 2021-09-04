@@ -112,7 +112,7 @@
         <div class="wrap">
             <div class="fixed-footer-offset2">
                 <div class="project-navigation">
-                    <Menu mode="horizontal" theme2="light" active-name="issue">
+                    <Menu mode="horizontal" theme2="light" active-name="overview">
                         <Row>
                             <Col span="18">
                                 <Submenu name="project">
@@ -177,65 +177,57 @@
                     </i-col>
                 </Row>
             </div>
-            <div class="project-navigation">
-                 <Row>
+            <div class="project-navigation2 m-t-10">
+                <Row :gutter="16">
                     <Col span="24">
-                <draggable class="main-box" v-model="dragList" :move="onMove" filter=".undraggable">
-                    <div v-for="(stage,index) in dragList" class="stage-item" :key="index">
-                        <div class="stage-header">
-                            <Badge :count="stage.list.length" type="success">
-                            <div class="title">{{stage.name}}</div>
-                            </Badge>
-                            <div>
-                                <!-- <i-button title="添加任务" type="primary" icon="md-add-circle" shape="circle" size="small" @click="addTask(index)" class="m-r-10"></i-button>
-                                <i-button class="delstage" title="删除阶段" type="warning" icon="md-remove-circle" shape="circle" size="small" @click="delStage(index)"></i-button> -->
-                                <Icon type="md-more" size="18" color="#808695" />
-                            </div>
-                        </div>
-                        <draggable tag="span" class="list-group-stage" v-model="stage.list" v-bind="dragOptions" :move="onMove">
-                            <transition-group tag="ul" type="transition" class="list-group" :name="'flip-list'">
-                                <li class="list-group-item stage-header" v-for="(element,k) in stage.list" :key="element.order">
-                                    <Card style="width:100%;" shadow >
-                                          <div slot="title">
-                                              <!-- <label data-v-5cb2b31c="" class="ivu-checkbox-wrapper ivu-checkbox-default"><span class="ivu-checkbox"><span class="ivu-checkbox-inner"></span> <input type="checkbox" class="ivu-checkbox-input"></span></label> -->
-                                            <!-- <label data-v-5cb2b31c="" class="ivu-checkbox-wrapper ivu-checkbox-wrapper-checked ivu-checkbox-default"><span class="ivu-checkbox ivu-checkbox-checked"><span class="ivu-checkbox-inner"></span> <input type="checkbox" class="ivu-checkbox-input"></span></label> -->
-                                            <Checkbox v-model="element.completed_bool"><em></em></Checkbox>
-                                            <Icon :type="element.project_type_icon.icon" :color="element.project_type_icon.color" />
-                                            <span :class="element.completed_bool ? 'item-removed' : ''">{{ element.num }}</span>
-                                            <Icon type="ios-copy-outline" />
-                                        </div>
-                                        <a href="javascript:void(0);" class="close-item" slot="extra" @click.prevent="delTask(index,k)">
-                                            <Icon color="#808695" size="18" type="md-close"></Icon>
-                                        </a>
-                                        <!-- <span class="check-box-wrapper">
-                                            <label data-v-5cb2b31c="" class="ivu-checkbox-wrapper ivu-checkbox-default"><span class="ivu-checkbox"><span class="ivu-checkbox-inner"></span> <input type="checkbox" class="ivu-checkbox-input"></span></label>
-                                            <label data-v-5cb2b31c="" class="ivu-checkbox-wrapper ivu-checkbox-wrapper-checked ivu-checkbox-default"><span class="ivu-checkbox ivu-checkbox-checked"><span class="ivu-checkbox-inner"></span> <input type="checkbox" class="ivu-checkbox-input"></span></label>
-                                        </span> -->
-                                        <span :class="element.completed_bool ? 'item-removed name' : 'name'">{{ element.name }}</span>
-                                        <Divider orientation="right" size="small"><em style="color: #c5c8ce;font-weight:normal;font-size:13px;">
-                                            {{ element.create_at }}
-                                            </em>
-                                        </Divider>
-                                        <div class="m-t-10">
-                                            <Badge v-for="(item, index) in element.project_tags" :key="index" :text="item.name" :color="item.color" class="m-r-10"/>
-                                        </div>
-                                        <div class="m-t-10">
-                                            <Tag v-for="(item, index) in element.project_releases" :key="index" :label="item.name" color="#c5c8ce">{{ item.name }}</Tag>
-                                        </div>
-                                        <div class="m-t-10">
-                                            <Tag v-for="(item, index) in element.project_modules" :key="index" :label="item.name" :color="item.color">{{ item.name }}</Tag>
-                                        </div>
-                                    </Card>
-                                </li>
-                            </transition-group>
-                        </draggable>
-                    </div>
-                    <div class="undraggable">
-                        <i-button type="text" @click="addStage">添加任务阶段</i-button>
-                    </div>
-                </draggable>
-                </Col>
-                 </Row>
+                        <Card :bordered="false" class="version-item">
+                            <p slot="title">
+                                <strong>任务燃尽图</strong>
+                            </p>
+                        <ve-line
+                                v-if="!burnoutMap.loading"
+                                :data="burnoutMap.chartData"
+                                :settings="burnoutMap.chartSettings"
+                                :extend="burnoutMap.chartExtend"
+                                :series="burnoutMap.series"
+                                :legend-visible="false"
+                                height="200px"
+                        ></ve-line>
+                        </Card>
+                    </Col>
+                </Row>
+                <Row :gutter="16" class="m-t-10">
+                    <Col span="18">
+                        <Row :gutter="16">
+                            <Col span="24">
+                                <Card :bordered="false" class="version-item">
+                                    <p slot="title">
+                                        <strong>项目信息</strong>
+                                    </p>
+                                </Card>
+                            </Col>
+                        </Row>
+                        <Row :gutter="16" class="m-t-10">
+                            <Col span="24">
+                                <Card :bordered="false" class="version-item">
+                                    <p slot="title">
+                                        <strong>项目动态</strong>
+                                    </p>
+                                </Card>
+                            </Col>
+                        </Row>
+                    </Col>
+                     <Col span="6">
+                        <Card :bordered="false" class="version-item">
+                            <p slot="title">
+                                <strong>项目情况</strong>
+                            </p>
+                            <p>vilson 创建于 2021年07月27日</p>
+                            <p>项目周期</p>
+                            <p>项目统计</p>
+                        </Card>
+                    </Col>
+                </Row>
             </div>
         </div>
         <div style="display:none;" class="fixed-footer">
@@ -318,5 +310,5 @@
     </div>
 </template>
 
-<script src="./assets/view.js"></script>
-<style lang="less" src="./assets/view.less"></style>
+<script src="./assets/overview.js"></script>
+<style lang="less" src="./assets/overview.less"></style>

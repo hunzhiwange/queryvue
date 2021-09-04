@@ -84,12 +84,36 @@ export const otherRouter = {
             component: importRouter('message/message'),
         },
         {
-            path:"/project/brower/:num",
+            path:"/board/:num",
             meta: {
                 title: __('任务看板'),
             },
-            name: 'project_view_index',
+            name: 'board_view_index',
             component: importRouter('project/view'),
+        },
+        {
+            path:"/board/:num/release",
+            meta: {
+                title: __('任务看板 - 项目版本'),
+            },
+            name: 'board_release_index',
+            component: importRouter('project/release'),
+        },
+        {
+            path:"/board/:num/overview",
+            meta: {
+                title: __('任务看板 - 概览'),
+            },
+            name: 'board_overview_index',
+            component: importRouter('project/overview'),
+        },
+        {
+            path:"/board/:num/attachement",
+            meta: {
+                title: __('任务看板 - 文件'),
+            },
+            name: 'board_attachement_index',
+            component: importRouter('project/attachement'),
         },
     ],
 }
@@ -150,7 +174,7 @@ let appRouterData = [
                 icon: '',
                 name: 'project_release_index',
                 meta: {
-                    title: __('项目发行'),
+                    title: __('项目版本'),
                     par: ['project'],
                 },
                 component: importRouter('project-release/index'),

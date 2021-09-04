@@ -1,7 +1,9 @@
 import http from '@/utils/http'
 import {validateAlphaDash} from '@/utils/validate'
-import search from '../search/index'
+import search from '../../project-issue/search/index'
 import projectTemplate from './template'
+//see https://github.com/SortableJS/Vue.Draggable
+import draggable from 'vuedraggable'
 
 const resetForm = {
     name: '',
@@ -21,13 +23,69 @@ const resetUserForm = {
     size: 10,
 }
 
+const projectTypeIcon = {
+    'bug': {
+        'icon': 'ios-bug',
+        'color': 'red',
+    },
+    'task': {
+        'icon': 'ios-list-box-outline',
+        'color': 'blue',
+    },
+    'product': {
+        'icon': 'md-map',
+        'color': 'green',
+    },
+    'story': {
+        'icon': 'md-mail-open',
+        'color': 'purple',
+    },
+    'doc': {
+        'icon': 'ios-document-outline',
+        'color': 'red',
+    },
+}
+
 const resetFormUser = {}
 
 export default {
     components: {
         search,
+        draggable,
     },
     data() {
+        const message = [
+            "编辑订单时，确认了逻辑未变，当前订单（结算金额-已支付金额 > 客户余额）就会报客户余额不足。程序有一个bug获取已支付金额变量取错了，每次获取的支付金额一直为0，导致判断错误。",
+            "委托代理合同",
+            "授权委托书",
+            "风险告知书",
+        ];
+        const message2 = [
+            "案情摘要",
+            "法律关系分析",
+            "法律法规检索",
+            "起诉状",
+            "调查取证身份信息",
+            "调查取证房产信息",
+            "调查取证车辆信息",
+            "查询其他档案",
+            "开庭审理",
+        ];
+        const message3 = [
+            "领取传票",
+            "提交代理词",
+            "开庭审理",
+            "当事人沟通",
+            "与法官沟通",
+            "领取裁决书",
+            "缴费立案",
+            "庭前阅卷",
+        ];
+        const message4 = [
+            "通知当事人领取裁决书并签字",
+            "结案归档",
+
+        ];
         return {
             columns: [
                 {
@@ -45,9 +103,6 @@ export default {
                 {
                     title: this.__('名字'),
                     key: 'name',
-                    render: (h, params) => {
-                        return <router-link to={'/board/' + params.row.num}>{params.row.name}</router-link>
-                    },
                 },
                 {
                     title: this.__('编号'),
@@ -237,15 +292,106 @@ export default {
             favorProjectIds: [],
             projectTemplate: projectTemplate,
             seletedProjectTemplate: 'soft',
+            dragList: [],
+            editable: true,
+            order: 1000,
+            single: false,
+            projectLabels: [],
+            projects: [],
+            project: {
+                id: 0,
+                num: '',
+                name: this.__('请选择项目'),
+            },
         }
     },
     methods: {
+        orderList() {
+            this.list = this.list.sort((one, two) => {
+                return one.order - two.order;
+            });
+        },
+        onMove({
+            relatedContext,
+            draggedContext
+        }) {
+            const relatedElement = relatedContext.element;
+            const draggedElement = draggedContext.element;
+            return (
+                (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
+            );
+        },
+        // 添加任务
+        addTask(index) {
+            var order = this.order++;
+            this.dragList[index].list.push({
+                name: '新增任务' + order,
+                order: order,
+                fixed: false
+            })
+        },
+        // 删除任务
+        delTask(index, k) {
+            this.dragList[index].list.splice(k, 1);
+        },
+        // 添加任务阶段
+        addStage() {
+            var order = this.order++;
+            this.dragList.push({
+                'list': [],
+                'order': order,
+                'name': "新增任务阶段" + order,
+                'fixed': false
+            });
+        },
+        // 删除任务阶段
+        delStage(index) {
+            this.dragList.splice(index, 1);
+        },
         getDataFromSearch(data) {
-            this.data = data.data
-            this.total = data.page.total_record
-            this.page = data.page.current_page
-            this.pageSize = data.page.per_page
-            this.loadingTable = false
+            // this.data = data.data
+            // this.total = data.page.total_record
+            // this.page = data.page.current_page
+            // this.pageSize = data.page.per_page
+            // this.loadingTable = false
+
+            let map = {}
+            data.data.forEach ((item, key) => {
+                if (!map.hasOwnProperty(item.project_label_id)) {
+                    map[item.project_label_id] = []
+                }
+                map[item.project_label_id].push({
+                    name: item.title,
+                    num: item.num,
+                    create_at: item.create_at,
+                    completed: item.completed,
+                    completed_bool: 2 === item.completed,
+                    completed_date: item.completed_date,
+                    project_releases: item.project_releases,
+                    project_tags: item.project_tags,
+                    project_modules: item.project_modules,
+                    project_type: item.project_type,
+                    project_type_icon: {
+                        icon: projectTypeIcon[item.project_type.icon]['icon'],
+                        color: projectTypeIcon[item.project_type.icon]['color'],
+                    },
+                    order: item.sort,
+                    fixed: false,
+                })
+            })
+
+            let hello = []
+            this.projectLabels.forEach((item, key) => {
+                hello.push({
+                    label_id: item.id,
+                    order: item.sort,
+                    name: item.name,
+                    fixed: false,
+                    list: map.hasOwnProperty(item.id) ? map[item.id] : [],
+                })
+            })
+
+            this.dragList = hello
         },
         getProjectFavorDataFromSearch(data) {
             let favorProjectIds = []
@@ -350,10 +496,16 @@ export default {
 
             this.selectedData = ids
         },
-        init: function() {
-            this.$refs.search.search()
-            this.apiGet('role', {status: 1}).then(res => {
-                this.roles = res.data
+        init: function(num) {
+            this.apiGet('project', {status: 1}).then(res => {
+                this.projects = res.data
+            })
+            this.apiGet('project/show', {num: num}).then(res => {
+                this.project = res
+                this.apiGet('project-label', {project_ids: [res.id]}).then(res => {
+                    this.projectLabels = res.data
+                    this.$refs.search.search()
+                })
             })
         },
         handleSubmit(form) {
@@ -580,6 +732,11 @@ export default {
             })
         },
     },
+    watch: {
+        $route(to, from) {
+            this.init(to.params.num)
+        }
+    },
     computed: {
         seletedProjectTemplateData: function () {
             let selecedData = this.projectTemplate.find(item => {
@@ -588,9 +745,20 @@ export default {
             selecedData = selecedData || {}
             return selecedData
         },
+        dragOptions() {
+            return {
+                animation: 1,
+                group: "description",
+                disabled: !this.editable,
+                ghostClass: "ghost"
+            };
+        },
+        listString() {
+            return JSON.stringify(this.dragList, null, 2);
+        },
     },
     mounted: function() {
-        this.init()
+        this.init(this.$route.params.num)
     },
     mixins: [http],
 }

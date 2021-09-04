@@ -112,7 +112,7 @@
         <div class="wrap">
             <div class="fixed-footer-offset2">
                 <div class="project-navigation">
-                    <Menu mode="horizontal" theme2="light" active-name="issue">
+                    <Menu mode="horizontal" theme2="light" active-name="attachement">
                         <Row>
                             <Col span="18">
                                 <Submenu name="project">
@@ -177,64 +177,46 @@
                     </i-col>
                 </Row>
             </div>
-            <div class="project-navigation">
-                 <Row>
-                    <Col span="24">
-                <draggable class="main-box" v-model="dragList" :move="onMove" filter=".undraggable">
-                    <div v-for="(stage,index) in dragList" class="stage-item" :key="index">
-                        <div class="stage-header">
-                            <Badge :count="stage.list.length" type="success">
-                            <div class="title">{{stage.name}}</div>
-                            </Badge>
-                            <div>
-                                <!-- <i-button title="添加任务" type="primary" icon="md-add-circle" shape="circle" size="small" @click="addTask(index)" class="m-r-10"></i-button>
-                                <i-button class="delstage" title="删除阶段" type="warning" icon="md-remove-circle" shape="circle" size="small" @click="delStage(index)"></i-button> -->
-                                <Icon type="md-more" size="18" color="#808695" />
-                            </div>
-                        </div>
-                        <draggable tag="span" class="list-group-stage" v-model="stage.list" v-bind="dragOptions" :move="onMove">
-                            <transition-group tag="ul" type="transition" class="list-group" :name="'flip-list'">
-                                <li class="list-group-item stage-header" v-for="(element,k) in stage.list" :key="element.order">
-                                    <Card style="width:100%;" shadow >
-                                          <div slot="title">
-                                              <!-- <label data-v-5cb2b31c="" class="ivu-checkbox-wrapper ivu-checkbox-default"><span class="ivu-checkbox"><span class="ivu-checkbox-inner"></span> <input type="checkbox" class="ivu-checkbox-input"></span></label> -->
-                                            <!-- <label data-v-5cb2b31c="" class="ivu-checkbox-wrapper ivu-checkbox-wrapper-checked ivu-checkbox-default"><span class="ivu-checkbox ivu-checkbox-checked"><span class="ivu-checkbox-inner"></span> <input type="checkbox" class="ivu-checkbox-input"></span></label> -->
-                                            <Checkbox v-model="element.completed_bool"><em></em></Checkbox>
-                                            <Icon :type="element.project_type_icon.icon" :color="element.project_type_icon.color" />
-                                            <span :class="element.completed_bool ? 'item-removed' : ''">{{ element.num }}</span>
-                                            <Icon type="ios-copy-outline" />
-                                        </div>
-                                        <a href="javascript:void(0);" class="close-item" slot="extra" @click.prevent="delTask(index,k)">
-                                            <Icon color="#808695" size="18" type="md-close"></Icon>
-                                        </a>
-                                        <!-- <span class="check-box-wrapper">
-                                            <label data-v-5cb2b31c="" class="ivu-checkbox-wrapper ivu-checkbox-default"><span class="ivu-checkbox"><span class="ivu-checkbox-inner"></span> <input type="checkbox" class="ivu-checkbox-input"></span></label>
-                                            <label data-v-5cb2b31c="" class="ivu-checkbox-wrapper ivu-checkbox-wrapper-checked ivu-checkbox-default"><span class="ivu-checkbox ivu-checkbox-checked"><span class="ivu-checkbox-inner"></span> <input type="checkbox" class="ivu-checkbox-input"></span></label>
-                                        </span> -->
-                                        <span :class="element.completed_bool ? 'item-removed name' : 'name'">{{ element.name }}</span>
-                                        <Divider orientation="right" size="small"><em style="color: #c5c8ce;font-weight:normal;font-size:13px;">
-                                            {{ element.create_at }}
+            <div class="project-navigation2 m-t-10">
+                 <Row :gutter="16">
+                    <Col span="6">
+                        <Card :bordered="false" class="version-item">
+                            <p slot="title">
+                                <strong>v20120522</strong>
+                            </p>
+                            <a href="javascript:void(0);" slot="extra">
+                                <Icon type="ios-loop-strong"></Icon>
+                                <Dropdown>
+                                    <Button type="primary" shape="circle" size="small">
+                                        未开始
+                                        <Icon type="ios-arrow-down"></Icon>
+                                    </Button>
+                                    <DropdownMenu slot="list">
+                                        <DropdownItem>未开始</DropdownItem>
+                                        <DropdownItem>进行中</DropdownItem>
+                                        <DropdownItem>延期发布</DropdownItem>
+                                        <DropdownItem>已发布</DropdownItem>
+                                    </DropdownMenu>
+                                </Dropdown>
+                            </a>
+                            <p><Progress :percent="100" /></p>
+                            <p><Divider orientation="right" size="small"><em style="color: #c5c8ce;font-weight:normal;font-size:13px;">
+                                            预计发布时间： 2021-08-11 05:55
                                             </em>
-                                        </Divider>
-                                        <div class="m-t-10">
-                                            <Badge v-for="(item, index) in element.project_tags" :key="index" :text="item.name" :color="item.color" class="m-r-10"/>
-                                        </div>
-                                        <div class="m-t-10">
-                                            <Tag v-for="(item, index) in element.project_releases" :key="index" :label="item.name" color="#c5c8ce">{{ item.name }}</Tag>
-                                        </div>
-                                        <div class="m-t-10">
-                                            <Tag v-for="(item, index) in element.project_modules" :key="index" :label="item.name" :color="item.color">{{ item.name }}</Tag>
-                                        </div>
-                                    </Card>
-                                </li>
-                            </transition-group>
-                        </draggable>
-                    </div>
-                    <div class="undraggable">
-                        <i-button type="text" @click="addStage">添加任务阶段</i-button>
-                    </div>
-                </draggable>
-                </Col>
+                                </Divider>
+                            </p>
+                        </Card>
+                 </Col>
+                    <Col span="6">
+                        <Card :bordered="false" class="version-item version-create" style="height:141px;">
+                            <a>
+                                <div style="text-align:center">
+                                    <Icon type="md-add" />
+                                    <div>创建版本</div>
+                                </div>
+                            </a>
+                        </Card>
+                    </Col>
                  </Row>
             </div>
         </div>
@@ -318,5 +300,5 @@
     </div>
 </template>
 
-<script src="./assets/view.js"></script>
-<style lang="less" src="./assets/view.less"></style>
+<script src="./assets/attachement.js"></script>
+<style lang="less" src="./assets/attachement.less"></style>

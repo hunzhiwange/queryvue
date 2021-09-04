@@ -3,7 +3,7 @@
         <div class="min-form" v-show="minForm">
             <Card :bordered="false">
                 <p slot="title">
-                    {{ formItem.id ? __('编辑项目发行') : __('新增项目发行') }}
+                    {{ formItem.id ? __('编辑项目版本') : __('新增项目版本') }}
                 </p>
                 <div class="min-form-inner">
                     <div class="min-form-body">

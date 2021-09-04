@@ -114,7 +114,7 @@ export default {
                 name: [
                     {
                         required: true,
-                        message: this.__('请输入项目发行名字'),
+                        message: this.__('请输入项目版本名字'),
                     },
                 ],
                 project_id: [
@@ -155,7 +155,7 @@ export default {
         remove(params) {
             this.$Modal.confirm({
                 title: this.__('提示'),
-                content: this.__('确认删除该项目发行?'),
+                content: this.__('确认删除该项目版本?'),
                 onOk: () => {
                     this.loadingTable = !this.loadingTable
                     this.apiDelete('project-release', params.row.id).then(res => {
