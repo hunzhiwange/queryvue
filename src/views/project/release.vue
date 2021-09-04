@@ -177,12 +177,12 @@
                     </i-col>
                 </Row>
             </div>
-            <div class="project-navigation2 m-t-10">
+            <div class="project-navigation2">
                  <Row :gutter="16">
-                    <Col span="6">
+                    <Col span="6" v-for="item in releaseData.data" :key="item.id" class="m-t-10">
                         <Card :bordered="false" class="version-item">
                             <p slot="title">
-                                <strong>v20120522</strong>
+                                <strong>{{ item.name }}</strong>
                             </p>
                             <a href="javascript:void(0);" slot="extra">
                                 <Icon type="ios-loop-strong"></Icon>
@@ -207,9 +207,9 @@
                             </p>
                         </Card>
                  </Col>
-                    <Col span="6">
+                    <Col span="6" class="m-t-10">
                         <Card :bordered="false" class="version-item version-create" style="height:141px;">
-                            <a>
+                            <a @click="createRelease">
                                 <div style="text-align:center">
                                     <Icon type="md-add" />
                                     <div>创建版本</div>
@@ -220,32 +220,17 @@
                  </Row>
             </div>
         </div>
-        <div style="display:none;" class="fixed-footer">
+        <div class="fixed-footer">
             <Row justify="end">
                 <i-col span="8">
-                    <ButtonGroup shape="circle">
-                        <i-button
-                            type="primary"
-                            icon="md-eye"
-                            @click="statusMany(1)"
-                            v-if="utils.permission('project_status_button')"
-                            >{{ __('启用') }}</i-button
-                        >
-                        <i-button
-                            type="primary"
-                            icon="md-eye-off"
-                            @click="statusMany(0)"
-                            v-if="utils.permission('project_status_button')"
-                            >{{ __('禁用') }}</i-button
-                        >
-                    </ButtonGroup>
+                    &nbsp;
                 </i-col>
                 <i-col span="16" class-name="fr">
                     <Page
                         class="fr"
-                        :total="total"
-                        :current="page"
-                        :page-size="pageSize"
+                        :total="releaseData.total"
+                        :current="releaseData.page"
+                        :page-size="releaseData.pageSize"
                         show-sizer
                         @on-change="changePage"
                         @on-page-size-change="changePageSize"

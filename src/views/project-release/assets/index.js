@@ -147,10 +147,13 @@ export default {
                 }
             })
         },
-        add: function() {
+        add: function(currentProjectId) {
             this.minForm = true
             this.formItem.id = ''
             this.reset()
+            if (currentProjectId) {
+                this.formItem.project_id = parseInt(currentProjectId)
+            }
         },
         remove(params) {
             this.$Modal.confirm({
@@ -274,6 +277,11 @@ export default {
     computed: {},
     mounted: function() {
         this.init()
+        if (this.$route.query.action) {
+            if ('create' === this.$route.query.action) {
+                this.add(this.$route.query.project_id)
+            }
+        }
     },
     mixins: [http],
 }

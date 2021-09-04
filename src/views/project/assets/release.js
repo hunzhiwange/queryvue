@@ -303,9 +303,24 @@ export default {
                 num: '',
                 name: this.__('请选择项目'),
             },
+            releaseData: {
+                total: 0,
+                page: 1,
+                pageSize: 10,
+                data: [],
+            },
         }
     },
     methods: {
+        createRelease() {
+            this.$router.push({
+                path: '/project/release',
+                query: {
+                    action: 'create',
+                    project_id: this.project.id
+                }
+            })
+        },
         orderList() {
             this.list = this.list.sort((one, two) => {
                 return one.order - two.order;
@@ -496,16 +511,31 @@ export default {
 
             this.selectedData = ids
         },
+        changePage(page) {
+            this.releaseData.page = page
+            this.searchRelease()
+        },
+        changePageSize(pageSize) {
+            this.releaseData.pageSize = pageSize
+            this.searchRelease()
+        },
         init: function(num) {
-            this.apiGet('project', {status: 1}).then(res => {
-                this.projects = res.data
-            })
             this.apiGet('project/show', {num: num}).then(res => {
                 this.project = res
-                this.apiGet('project-label', {project_ids: [res.id]}).then(res => {
-                    this.projectLabels = res.data
-                    this.$refs.search.search()
-                })
+                this.searchRelease()
+            })
+        },
+        searchRelease() {
+            this.apiGet('project-release', {
+                status: 1,
+                page: this.releaseData.page,
+                size: this.releaseData.pageSize,
+                project_ids: [this.project.id],
+            }).then(data => {
+                this.releaseData.data = data.data
+                this.releaseData.total = data.page.total_record
+                this.releaseData.page = data.page.current_page
+                this.releaseData.pageSize = data.page.per_page
             })
         },
         handleSubmit(form) {
