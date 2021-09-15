@@ -180,7 +180,11 @@
             <div class="project-navigation">
                  <Row>
                     <Col span="24">
-                <draggable class="main-box" v-model="dragList" :move="onMove" filter=".undraggable">
+                <draggable class="main-box" v-model="dragList" :move="onMove2" filter=".undraggable"
+  @change="change2"
+                @start="start2"
+                @end="end2"
+                >
                     <div v-for="(stage,index) in dragList" class="stage-item" :key="index">
                         <div class="stage-header">
                             <Badge :count="stage.list.length" type="success">
@@ -192,9 +196,15 @@
                                 <Icon type="md-more" size="18" color="#808695" />
                             </div>
                         </div>
-                        <draggable tag="span" class="list-group-stage" v-model="stage.list" v-bind="dragOptions" :move="onMove">
-                            <transition-group tag="ul" type="transition" class="list-group" :name="'flip-list'">
-                                <li class="list-group-item stage-header" v-for="(element,k) in stage.list" :key="element.order">
+                        <draggable tag="span" class="list-group-stage" v-model="stage.list" v-bind="dragOptions" :move="onMove"
+
+
+                          @change="change"
+                @start="start"
+                @end="end"
+            >
+                            <transition-group tag="ul" type="transition" class="list-group" :name="'flip-list'" :id="stage.project_label_id">
+                                <li class="list-group-item stage-header" v-for="(element,k) in stage.list" :key="element.key" :id="element.id">
                                     <Card style="width:100%;" shadow >
                                           <div slot="title">
                                               <!-- <label data-v-5cb2b31c="" class="ivu-checkbox-wrapper ivu-checkbox-default"><span class="ivu-checkbox"><span class="ivu-checkbox-inner"></span> <input type="checkbox" class="ivu-checkbox-input"></span></label> -->

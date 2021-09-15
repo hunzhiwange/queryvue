@@ -303,6 +303,7 @@ export default {
                 num: '',
                 name: this.__('请选择项目'),
             },
+            beforeMove:[],
         }
     },
     methods: {
@@ -311,15 +312,141 @@ export default {
                 return one.order - two.order;
             });
         },
+        change2(evt) {
+            //console.log(evt , 'change...')
+          },
+          //start ,end ,add,update, sort, remove 得到的都差不多
+          start2(event) {
+            // this.drag = true
+             //console.log(evt , 'start...')
+             this.beforeMove = this.getPreAndNextCode(event)
+           },
+           end2(event) {
+               console.log(2)
+            //console.log(evt , 'end....')
+            const list = this.getPreAndNextCode(event)
+            console.log(this.beforeMove)
+            console.log(list)
+            return
+            if (this.beforeMove[0] === list[0]
+                && this.beforeMove[1] === list[1]
+                && this.beforeMove[2] === list[2]) {
+                return
+            }
+
+            //console.log(list)
+            let data = {
+                prev_issue_id:list[0],
+                next_issue_id:list[1],
+                project_id: this.project.id,
+                project_label_id:list[2],
+            }
+            //this.loadingTable = !this.loadingTable
+            this.apiPost('project-issue/sort', data).then(res => {
+                // if (!this.favorProjectIds.includes(data.project_id)) {
+                //     this.favorProjectIds.push(data.project_id)
+                // }
+                // this.loadingTable = !this.loadingTable
+                utils.success(res.message)
+            }, () => {
+                //this.loadingTable = !this.loadingTable
+            })
+           // this.drag = true
+            // evt.item //可以知道拖动的本身
+            // evt.to    // 可以知道拖动的目标列表
+            // evt.from  // 可以知道之前的列表
+            // evt.oldIndex  // 可以知道拖动前的位置
+            // evt.newIndex  // 可以知道拖动后的位置
+          },
+           onMove2({
+            relatedContext,
+            draggedContext
+        }) {
+            return true
+            const relatedElement = relatedContext.element;
+            const draggedElement = draggedContext.element;
+            // console.log(relatedContext.element)
+            // console.log(draggedContext.element)
+            return (
+                (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
+            );
+        },
+          change(evt) {
+            //console.log(evt , 'change...')
+          },
+          //start ,end ,add,update, sort, remove 得到的都差不多
+          start(event) {
+           // this.drag = true
+            //console.log(evt , 'start...')
+            this.beforeMove = this.getPreAndNextCode(event)
+          },
+          change(event) {
+            //console.log(event)
+          },
+          end(event) {
+            //console.log(evt , 'end....')
+            const list = this.getPreAndNextCode(event)
+            console.log(this.beforeMove)
+            console.log(list)
+            if (this.beforeMove[0] === list[0]
+                && this.beforeMove[1] === list[1]
+                && this.beforeMove[2] === list[2]) {
+                return
+            }
+
+            //console.log(list)
+            let data = {
+                prev_issue_id:list[0],
+                next_issue_id:list[1],
+                project_id: this.project.id,
+                project_label_id:list[2],
+            }
+            //this.loadingTable = !this.loadingTable
+            this.apiPost('project-issue/sort', data).then(res => {
+                // if (!this.favorProjectIds.includes(data.project_id)) {
+                //     this.favorProjectIds.push(data.project_id)
+                // }
+                // this.loadingTable = !this.loadingTable
+                utils.success(res.message)
+            }, () => {
+                //this.loadingTable = !this.loadingTable
+            })
+           // this.drag = true
+            // evt.item //可以知道拖动的本身
+            // evt.to    // 可以知道拖动的目标列表
+            // evt.from  // 可以知道之前的列表
+            // evt.oldIndex  // 可以知道拖动前的位置
+            // evt.newIndex  // 可以知道拖动后的位置
+          },
         onMove({
             relatedContext,
             draggedContext
         }) {
+            return true
             const relatedElement = relatedContext.element;
             const draggedElement = draggedContext.element;
+            // console.log(relatedContext.element)
+            // console.log(draggedContext.element)
             return (
                 (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
             );
+        },
+        getPreAndNextCode(event) {
+            const preCode = event.clone.getAttribute('id')
+            let toList = []
+            let nextCode = ''
+            // console.log(event)
+            // console.log(event.to)
+            // console.log(event.to.getAttribute('id'))
+            for (let i = 0, len = event.to.children.length; i < len; i++) {
+                toList.push(event.to.children[i].getAttribute('id'))
+            }
+            const preCodeIndex = toList.findIndex(item => item === preCode)
+            if (preCodeIndex < toList.length) {
+                nextCode = toList[preCodeIndex + 1]
+            }
+
+            return [preCode, nextCode, event.to.getAttribute('id')]
         },
         // 添加任务
         addTask(index) {
@@ -356,11 +483,13 @@ export default {
             // this.loadingTable = false
 
             let map = {}
+            var key2 = 1
             data.data.forEach ((item, key) => {
                 if (!map.hasOwnProperty(item.project_label_id)) {
                     map[item.project_label_id] = []
                 }
                 map[item.project_label_id].push({
+                    id: item.id,
                     name: item.title,
                     num: item.num,
                     create_at: item.create_at,
@@ -375,20 +504,26 @@ export default {
                         icon: projectTypeIcon[item.project_type.icon]['icon'],
                         color: projectTypeIcon[item.project_type.icon]['color'],
                     },
-                    order: item.sort,
-                    fixed: false,
+                    //order: item.sort,
+                    key: key2,
+                    fixed: 2 === item.completed,
                 })
+                key2++
             })
 
             let hello = []
+            var key = 1;
             this.projectLabels.forEach((item, key) => {
                 hello.push({
+                    project_label_id: item.id,
                     label_id: item.id,
-                    order: item.sort,
+                    //order: item.sort,
+                    key: key,
                     name: item.name,
                     fixed: false,
                     list: map.hasOwnProperty(item.id) ? map[item.id] : [],
                 })
+                key++
             })
 
             this.dragList = hello
