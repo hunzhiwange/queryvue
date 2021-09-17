@@ -304,6 +304,7 @@ export default {
                 name: this.__('请选择项目'),
             },
             beforeMove:[],
+            projectLabelBeforeMove:[],
         }
     },
     methods: {
@@ -319,45 +320,41 @@ export default {
           start2(event) {
             // this.drag = true
              //console.log(evt , 'start...')
-             this.beforeMove = this.getPreAndNextCode(event)
+             this.projectLabelBeforeMove = this.getProjectLabelId(event)
+           },
+           getProjectLabelId(event) {
+                let toList = []
+                for (let i = 0, len = event.to.children.length; i < len; i++) {
+                    let id = event.to.children[i].getAttribute('id')
+                    if(id) {
+                        toList.push(id)
+                    }
+                }
+                //console.log(event.to.children.length)
+                return toList
            },
            end2(event) {
-               console.log(2)
-            //console.log(evt , 'end....')
-            const list = this.getPreAndNextCode(event)
-            console.log(this.beforeMove)
-            console.log(list)
-            return
-            if (this.beforeMove[0] === list[0]
-                && this.beforeMove[1] === list[1]
-                && this.beforeMove[2] === list[2]) {
-                return
-            }
+                let currentProjectLabel = this.getProjectLabelId(event)
 
-            //console.log(list)
-            let data = {
-                prev_issue_id:list[0],
-                next_issue_id:list[1],
-                project_id: this.project.id,
-                project_label_id:list[2],
-            }
-            //this.loadingTable = !this.loadingTable
-            this.apiPost('project-issue/sort', data).then(res => {
+               if (this.projectLabelBeforeMove.toString() === currentProjectLabel.toString()) {
+                    return
+               }
+               let data = {
+                    project_id: this.project.id,
+                    project_label_ids:currentProjectLabel,
+                }
+               this.apiPost('project-label/sort', data).then(res => {
                 // if (!this.favorProjectIds.includes(data.project_id)) {
-                //     this.favorProjectIds.push(data.project_id)
-                // }
-                // this.loadingTable = !this.loadingTable
-                utils.success(res.message)
-            }, () => {
-                //this.loadingTable = !this.loadingTable
-            })
-           // this.drag = true
-            // evt.item //可以知道拖动的本身
-            // evt.to    // 可以知道拖动的目标列表
-            // evt.from  // 可以知道之前的列表
-            // evt.oldIndex  // 可以知道拖动前的位置
-            // evt.newIndex  // 可以知道拖动后的位置
-          },
+                    //     this.favorProjectIds.push(data.project_id)
+                    // }
+                    // this.loadingTable = !this.loadingTable
+                    utils.success(res.message)
+                }, () => {
+                    //this.loadingTable = !this.loadingTable
+                })
+
+               return
+            },
            onMove2({
             relatedContext,
             draggedContext
@@ -386,11 +383,8 @@ export default {
           end(event) {
             //console.log(evt , 'end....')
             const list = this.getPreAndNextCode(event)
-            console.log(this.beforeMove)
-            console.log(list)
-            if (this.beforeMove[0] === list[0]
-                && this.beforeMove[1] === list[1]
-                && this.beforeMove[2] === list[2]) {
+
+            if (this.beforeMove.toString() === list.toString()) {
                 return
             }
 

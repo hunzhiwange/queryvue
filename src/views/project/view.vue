@@ -185,7 +185,7 @@
                 @start="start2"
                 @end="end2"
                 >
-                    <div v-for="(stage,index) in dragList" class="stage-item" :key="index">
+                    <div v-for="(stage,index) in dragList" class="stage-item" :key="index" :id="stage.project_label_id">
                         <div class="stage-header">
                             <Badge :count="stage.list.length" type="success">
                             <div class="title">{{stage.name}}</div>
