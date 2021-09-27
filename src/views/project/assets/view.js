@@ -23,6 +23,13 @@ const resetUserForm = {
     size: 10,
 }
 
+const resetIssueForm = {
+    title: '',
+    project_label_id: '',
+    project_type_id: '',
+    project_id: 0,
+}
+
 const projectTypeIcon = {
     'bug': {
         'icon': 'ios-bug',
@@ -54,38 +61,6 @@ export default {
         draggable,
     },
     data() {
-        const message = [
-            "编辑订单时，确认了逻辑未变，当前订单（结算金额-已支付金额 > 客户余额）就会报客户余额不足。程序有一个bug获取已支付金额变量取错了，每次获取的支付金额一直为0，导致判断错误。",
-            "委托代理合同",
-            "授权委托书",
-            "风险告知书",
-        ];
-        const message2 = [
-            "案情摘要",
-            "法律关系分析",
-            "法律法规检索",
-            "起诉状",
-            "调查取证身份信息",
-            "调查取证房产信息",
-            "调查取证车辆信息",
-            "查询其他档案",
-            "开庭审理",
-        ];
-        const message3 = [
-            "领取传票",
-            "提交代理词",
-            "开庭审理",
-            "当事人沟通",
-            "与法官沟通",
-            "领取裁决书",
-            "缴费立案",
-            "庭前阅卷",
-        ];
-        const message4 = [
-            "通知当事人领取裁决书并签字",
-            "结案归档",
-
-        ];
         return {
             columns: [
                 {
@@ -305,6 +280,29 @@ export default {
             },
             beforeMove:[],
             projectLabelBeforeMove:[],
+            loadingIssue: false,
+            issueForm: Object.assign({}, resetIssueForm),
+            issueFormRules: {
+                project_type_id: [
+                    {
+                        required: true,
+                        message: this.__('请选择任务类型'),
+                    },
+                ],
+                title: [
+                    {
+                        required: true,
+                        message: this.__('请输入任务标题'),
+                    },
+                ],
+            },
+            projectTypes: [],
+            issueEditTags: [],
+            projectTags: [],
+            issueEditModules: [],
+            projectModules: [],
+            issueEditReleases: [],
+            projectReleases: [],
         }
     },
     methods: {
@@ -443,17 +441,119 @@ export default {
             return [preCode, nextCode, event.to.getAttribute('id')]
         },
         // 添加任务
-        addTask(index) {
-            var order = this.order++;
-            this.dragList[index].list.push({
-                name: '新增任务' + order,
-                order: order,
-                fixed: false
+        addTask(projectLabelId) {
+            this.dragList.forEach((item, index) => {
+                if (item.label_id === projectLabelId) {
+                    this.$set(this.dragList[index], 'issueForm', true)
+                }
             })
         },
         // 删除任务
-        delTask(index, k) {
-            this.dragList[index].list.splice(k, 1);
+        delTask(index, k, projectIssueId) {
+            this.$Modal.confirm({
+                title: this.__('提示'),
+                content: this.__('确认删除该问题?'),
+                onOk: () => {
+                    this.apiDelete('project-issue', projectIssueId).then(res => {
+                        this.dragList[index].list.splice(k, 1);
+                        utils.success(res.message)
+                    }, () => {
+                    })
+                },
+                onCancel: () => {},
+            })
+        },
+        editTask(index, k, projectIssueId) {
+            this.$set(this.dragList[index].list[k], 'issueTitleEdit', true)
+        },
+        editTaskTags(index, k, projectIssueId) {
+            this.$set(this.dragList[index].list[k], 'issueTagsEdit', true)
+            this.issueEditTags = []
+            this.dragList[index].list[k].project_tags.forEach (item => {
+                this.issueEditTags.push(item.id)
+            })
+        },
+        editTaskModules(index, k, projectIssueId) {
+            this.$set(this.dragList[index].list[k], 'issueModulesEdit', true)
+            this.issueEditModules = []
+            this.dragList[index].list[k].project_modules.forEach (item => {
+                this.issueEditModules.push(item.id)
+            })
+        },
+        editTaskReleases(index, k, projectIssueId) {
+            this.$set(this.dragList[index].list[k], 'issueReleasesEdit', true)
+            this.issueEditReleases = []
+            this.dragList[index].list[k].project_releases.forEach (item => {
+                this.issueEditReleases.push(item.id)
+            })
+        },
+        cancelIssueTitleForm(index, k) {
+            this.$set(this.dragList[index].list[k], 'issueTitleEdit', false)
+        },
+        cancelIssueTagsForm(index, k) {
+            this.$set(this.dragList[index].list[k], 'issueTagsEdit', false)
+        },
+        cancelIssueReleasesForm(index, k) {
+            this.$set(this.dragList[index].list[k], 'issueReleasesEdit', false)
+        },
+        cancelIssueModulesForm(index, k) {
+            this.$set(this.dragList[index].list[k], 'issueModulesEdit', false)
+        },
+        updateTask(index, k, projectIssueId) {
+            var formData = {
+                title : this.dragList[index].list[k].name,
+            }
+            this.apiPut('project-issue', projectIssueId, formData).then(
+                res => {
+                    this.$set(this.dragList[index].list[k], 'issueTitleEdit', false)
+                    utils.success(res.message)
+                },
+                () => {
+                }
+            )
+        },
+        updateTaskTags (index, k, projectIssueId) {
+            var formData = {
+                tags : this.issueEditTags,
+            }
+            this.apiPut('project-issue', projectIssueId+'/tag', formData).then(
+                res => {
+                    this.$set(this.dragList[index].list[k], 'issueTagsEdit', false)
+                    this.refreshIssue()
+                    utils.success(res.message)
+                },
+                () => {
+                }
+            )
+        },
+        updateTaskModules (index, k, projectIssueId) {
+            var formData = {
+                modules : this.issueEditModules,
+            }
+            this.apiPut('project-issue', projectIssueId+'/module', formData).then(
+                res => {
+                    this.$set(this.dragList[index].list[k], 'issueModulesEdit', false)
+                    this.refreshIssue()
+                    utils.success(res.message)
+                },
+                () => {
+                }
+            )
+        },
+        updateTaskReleases (index, k, projectIssueId) {
+            var formData = {
+                releases : this.issueEditReleases,
+            }
+
+            this.apiPut('project-issue', projectIssueId+'/release', formData).then(
+                res => {
+                    this.$set(this.dragList[index].list[k], 'issueReleasesEdit', false)
+                    this.refreshIssue()
+                    utils.success(res.message)
+                },
+                () => {
+                }
+            )
         },
         // 添加任务阶段
         addStage() {
@@ -501,6 +601,10 @@ export default {
                     //order: item.sort,
                     key: key2,
                     fixed: 2 === item.completed,
+                    issueTitleEdit: false,
+                    issueTagsEdit: false,
+                    issueModulesEdit: false,
+                    issueReleasesEdit: false,
                 })
                 key2++
             })
@@ -515,6 +619,7 @@ export default {
                     key: key,
                     name: item.name,
                     fixed: false,
+                    issueForm: false,
                     list: map.hasOwnProperty(item.id) ? map[item.id] : [],
                 })
                 key++
@@ -543,23 +648,6 @@ export default {
             this.minForm = true
             this.formItem.id = ''
             this.reset()
-        },
-        remove(params) {
-            this.$Modal.confirm({
-                title: this.__('提示'),
-                content: this.__('确认删除该项目?'),
-                onOk: () => {
-                    this.loadingTable = !this.loadingTable
-                    this.apiDelete('project', params.row.id).then(res => {
-                        this.loadingTable = !this.loadingTable
-                        this.data.splice(params.index, 1)
-                        utils.success(res.message)
-                    }, () => {
-                        this.loadingTable = !this.loadingTable
-                    })
-                },
-                onCancel: () => {},
-            })
         },
         favor(params) {
             let data = {
@@ -633,7 +721,22 @@ export default {
                 this.project = res
                 this.apiGet('project-label', {project_ids: [res.id]}).then(res => {
                     this.projectLabels = res.data
-                    this.$refs.search.search()
+                    this.refreshIssue()
+                })
+                this.apiGet('project-type', {project_ids: [res.id]}).then(res => {
+                    this.projectTypes = res.data
+                    if (res.data.length > 0) {
+                        this.issueForm.project_type_id = res.data[0].id
+                    }
+                })
+                this.apiGet('project-tag', {project_ids: [res.id]}).then(res => {
+                    this.projectTags = res.data
+                })
+                this.apiGet('project-module', {project_ids: [res.id]}).then(res => {
+                    this.projectModules = res.data
+                })
+                this.apiGet('project-release', {project_ids: [res.id]}).then(res => {
+                    this.projectReleases = res.data
                 })
             })
         },
@@ -719,7 +822,7 @@ export default {
                 this.userTotal = res.page.total_record
                 this.userPage = res.page.current_page
                 this.userPageSize = res.page.per_page
-                this.loadingUserTable != this.loadingUserTable
+                this.loadingUserTable = !this.loadingUserTable
             })
         },
         searchCommonUser(query) {
@@ -749,7 +852,7 @@ export default {
                 user_id: params.row.user_id,
             }
 
-            this.loadingUserTable != this.loadingUserTable
+            this.loadingUserTable = !this.loadingUserTable
             this.apiPost('project/set-member', formData).then(
                 res => {
                     this.userData.forEach((item, index) => {
@@ -759,11 +862,11 @@ export default {
                             this.$set(this.userData, index, item)
                         }
                     })
-                    this.loadingUserTable != this.loadingUserTable
+                    this.loadingUserTable = !this.loadingUserTable
                     utils.success(res.message)
                 },
                 () => {
-                    this.loadingUserTable != this.loadingUserTable
+                    this.loadingUserTable = !this.loadingUserTable
                 }
             )
         },
@@ -773,7 +876,7 @@ export default {
                 user_id: params.row.user_id,
             }
 
-            this.loadingUserTable != this.loadingUserTable
+            this.loadingUserTable = !this.loadingUserTable
             this.apiPost('project/set-administrator', formData).then(
                 res => {
                     this.userData.forEach((item, index) => {
@@ -783,13 +886,28 @@ export default {
                             this.$set(this.userData, index, item)
                         }
                     })
-                    this.loadingUserTable != this.loadingUserTable
+                    this.loadingUserTable = !this.loadingUserTable
                     utils.success(res.message)
                 },
                 () => {
-                    this.loadingUserTable != this.loadingUserTable
+                    this.loadingUserTable = !this.loadingUserTable
                 }
             )
+        },
+        removeIssue(params) {
+            this.$Modal.confirm({
+                title: this.__('提示'),
+                content: this.__('确认删除该任务?'),
+                onOk: () => {
+                    this.apiDelete('project-issue', params.row.id).then(res => {
+                        this.data.splice(params.index, 1)
+                        utils.success(res.message)
+                    }, () => {
+                        this.loadingTable = !this.loadingTable
+                    })
+                },
+                onCancel: () => {},
+            })
         },
         deleteUser(params) {
             this.$Modal.confirm({
@@ -800,15 +918,15 @@ export default {
                         project_id: this.minUserProjectId,
                         user_id: params.row.user_id,
                     }
-                    this.loadingUserTable != this.loadingUserTable
+                    this.loadingUserTable = !this.loadingUserTable
                     this.apiPost('project/delete-user', formData).then(
                         res => {
                             this.userData.splice(params.index, 1)
-                            this.loadingUserTable != this.loadingUserTable
+                            this.loadingUserTable = !this.loadingUserTable
                             utils.success(res.message)
                         },
                         () => {
-                            this.loadingUserTable != this.loadingUserTable
+                            this.loadingUserTable = !this.loadingUserTable
                         }
                     )
                 },
@@ -841,7 +959,7 @@ export default {
                     }
 
                     this.loading = !this.loading
-                    this.loadingUserTable != this.loadingUserTable
+                    this.loadingUserTable = !this.loadingUserTable
                     this.apiPost('project/addUsers', formData).then(
                         res => {
                             this.loading = !this.loading
@@ -849,16 +967,56 @@ export default {
                             this.commonUsers = []
                             this.selectUser = []
                             this.searchUser()
-                            this.loadingUserTable != this.loadingUserTable
+                            this.loadingUserTable = !this.loadingUserTable
                             utils.success(res.message)
                         },
                         () => {
                             this.loading = !this.loading
-                            this.loadingUserTable != this.loadingUserTable
+                            this.loadingUserTable = !this.loadingUserTable
                         }
                     )
                 }
             })
+        },
+        handleIssueSubmit(form, projectLabelId) {
+            this.$refs[form][0].validate(pass => {
+                if (pass) {
+                    this.loadingIssue = !this.loadingIssue
+
+                    var formData = {
+                        project_id: this.project.id,
+                        project_label_id: projectLabelId,
+                        project_type_id: this.issueForm.project_type_id,
+                        title: this.issueForm.title,
+                    }
+
+                    this.apiPost('project-issue', formData).then(
+                        res => {
+                            this.cancelIssueForm(form, projectLabelId)
+                            this.refreshIssue()
+                            this.loadingIssue = !this.loadingIssue
+                            utils.success(res.message)
+                        },
+                        () => {
+                            this.loadingIssue = !this.loadingIssue
+                        }
+                    )
+                }
+            })
+        },
+        cancelIssueForm(form, projectLabelId) {
+            this.handleResetIssue(form)
+            this.dragList.forEach((item, index) => {
+                if (item.label_id === projectLabelId) {
+                    this.$set(this.dragList[index], 'issueForm', false)
+                }
+            })
+        },
+        refreshIssue() {
+            this.$refs.search.search(1, 99999)
+        },
+        handleResetIssue(form) {
+            this.$refs[form][0].resetFields()
         },
     },
     watch: {
@@ -867,6 +1025,12 @@ export default {
         }
     },
     computed: {
+        getProjectIds: function() {
+            let projectIds = []
+            projectIds.push(this.project.id)
+
+            return projectIds
+        },
         seletedProjectTemplateData: function () {
             let selecedData = this.projectTemplate.find(item => {
                 return item.key === this.seletedProjectTemplate;

@@ -590,7 +590,7 @@ export default {
                 this.userTotal = res.page.total_record
                 this.userPage = res.page.current_page
                 this.userPageSize = res.page.per_page
-                this.loadingUserTable != this.loadingUserTable
+                this.loadingUserTable = !this.loadingUserTable
             })
         },
         searchCommonUser(query) {
@@ -620,7 +620,7 @@ export default {
                 user_id: params.row.user_id,
             }
 
-            this.loadingUserTable != this.loadingUserTable
+            this.loadingUserTable = !this.loadingUserTable
             this.apiPost('project/set-member', formData).then(
                 res => {
                     this.userData.forEach((item, index) => {
@@ -630,11 +630,11 @@ export default {
                             this.$set(this.userData, index, item)
                         }
                     })
-                    this.loadingUserTable != this.loadingUserTable
+                    this.loadingUserTable = !this.loadingUserTable
                     utils.success(res.message)
                 },
                 () => {
-                    this.loadingUserTable != this.loadingUserTable
+                    this.loadingUserTable = !this.loadingUserTable
                 }
             )
         },
@@ -644,7 +644,7 @@ export default {
                 user_id: params.row.user_id,
             }
 
-            this.loadingUserTable != this.loadingUserTable
+            this.loadingUserTable = !this.loadingUserTable
             this.apiPost('project/set-administrator', formData).then(
                 res => {
                     this.userData.forEach((item, index) => {
@@ -654,11 +654,11 @@ export default {
                             this.$set(this.userData, index, item)
                         }
                     })
-                    this.loadingUserTable != this.loadingUserTable
+                    this.loadingUserTable = !this.loadingUserTable
                     utils.success(res.message)
                 },
                 () => {
-                    this.loadingUserTable != this.loadingUserTable
+                    this.loadingUserTable = !this.loadingUserTable
                 }
             )
         },
@@ -671,15 +671,15 @@ export default {
                         project_id: this.minUserProjectId,
                         user_id: params.row.user_id,
                     }
-                    this.loadingUserTable != this.loadingUserTable
+                    this.loadingUserTable = !this.loadingUserTable
                     this.apiPost('project/delete-user', formData).then(
                         res => {
                             this.userData.splice(params.index, 1)
-                            this.loadingUserTable != this.loadingUserTable
+                            this.loadingUserTable = !this.loadingUserTable
                             utils.success(res.message)
                         },
                         () => {
-                            this.loadingUserTable != this.loadingUserTable
+                            this.loadingUserTable = !this.loadingUserTable
                         }
                     )
                 },
@@ -712,7 +712,7 @@ export default {
                     }
 
                     this.loading = !this.loading
-                    this.loadingUserTable != this.loadingUserTable
+                    this.loadingUserTable = !this.loadingUserTable
                     this.apiPost('project/addUsers', formData).then(
                         res => {
                             this.loading = !this.loading
@@ -720,12 +720,12 @@ export default {
                             this.commonUsers = []
                             this.selectUser = []
                             this.searchUser()
-                            this.loadingUserTable != this.loadingUserTable
+                            this.loadingUserTable = !this.loadingUserTable
                             utils.success(res.message)
                         },
                         () => {
                             this.loading = !this.loading
-                            this.loadingUserTable != this.loadingUserTable
+                            this.loadingUserTable = !this.loadingUserTable
                         }
                     )
                 }

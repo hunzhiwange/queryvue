@@ -4,12 +4,18 @@ const resetForm = {
     key: '',
     status: '',
     type: '',
-    project_ids: [1],
+    project_ids: [],
     page: 1,
     size: 10,
 }
 
 export default {
+    props: {
+        projectIds: {
+            type: Array,
+            required: true,
+        },
+    },
     data() {
         return {
             searchForm: Object.assign({}, resetForm),
@@ -22,6 +28,7 @@ export default {
     },
     methods: {
         search(page, pageSize) {
+            this.searchForm.project_ids = this.projectIds
             this.searchForm.page = resetForm.page
 
             if (page) {
