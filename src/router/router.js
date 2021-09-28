@@ -190,6 +190,16 @@ let appRouterData = [
                 component: importRouter('project-module/index'),
             },
             {
+                path: 'label',
+                icon: '',
+                name: 'project_label_index',
+                meta: {
+                    title: __('项目分类'),
+                    par: ['project'],
+                },
+                component: importRouter('project-label/index'),
+            },
+            {
                 path: 'tag',
                 icon: '',
                 name: 'project_tag_index',
