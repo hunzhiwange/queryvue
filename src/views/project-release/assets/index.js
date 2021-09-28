@@ -87,7 +87,7 @@ export default {
                                 <buttonGroup size="small" shape="circle">
                                     <i-button
                                         type="text"
-                                        onClick={() => this.edit(params)}
+                                        onClick={() => this.edit(params.row)}
                                         v-show={utils.permission('project_release_edit_button')}>
                                         {this.__('编辑')}
                                     </i-button>
@@ -137,14 +137,18 @@ export default {
             this.pageSize = data.page.per_page
             this.loadingTable = false
         },
-        edit(params) {
-            let row = params.row
+        edit(row) {
             this.minForm = true
             this.formItem.id = row.id
             Object.keys(this.formItem).forEach(key => {
                 if (row.hasOwnProperty(key)) {
                     this.formItem[key] = row[key]
                 }
+            })
+        },
+        editId(projectReleaseId) {
+            this.apiGet('project-release/' + projectReleaseId).then(res => {
+                this.edit(res)
             })
         },
         add: function(currentProjectId) {
@@ -280,6 +284,9 @@ export default {
         if (this.$route.query.action) {
             if ('create' === this.$route.query.action) {
                 this.add(this.$route.query.project_id)
+            }
+            if ('edit' === this.$route.query.action) {
+                this.editId(this.$route.query.project_release_id)
             }
         }
     },

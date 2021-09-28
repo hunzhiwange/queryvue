@@ -321,6 +321,15 @@ export default {
                 }
             })
         },
+        editTaskReleases(projectReleaseId) {
+            this.$router.push({
+                path: '/project/release',
+                query: {
+                    action: 'edit',
+                    project_release_id: projectReleaseId
+                }
+            })
+        },
         orderList() {
             this.list = this.list.sort((one, two) => {
                 return one.order - two.order;

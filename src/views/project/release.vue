@@ -182,12 +182,13 @@
                     <Col span="6" v-for="item in releaseData.data" :key="item.id" class="m-t-10">
                         <Card :bordered="false" class="version-item">
                             <p slot="title">
-                                <strong>{{ item.name }}</strong>
+                                {{ item.name }}
+                                <Icon type="ios-create-outline" @click.native="editTaskReleases(item.id)" />
                             </p>
                             <a href="javascript:void(0);" slot="extra">
                                 <Icon type="ios-loop-strong"></Icon>
                                 <Dropdown>
-                                    <Button type="primary" shape="circle" size="small">
+                                    <Button type="default" shape="circle" size="small">
                                         未开始
                                         <Icon type="ios-arrow-down"></Icon>
                                     </Button>

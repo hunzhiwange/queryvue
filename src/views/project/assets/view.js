@@ -557,13 +557,13 @@ export default {
         },
         // 添加任务阶段
         addStage() {
-            var order = this.order++;
-            this.dragList.push({
-                'list': [],
-                'order': order,
-                'name': "新增任务阶段" + order,
-                'fixed': false
-            });
+            this.$router.push({
+                path: '/project/label',
+                query: {
+                    action: 'create',
+                    project_id: this.project.id
+                }
+            })
         },
         // 删除任务阶段
         delStage(index) {
