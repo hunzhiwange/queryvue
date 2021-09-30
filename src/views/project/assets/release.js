@@ -54,38 +54,6 @@ export default {
         draggable,
     },
     data() {
-        const message = [
-            "编辑订单时，确认了逻辑未变，当前订单（结算金额-已支付金额 > 客户余额）就会报客户余额不足。程序有一个bug获取已支付金额变量取错了，每次获取的支付金额一直为0，导致判断错误。",
-            "委托代理合同",
-            "授权委托书",
-            "风险告知书",
-        ];
-        const message2 = [
-            "案情摘要",
-            "法律关系分析",
-            "法律法规检索",
-            "起诉状",
-            "调查取证身份信息",
-            "调查取证房产信息",
-            "调查取证车辆信息",
-            "查询其他档案",
-            "开庭审理",
-        ];
-        const message3 = [
-            "领取传票",
-            "提交代理词",
-            "开庭审理",
-            "当事人沟通",
-            "与法官沟通",
-            "领取裁决书",
-            "缴费立案",
-            "庭前阅卷",
-        ];
-        const message4 = [
-            "通知当事人领取裁决书并签字",
-            "结案归档",
-
-        ];
         return {
             columns: [
                 {
@@ -309,6 +277,7 @@ export default {
                 pageSize: 10,
                 data: [],
             },
+            projectReleaseCompleted: {},
         }
     },
     methods: {
@@ -532,6 +501,13 @@ export default {
             this.apiGet('project/show', {num: num}).then(res => {
                 this.project = res
                 this.searchRelease()
+            })
+            this.apiGet('search', {
+                'entity:enums':[
+                    'Project:ProjectRelease:completed',
+                ],
+            }).then(res => {
+                this.projectReleaseCompleted = res['entity']['enums']['Project:ProjectRelease:completed']
             })
         },
         searchRelease() {

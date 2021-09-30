@@ -231,8 +231,13 @@ export default {
         },
         init: function() {
             this.$refs.search.search()
-            this.apiGet('search', {project_type: ['content_type']}).then(res => {
-                this.projectTypeContentType = res['project_type']['content_type']
+
+            this.apiGet('search', {
+                'entity:enums':[
+                    'Project:ProjectType:content_type',
+                ],
+            }).then(res => {
+                this.projectTypeContentType = res['entity']['enums']['Project:ProjectType:content_type']
             })
         },
         handleSubmit(form) {

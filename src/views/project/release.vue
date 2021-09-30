@@ -193,17 +193,23 @@
                                         <Icon type="ios-arrow-down"></Icon>
                                     </a>
                                     <DropdownMenu slot="list">
-                                        <DropdownItem name="1" @click.native="updateCompleted(item.id, 1)">未开始</DropdownItem>
-                                        <DropdownItem name="2" @click.native="updateCompleted(item.id, 2)">进行中</DropdownItem>
-                                        <DropdownItem name="3" @click.native="updateCompleted(item.id, 3)">延期发布</DropdownItem>
-                                        <DropdownItem name="4" @click.native="updateCompleted(item.id, 4)">已发布</DropdownItem>
+                                        <DropdownItem
+                                            v-for="(value,key) in projectReleaseCompleted"
+                                            :key="key"
+                                            :name="key"
+                                            @click.native="updateCompleted(item.id, key)"
+                                            :disabled="key == item.completed"
+                                        >
+                                            {{ value }}
+                                        </DropdownItem>
                                     </DropdownMenu>
                                 </Dropdown>
                             </a>
                             <p><Progress :percent="item.progress/100" /></p>
-                            <p><Divider orientation="right" size="small"><em style="color: #c5c8ce;font-weight:normal;font-size:13px;">
-                                            预计发布时间： {{ item.create_at }}
-                                            </em>
+                            <p><Divider orientation="right" size="small">
+                                <em style="color: #c5c8ce;font-weight:normal;font-size:13px;">
+                                预计发布时间： {{ item.create_at }}
+                                </em>
                                 </Divider>
                             </p>
                         </Card>
