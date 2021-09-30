@@ -770,6 +770,20 @@ export default {
                 }
             })
         },
+        updateCompleted(releaseId, completedStatus) {
+            let formData = {
+                completed: completedStatus
+            }
+
+            this.apiPut('project-release', releaseId+'/completed', formData).then(
+                res => {
+                    //this.refresh()
+                    utils.success(res.message)
+                },
+                () => {
+                }
+            )
+        },
     },
     watch: {
         $route(to, from) {

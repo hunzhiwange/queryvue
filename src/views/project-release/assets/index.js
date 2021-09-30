@@ -30,10 +30,12 @@ export default {
                 },
                 {
                     title: this.__('名字'),
+                    width: 240,
                     key: 'name',
                 },
                 {
                     title: this.__('排序'),
+                    width: 80,
                     key: 'sort',
                     render: (h, params) => {
                         return <tag color="default">{params.row.sort}</tag>
@@ -41,6 +43,7 @@ export default {
                 },
                 {
                     title: this.__('所属项目'),
+                    width: 170,
                     key: 'project',
                     render: (h, params) => {
                         return <div>{params.row.project.name}</div>
@@ -48,6 +51,7 @@ export default {
                 },
                 {
                     title: this.__('创建时间'),
+                    width: 170,
                     key: 'create_at',
                 },
                 {
@@ -55,15 +59,31 @@ export default {
                     key: 'completed_enum',
                     width: 120,
                     render: (h, params) => {
-                        return <Badge status={2 === params.row.completed ? 'success' : 'default'} text={params.row.completed_enum} />
+                        let status = ''
+                        switch (params.row.completed) {
+                            case 1:
+                                status = 'default';
+                                break;
+                            case 2:
+                                status = 'blue';
+                                break;
+                            case 3:
+                                status = 'red';
+                                break;
+                            case 4:
+                                status ='success';
+                                break;
+                        }
+                        return <Badge status={status} text={params.row.completed_enum} />
                     },
                 },
                 {
                     title: this.__('发布时间'),
+                    width: 170,
                     key: 'completed_date',
                     render: (h, params) => {
                         return <div>
-                            { 2 == params.row.completed ? params.row.completed_date : '' }
+                            { 4 == params.row.completed ? params.row.completed_date : '' }
                             </div>
                     },
                 },
@@ -73,6 +93,13 @@ export default {
                     width: 120,
                     render: (h, params) => {
                         return <Badge status={1 === params.row.status ? 'success' : 'default'} text={params.row.status_enum} />
+                    },
+                },
+                {
+                    title: this.__('进度'),
+                    key: 'progress',
+                    render: (h, params) => {
+                        return <Progress percent={params.row.progress/100} stroke-width={10} />
                     },
                 },
                 {

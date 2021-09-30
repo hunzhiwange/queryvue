@@ -56,6 +56,7 @@ export default {
                 },
                 {
                     title: this.__('颜色'),
+                    width: 130,
                     key: 'color',
                     render: (h, params) => {
                         return <Badge color={params.row.color} text={params.row.color} />
@@ -67,6 +68,7 @@ export default {
                 },
                 {
                     title: this.__('创建时间'),
+                    width: 170,
                     key: 'create_at',
                 },
                 {

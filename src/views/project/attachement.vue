@@ -178,46 +178,6 @@
                 </Row>
             </div>
             <div class="project-navigation2 m-t-10">
-                 <Row :gutter="16">
-                    <Col span="6">
-                        <Card :bordered="false" class="version-item">
-                            <p slot="title">
-                                <strong>v20120522</strong>
-                            </p>
-                            <a href="javascript:void(0);" slot="extra">
-                                <Icon type="ios-loop-strong"></Icon>
-                                <Dropdown>
-                                    <Button type="primary" shape="circle" size="small">
-                                        未开始
-                                        <Icon type="ios-arrow-down"></Icon>
-                                    </Button>
-                                    <DropdownMenu slot="list">
-                                        <DropdownItem>未开始</DropdownItem>
-                                        <DropdownItem>进行中</DropdownItem>
-                                        <DropdownItem>延期发布</DropdownItem>
-                                        <DropdownItem>已发布</DropdownItem>
-                                    </DropdownMenu>
-                                </Dropdown>
-                            </a>
-                            <p><Progress :percent="100" /></p>
-                            <p><Divider orientation="right" size="small"><em style="color: #c5c8ce;font-weight:normal;font-size:13px;">
-                                            预计发布时间： 2021-08-11 05:55
-                                            </em>
-                                </Divider>
-                            </p>
-                        </Card>
-                 </Col>
-                    <Col span="6">
-                        <Card :bordered="false" class="version-item version-create" style="height:141px;">
-                            <a>
-                                <div style="text-align:center">
-                                    <Icon type="md-add" />
-                                    <div>创建版本</div>
-                                </div>
-                            </a>
-                        </Card>
-                    </Col>
-                 </Row>
             </div>
         </div>
         <div style="display:none;" class="fixed-footer">

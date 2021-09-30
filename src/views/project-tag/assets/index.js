@@ -56,6 +56,7 @@ export default {
                 },
                 {
                     title: this.__('创建时间'),
+                    width: 170,
                     key: 'create_at',
                 },
                 {
