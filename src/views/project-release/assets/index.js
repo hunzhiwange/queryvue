@@ -59,21 +59,7 @@ export default {
                     key: 'completed_enum',
                     width: 120,
                     render: (h, params) => {
-                        let status = ''
-                        switch (params.row.completed) {
-                            case 1:
-                                status = 'default';
-                                break;
-                            case 2:
-                                status = 'blue';
-                                break;
-                            case 3:
-                                status = 'red';
-                                break;
-                            case 4:
-                                status ='success';
-                                break;
-                        }
+                        let status = this.getStatus(params.row.completed)
                         return <Badge status={status} text={params.row.completed_enum} />
                     },
                 },
@@ -157,6 +143,25 @@ export default {
         }
     },
     methods: {
+        getStatus(completed) {
+            let status = ''
+            switch (completed) {
+                case 1:
+                    status = 'default';
+                    break;
+                case 2:
+                    status = 'blue';
+                    break;
+                case 3:
+                    status = 'red';
+                    break;
+                case 4:
+                    status ='success';
+                    break;
+            }
+
+            return status
+        },
         getDataFromSearch(data) {
             this.data = data.data
             this.total = data.page.total_record

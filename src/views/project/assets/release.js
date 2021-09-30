@@ -746,19 +746,45 @@ export default {
                 }
             })
         },
-        updateCompleted(releaseId, completedStatus) {
+        updateCompleted(releaseId, completedStatus, currentStatus) {
+            if (currentStatus) {
+                return
+            }
+
             let formData = {
                 completed: completedStatus
             }
 
             this.apiPut('project-release', releaseId+'/completed', formData).then(
                 res => {
-                    //this.refresh()
+                    this.refresh()
                     utils.success(res.message)
                 },
                 () => {
                 }
             )
+        },
+        refresh() {
+            this.init(this.$route.params.num)
+        },
+        getStatus(completed) {
+            let status = ''
+            switch (completed) {
+                case 1:
+                    status = 'default';
+                    break;
+                case 2:
+                    status = 'blue';
+                    break;
+                case 3:
+                    status = 'red';
+                    break;
+                case 4:
+                    status ='success';
+                    break;
+            }
+
+            return status
         },
     },
     watch: {
@@ -787,7 +813,7 @@ export default {
         },
     },
     mounted: function() {
-        this.init(this.$route.params.num)
+        this.refresh()
     },
     mixins: [http],
 }

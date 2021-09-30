@@ -189,7 +189,7 @@
                                 <Icon type="ios-loop-strong"></Icon>
                                 <Dropdown>
                                    <a href="javascript:void(0)">
-                                        {{ item.completed_enum }}
+                                       <Badge :status="getStatus(item.completed)" :text="item.completed_enum" />
                                         <Icon type="ios-arrow-down"></Icon>
                                     </a>
                                     <DropdownMenu slot="list">
@@ -197,8 +197,8 @@
                                             v-for="(value,key) in projectReleaseCompleted"
                                             :key="key"
                                             :name="key"
-                                            @click.native="updateCompleted(item.id, key)"
-                                            :disabled="key == item.completed"
+                                            @click.native="updateCompleted(item.id, key, key == item.completed)"
+                                            :selected="key == item.completed"
                                         >
                                             {{ value }}
                                         </DropdownItem>
