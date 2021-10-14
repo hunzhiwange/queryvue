@@ -555,6 +555,23 @@ export default {
                 }
             )
         },
+        // 完成或者取消任务
+        completeTask(index, k, projectIssueId) {
+            var completedStatus = this.dragList[index].list[k].completed_bool ? 2 : 1
+            var formData = {
+                completed : completedStatus,
+            }
+            this.apiPut('project-issue', projectIssueId+'/complete', formData).then(
+                res => {
+                    this.$set(this.dragList[index].list[k], 'completed', completedStatus)
+                    utils.success(res.message)
+                },
+                () => {
+                    this.$set(this.dragList[index].list[k], 'completed', this.dragList[index].list[k].completed_bool ? 1 : 2)
+                    this.$set(this.dragList[index].list[k], 'completed_bool', !this.dragList[index].list[k].completed_bool)
+                }
+            )
+        },
         // 添加任务阶段
         addStage() {
             this.$router.push({

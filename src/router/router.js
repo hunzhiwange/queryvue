@@ -86,7 +86,7 @@ export const otherRouter = {
         {
             path:"/board/:num",
             meta: {
-                title: __('任务看板'),
+                title: __('项目看板'),
             },
             name: 'board_view_index',
             component: importRouter('project/view'),
@@ -94,7 +94,7 @@ export const otherRouter = {
         {
             path:"/board/:num/release",
             meta: {
-                title: __('任务看板 - 项目版本'),
+                title: __('项目版本 - 项目看板'),
             },
             name: 'board_release_index',
             component: importRouter('project/release'),
@@ -102,7 +102,7 @@ export const otherRouter = {
         {
             path:"/board/:num/overview",
             meta: {
-                title: __('任务看板 - 概览'),
+                title: __('项目概览 - 项目看板'),
             },
             name: 'board_overview_index',
             component: importRouter('project/overview'),
@@ -110,7 +110,7 @@ export const otherRouter = {
         {
             path:"/board/:num/attachement",
             meta: {
-                title: __('任务看板 - 文件'),
+                title: __('项目文件 - 项目看板'),
             },
             name: 'board_attachement_index',
             component: importRouter('project/attachement'),
