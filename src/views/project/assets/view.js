@@ -447,6 +447,11 @@ export default {
                     this.$set(this.dragList[index], 'issueForm', true)
                 }
             })
+
+            // 记住问题类型
+            if (localStorage.currentProjectTypeIdForCreateIssue) {
+                this.issueForm.project_type_id = parseInt(localStorage.currentProjectTypeIdForCreateIssue)
+            }
         },
         // 删除任务
         delTask(index, k, projectIssueId) {
@@ -581,6 +586,9 @@ export default {
                     project_id: this.project.id
                 }
             })
+        },
+        setCurrentProjectTypeIdForCreateIssue(projectTypeId) {
+            localStorage.currentProjectTypeIdForCreateIssue = projectTypeId
         },
         // 删除任务阶段
         delStage(index) {

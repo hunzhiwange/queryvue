@@ -205,7 +205,7 @@
                                     <Input v-model="issueForm.title" type="textarea" placeholder="任务标题..."></Input>
                                 </FormItem>
                                 <FormItem label="任务类型" prop="project_type_id">
-                                    <Select v-model="issueForm.project_type_id">
+                                    <Select v-model="issueForm.project_type_id" @on-change="setCurrentProjectTypeIdForCreateIssue">
                                         <Option v-for="item in projectTypes" :value="item.id" :key="item.id">{{ item.name }}</Option>
                                     </Select>
                                 </FormItem>
