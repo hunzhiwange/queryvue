@@ -81,7 +81,7 @@
         </Row>-->
 
         <Drawer
-            :title="viewDetail.name + ' ' + __('资源授权')"
+            :title="__('资源授权') + '.' + viewDetail.name"
             v-model="rightForm"
             width="800"
             :mask-closable="false"

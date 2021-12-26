@@ -10,7 +10,6 @@ export default {
                     this.apiPost('base/option', this.formItem).then(
                         res => {
                             this.loading = !this.loading
-                            utils.success(res.message)
                         },
                         () => {
                             this.loading = !this.loading

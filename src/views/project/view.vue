@@ -191,9 +191,32 @@
                             <div class="title">{{stage.name}}</div>
                             </Badge>
                             <div>
-                                <!-- <i-button title="添加任务" type="primary" icon="md-add-circle" shape="circle" size="small" @click="addTask(index)" class="m-r-10"></i-button>
-                                <i-button class="delstage" title="删除阶段" type="warning" icon="md-remove-circle" shape="circle" size="small" @click="delStage(index)"></i-button> -->
-                                <Icon type="md-more" size="18" color="#808695" />
+                                <Dropdown>
+                                   <a href="javascript:void(0)">
+                                       <Icon type="md-more" size="18" color="#808695" />
+                                    </a>
+                                    <DropdownMenu slot="list">
+                                        <DropdownItem
+                                            @click.native="updateCompleted(item.id, key, key == item.completed)"
+                                        >
+                                            移动问题
+                                        </DropdownItem>
+                                    </DropdownMenu>
+                                    <DropdownMenu slot="list">
+                                        <DropdownItem
+                                            @click.native="updateCompleted(item.id, key, key == item.completed)"
+                                        >
+                                            编辑分类
+                                        </DropdownItem>
+                                    </DropdownMenu>
+                                    <DropdownMenu slot="list">
+                                        <DropdownItem
+                                            @click.native="updateCompleted(item.id, key, key == item.completed)"
+                                        >
+                                            删除分类
+                                        </DropdownItem>
+                                    </DropdownMenu>
+                                </Dropdown>
                             </div>
                         </div>
                         <div v-if="!stage.issueForm" class="task-creator-handler-wrap">
@@ -230,10 +253,39 @@
                                             <Icon :type="element.project_type_icon.icon" :color="element.project_type_icon.color" />
                                             <span :class="element.completed_bool ? 'item-removed' : ''">{{ element.num }}</span>
                                             <Icon type="ios-copy-outline" />
+                                            <Icon @click.native="viewTask(element.id)" type="md-eye" />
                                         </div>
-                                        <a href="javascript:void(0);" class="close-item" slot="extra" @click.prevent="delTask(index,k, element.id)">
+                                        <!-- <a href="javascript:void(0);" class="close-item" slot="extra" @click.prevent="delTask(index,k, element.id)">
                                             <Icon color="#808695" size="18" type="md-close"></Icon>
-                                        </a>
+                                        </a> -->
+                                        <div slot="extra">
+                                            <Dropdown>
+                                            <a href="javascript:void(0)">
+                                                <Icon type="md-more" size="18" color="#808695" />
+                                                </a>
+                                                <DropdownMenu slot="list">
+                                                    <DropdownItem
+                                                        @click.native="viewTask(element.id)"
+                                                    >
+                                                        查看
+                                                    </DropdownItem>
+                                                </DropdownMenu>
+                                                <DropdownMenu slot="list">
+                                                    <DropdownItem
+                                                        @click.native="updateCompleted(item.id, key, key == item.completed)"
+                                                    >
+                                                        归档
+                                                    </DropdownItem>
+                                                </DropdownMenu>
+                                                <DropdownMenu slot="list">
+                                                    <DropdownItem
+                                                        @click.native="delTask(index,k, element.id)"
+                                                    >
+                                                        删除
+                                                    </DropdownItem>
+                                                </DropdownMenu>
+                                            </Dropdown>
+                                        </div>
                                         <!-- <span class="check-box-wrapper">
                                             <label data-v-5cb2b31c="" class="ivu-checkbox-wrapper ivu-checkbox-default"><span class="ivu-checkbox"><span class="ivu-checkbox-inner"></span> <input type="checkbox" class="ivu-checkbox-input"></span></label>
                                             <label data-v-5cb2b31c="" class="ivu-checkbox-wrapper ivu-checkbox-wrapper-checked ivu-checkbox-default"><span class="ivu-checkbox ivu-checkbox-checked"><span class="ivu-checkbox-inner"></span> <input type="checkbox" class="ivu-checkbox-input"></span></label>

@@ -346,7 +346,6 @@ export default {
                     //     this.favorProjectIds.push(data.project_id)
                     // }
                     // this.loadingTable = !this.loadingTable
-                    utils.success(res.message)
                 }, () => {
                     //this.loadingTable = !this.loadingTable
                 })
@@ -399,7 +398,6 @@ export default {
                 //     this.favorProjectIds.push(data.project_id)
                 // }
                 // this.loadingTable = !this.loadingTable
-                utils.success(res.message)
             }, () => {
                 //this.loadingTable = !this.loadingTable
             })
@@ -461,11 +459,16 @@ export default {
                 onOk: () => {
                     this.apiDelete('project-issue', projectIssueId).then(res => {
                         this.dragList[index].list.splice(k, 1);
-                        utils.success(res.message)
                     }, () => {
                     })
                 },
                 onCancel: () => {},
+            })
+        },
+        // 查看任务
+        viewTask(projectIssueId) {
+            this.$router.push({
+                path: '/board/'+this.project.num+'/'+this.project.num+'-'+projectIssueId,
             })
         },
         editTask(index, k, projectIssueId) {
@@ -511,7 +514,6 @@ export default {
             this.apiPut('project-issue', projectIssueId, formData).then(
                 res => {
                     this.$set(this.dragList[index].list[k], 'issueTitleEdit', false)
-                    utils.success(res.message)
                 },
                 () => {
                 }
@@ -525,7 +527,6 @@ export default {
                 res => {
                     this.$set(this.dragList[index].list[k], 'issueTagsEdit', false)
                     this.refreshIssue()
-                    utils.success(res.message)
                 },
                 () => {
                 }
@@ -539,7 +540,6 @@ export default {
                 res => {
                     this.$set(this.dragList[index].list[k], 'issueModulesEdit', false)
                     this.refreshIssue()
-                    utils.success(res.message)
                 },
                 () => {
                 }
@@ -554,7 +554,6 @@ export default {
                 res => {
                     this.$set(this.dragList[index].list[k], 'issueReleasesEdit', false)
                     this.refreshIssue()
-                    utils.success(res.message)
                 },
                 () => {
                 }
@@ -569,7 +568,6 @@ export default {
             this.apiPut('project-issue', projectIssueId+'/complete', formData).then(
                 res => {
                     this.$set(this.dragList[index].list[k], 'completed', completedStatus)
-                    utils.success(res.message)
                 },
                 () => {
                     this.$set(this.dragList[index].list[k], 'completed', this.dragList[index].list[k].completed_bool ? 1 : 2)
@@ -684,7 +682,6 @@ export default {
                     this.favorProjectIds.push(data.project_id)
                 }
                 this.loadingTable = !this.loadingTable
-                utils.success(res.message)
             }, () => {
                 this.loadingTable = !this.loadingTable
             })
@@ -702,7 +699,6 @@ export default {
                     }
                 }
                 this.loadingTable = !this.loadingTable
-                utils.success(res.message)
             }, () => {
                 this.loadingTable = !this.loadingTable
             })
@@ -727,8 +723,6 @@ export default {
                         this.$set(this.data[index], 'status_enum', 1 === type ? this.__('启用') : this.__('禁用'))
                     }
                 })
-
-                utils.success(res.message)
             })
         },
         onSelectionChange(data) {
@@ -783,12 +777,9 @@ export default {
             this.apiPost('project', formData).then(
                 res => {
                     let addNode = Object.assign({}, this.formItem, res)
-
                     this.data.unshift(addNode)
                     this.loading = !this.loading
                     this.cancelMinForm(form)
-
-                    utils.success(res.message)
                 },
                 () => {
                     this.loading = !this.loading
@@ -807,8 +798,6 @@ export default {
 
                     this.loading = !this.loading
                     this.cancelMinForm(form)
-
-                    utils.success(res.message)
                 },
                 () => {
                     this.loading = !this.loading
@@ -888,7 +877,6 @@ export default {
                         }
                     })
                     this.loadingUserTable = !this.loadingUserTable
-                    utils.success(res.message)
                 },
                 () => {
                     this.loadingUserTable = !this.loadingUserTable
@@ -912,7 +900,6 @@ export default {
                         }
                     })
                     this.loadingUserTable = !this.loadingUserTable
-                    utils.success(res.message)
                 },
                 () => {
                     this.loadingUserTable = !this.loadingUserTable
@@ -926,7 +913,6 @@ export default {
                 onOk: () => {
                     this.apiDelete('project-issue', params.row.id).then(res => {
                         this.data.splice(params.index, 1)
-                        utils.success(res.message)
                     }, () => {
                         this.loadingTable = !this.loadingTable
                     })
@@ -948,7 +934,6 @@ export default {
                         res => {
                             this.userData.splice(params.index, 1)
                             this.loadingUserTable = !this.loadingUserTable
-                            utils.success(res.message)
                         },
                         () => {
                             this.loadingUserTable = !this.loadingUserTable
@@ -993,7 +978,6 @@ export default {
                             this.selectUser = []
                             this.searchUser()
                             this.loadingUserTable = !this.loadingUserTable
-                            utils.success(res.message)
                         },
                         () => {
                             this.loading = !this.loading
@@ -1020,7 +1004,6 @@ export default {
                             this.cancelIssueForm(form, projectLabelId)
                             this.refreshIssue()
                             this.loadingIssue = !this.loadingIssue
-                            utils.success(res.message)
                         },
                         () => {
                             this.loadingIssue = !this.loadingIssue

@@ -176,7 +176,6 @@ export default {
             let data = {token: apiToken}
             this.apiPost('login/logout', data).then(() => {
                 this.$store.dispatch('logout')
-                utils.success(this.__('登出成功'))
                 setTimeout(() => {
                     router.replace('/login')
                 }, 1000)

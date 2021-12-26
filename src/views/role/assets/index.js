@@ -162,7 +162,6 @@ export default {
                     this.apiDelete('role', params.row.id).then(res => {
                         this.data.splice(params.index, 1)
                         this.loadingTable = !this.loadingTable
-                        utils.success(res.message)
                     }, () => {
                         this.loadingTable = !this.loadingTable
                     })
@@ -190,8 +189,6 @@ export default {
                         this.$set(this.data[index], 'status_enum', type === '1' ? this.__('启用') : this.__('禁用'))
                     }
                 })
-
-                utils.success(res.message)
             })
         },
         onSelectionChange(data) {
@@ -227,8 +224,6 @@ export default {
 
                     this.loading = !this.loading
                     this.cancelMinForm(form)
-
-                    utils.success(res.message)
                 },
                 () => {
                     this.loading = !this.loading
@@ -248,8 +243,6 @@ export default {
 
                     this.loading = !this.loading
                     this.cancelMinForm(form)
-
-                    utils.success(res.message)
                 },
                 () => {
                     this.loading = !this.loading
@@ -342,8 +335,6 @@ export default {
                 res => {
                     this.loading = !this.loading
                     this.rightForm = false
-
-                    utils.success(res.message)
                 },
                 () => {
                     this.loading = !this.loading
