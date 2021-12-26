@@ -417,7 +417,6 @@ export default {
                     this.apiDelete('project', params.row.id).then(res => {
                         this.loadingTable = !this.loadingTable
                         this.data.splice(params.index, 1)
-                        utils.success(res.message)
                     }, () => {
                         this.loadingTable = !this.loadingTable
                     })
@@ -435,7 +434,6 @@ export default {
                     this.favorProjectIds.push(data.project_id)
                 }
                 this.loadingTable = !this.loadingTable
-                utils.success(res.message)
             }, () => {
                 this.loadingTable = !this.loadingTable
             })
@@ -453,7 +451,6 @@ export default {
                     }
                 }
                 this.loadingTable = !this.loadingTable
-                utils.success(res.message)
             }, () => {
                 this.loadingTable = !this.loadingTable
             })
@@ -478,8 +475,6 @@ export default {
                         this.$set(this.data[index], 'status_enum', 1 === type ? this.__('启用') : this.__('禁用'))
                     }
                 })
-
-                utils.success(res.message)
             })
         },
         onSelectionChange(data) {
@@ -541,12 +536,9 @@ export default {
             this.apiPost('project', formData).then(
                 res => {
                     let addNode = Object.assign({}, this.formItem, res)
-
                     this.data.unshift(addNode)
                     this.loading = !this.loading
                     this.cancelMinForm(form)
-
-                    utils.success(res.message)
                 },
                 () => {
                     this.loading = !this.loading
@@ -562,11 +554,8 @@ export default {
                             this.$set(this.data, index, res)
                         }
                     })
-
                     this.loading = !this.loading
                     this.cancelMinForm(form)
-
-                    utils.success(res.message)
                 },
                 () => {
                     this.loading = !this.loading
@@ -646,7 +635,6 @@ export default {
                         }
                     })
                     this.loadingUserTable = !this.loadingUserTable
-                    utils.success(res.message)
                 },
                 () => {
                     this.loadingUserTable = !this.loadingUserTable
@@ -670,7 +658,6 @@ export default {
                         }
                     })
                     this.loadingUserTable = !this.loadingUserTable
-                    utils.success(res.message)
                 },
                 () => {
                     this.loadingUserTable = !this.loadingUserTable
@@ -691,7 +678,6 @@ export default {
                         res => {
                             this.userData.splice(params.index, 1)
                             this.loadingUserTable = !this.loadingUserTable
-                            utils.success(res.message)
                         },
                         () => {
                             this.loadingUserTable = !this.loadingUserTable
@@ -736,7 +722,6 @@ export default {
                             this.selectUser = []
                             this.searchUser()
                             this.loadingUserTable = !this.loadingUserTable
-                            utils.success(res.message)
                         },
                         () => {
                             this.loading = !this.loading
@@ -758,7 +743,6 @@ export default {
             this.apiPut('project-release', releaseId+'/completed', formData).then(
                 res => {
                     this.refresh()
-                    utils.success(res.message)
                 },
                 () => {
                 }

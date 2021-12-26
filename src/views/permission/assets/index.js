@@ -213,7 +213,6 @@ export default {
                     this.apiDelete('permission', nodeData.id).then(res => {
                         this.init()
                         this.loading = !this.loading
-                        utils.success(res.message)
                     }, () => {
                         this.loading = !this.loading
                     })
@@ -228,7 +227,6 @@ export default {
             }).then(res => {
                 this.$set(nodeData, 'status', status)
                 this.loading = !this.loading
-                utils.success(res.message)
             }, () => {
                 this.loading = !this.loading
             })
@@ -254,7 +252,6 @@ export default {
                     this.$set(item, 'status', type)
                 })
                 this.loading = !this.loading
-                utils.success(res.message)
             }, () => {
                 this.loading = !this.loading
             })
@@ -324,7 +321,6 @@ export default {
                     }
                 }
                 this.loading = !this.loading
-                utils.success(res.message)
             }, () => {
                 this.loading = !this.loading
             })
@@ -377,7 +373,6 @@ export default {
                     this.init()
                     this.loading = !this.loading
                     this.cancelMinForm(form)
-                    utils.success(res.message)
                 },
                 res => {
                     this.loading = !this.loading
@@ -392,7 +387,6 @@ export default {
                     this.init()
                     this.loading = !this.loading
                     this.cancelMinForm(form)
-                    utils.success(res.message)
                 },
                 res => {
                     this.loading = !this.loading
@@ -421,7 +415,6 @@ export default {
             }
             this.apiPost('permission/synchrodata', data).then(
                 res => {
-                    utils.success(res.message)
                     this.loadingSynchrodata = false
                 },
                 res => {
@@ -473,8 +466,6 @@ export default {
                 res => {
                     this.loading = !this.loading
                     this.rightForm = false
-
-                    utils.success(res.message)
                 },
                 res => {
                     this.loading = !this.loading

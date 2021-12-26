@@ -36,8 +36,6 @@ export default {
                     this.loading = true
                     this.apiPost('user/update-info', this.form).then(
                         res => {
-                            utils.success(res.message)
-
                             let users = this.$store.state.user.users
                             users.email = this.form.email
                             users.mobile = this.form.mobile

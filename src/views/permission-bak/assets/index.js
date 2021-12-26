@@ -222,7 +222,6 @@ export default {
                             this.dataTree.splice(index, 1)
                         }
                         this.loading = !this.loading
-                        utils.success(res.message)
                     }, () => {
                         this.loading = !this.loading
                     })
@@ -237,7 +236,6 @@ export default {
             }).then(res => {
                 this.$set(nodeData, 'status', status)
                 this.loading = !this.loading
-                utils.success(res.message)
             }, () => {
                 this.loading = !this.loading
             })
@@ -263,7 +261,6 @@ export default {
                     this.$set(item, 'status', type)
                 })
                 this.loading = !this.loading
-                utils.success(res.message)
             }, () => {
                 this.loading = !this.loading
             })
@@ -333,7 +330,6 @@ export default {
                     }
                 }
                 this.loading = !this.loading
-                utils.success(res.message)
             }, () => {
                 this.loading = !this.loading
             })
@@ -384,7 +380,6 @@ export default {
             this.apiPost('permission', inputData).then(
                 res => {
                     let addNode = Object.assign({}, this.formItem, res)
-
                     if (this.currentParentData) {
                         let children = this.currentParentData.children || []
                         children.push(addNode)
@@ -393,11 +388,8 @@ export default {
                     } else {
                         this.dataTree.push(addNode)
                     }
-
                     this.loading = !this.loading
                     this.cancelMinForm(form)
-
-                    utils.success(res.message)
                 },
                 res => {
                     this.loading = !this.loading
@@ -447,8 +439,6 @@ export default {
                     this.nodeRoot = []
                     this.loading = !this.loading
                     this.cancelMinForm(form)
-
-                    utils.success(res.message)
                 },
                 res => {
                     this.loading = !this.loading
@@ -477,7 +467,6 @@ export default {
             }
             this.apiPost('permission/synchrodata', data).then(
                 res => {
-                    utils.success(res.message)
                     this.loadingSynchrodata = false
                 },
                 res => {
@@ -529,8 +518,6 @@ export default {
                 res => {
                     this.loading = !this.loading
                     this.rightForm = false
-
-                    utils.success(res.message)
                 },
                 res => {
                     this.loading = !this.loading
