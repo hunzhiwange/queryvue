@@ -115,6 +115,14 @@ export const otherRouter = {
             name: 'board_attachement_index',
             component: importRouter('project/attachement'),
         },
+        {
+            path:"/board/:num/:num-:id",
+            meta: {
+                title: __('任务详情 - 项目看板'),
+            },
+            name: 'board_attachement_index',
+            component: importRouter('project/issue'),
+        },
     ],
 }
 
