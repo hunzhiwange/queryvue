@@ -732,7 +732,6 @@ export default {
                         }
                     })
                     this.loadingUserTable = !this.loadingUserTable
-                    utils.success(res.message)
                 },
                 () => {
                     this.loadingUserTable = !this.loadingUserTable
