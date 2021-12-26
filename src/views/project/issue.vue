@@ -122,7 +122,7 @@
                                     </template>
                                     <MenuItem :to="'/board/'+item.num" v-for="item in projects" :key="item.id" :name="'project-'+item.id">{{ item.name }}</MenuItem>
                                 </Submenu>
-                                <MenuItem name="issue" :to="'/board/'+project.num+'/release'">
+                                <MenuItem name="issue" :to="'/board/issue/'+project.num+'-'+$route.params.id">
                                     <Icon type="ios-document" />
                                     {{ project.num+'-'+$route.params.id }}
                                 </MenuItem>

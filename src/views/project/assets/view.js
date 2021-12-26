@@ -468,7 +468,7 @@ export default {
         // 查看任务
         viewTask(projectIssueId) {
             this.$router.push({
-                path: '/board/'+this.project.num+'/'+this.project.num+'-'+projectIssueId,
+                path: '/board/issue/'+this.project.num+'-'+projectIssueId,
             })
         },
         editTask(index, k, projectIssueId) {

@@ -116,11 +116,11 @@ export const otherRouter = {
             component: importRouter('project/attachement'),
         },
         {
-            path:"/board/:num/:num-:id",
+            path:"/board/issue/:num-:id",
             meta: {
                 title: __('任务详情 - 项目看板'),
             },
-            name: 'board_attachement_index',
+            name: 'board_issue_content',
             component: importRouter('project/issue'),
         },
     ],
