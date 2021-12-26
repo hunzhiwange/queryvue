@@ -43,7 +43,7 @@ export default {
                 },
                 {
                     title: this.__('所属项目'),
-                    width: 170,
+                    width: 180,
                     key: 'project',
                     render: (h, params) => {
                         return <div>{params.row.project.name}</div>
@@ -55,7 +55,7 @@ export default {
                     key: 'create_at',
                 },
                 {
-                    title: this.__('是否发布'),
+                    title: this.__('发布状态'),
                     key: 'completed_enum',
                     width: 120,
                     render: (h, params) => {
@@ -84,6 +84,7 @@ export default {
                 {
                     title: this.__('进度'),
                     key: 'progress',
+                    width: 150,
                     render: (h, params) => {
                         return <Progress percent={params.row.progress/100} stroke-width={10} />
                     },
