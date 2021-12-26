@@ -86,6 +86,18 @@ service.interceptors.response.use(
             delete response.data[':trace']
         }
 
+        if (response.data['success']) {
+            if ('object' !== typeof response.data['success']) {
+                utils.error('Response success data must be JSON.')
+                return Promise.reject()
+            }
+
+            if (response.data['success']['throw_message'] &&
+                response.data['success']['message']) {
+                utils.success(response.data['success']['message'])
+            }
+        }
+
         return response.data
 
         // const res = response.data
