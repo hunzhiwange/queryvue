@@ -73,7 +73,6 @@ export default {
                     this.loading = true
                     this.apiPost('user/change-password', this.form).then(
                         () => {
-                            utils.success(this.__('修改密码后你需要从新登陆'))
                             setTimeout(() => {
                                 this.$emit('logout')
                             }, 1000)

@@ -90,8 +90,6 @@ export default {
 
                     this.apiPost('login/validate', data).then(
                         res => {
-                            utils.success(this.__('登陆成功'))
-
                             res.keepLogin = this.isKeepLogin()
                             this.$store.dispatch('login', res)
 

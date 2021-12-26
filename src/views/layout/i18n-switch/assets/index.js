@@ -29,11 +29,8 @@ export default {
             localStorage.lang = this.i18n
             this.$i18n.locale = this.i18n
             this.$store.commit('switchLang', this.i18n)
-
             this.i18nSelect = false
-
             this.$forceUpdate()
-
             utils.success(this.__('切换语言成功'))
         },
     },

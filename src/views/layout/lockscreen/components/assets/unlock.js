@@ -82,7 +82,6 @@ export default {
             let data = {}
             this.apiPost('login/logout', data).then(res => {
                 this.$store.dispatch('logout')
-                utils.success(this.__('登出成功'))
                 this.successOnlock()
                 setTimeout(() => {
                     router.replace('/login')
