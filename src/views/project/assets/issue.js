@@ -381,6 +381,7 @@ export default {
                     }
                 }
             },
+            projectIssue: {},
         }
     },
     methods: {
@@ -579,7 +580,7 @@ export default {
 
             this.selectedData = ids
         },
-        init: function(num) {
+        init: function(num, id) {
             this.getProjectReport()
             this.apiGet('project', {status: 1}).then(res => {
                 this.projects = res.data
@@ -590,6 +591,9 @@ export default {
                     this.projectLabels = res.data
                     this.$refs.search.search()
                 })
+            })
+            this.apiGet('project-issue/show', {num: num+'-'+id}).then(res => {
+                this.projectIssue = res
             })
         },
         handleSubmit(form) {
@@ -832,9 +836,7 @@ export default {
         },
     },
     mounted: function() {
-
-        console.log(this.$route.params)
-        this.init(this.$route.params.num)
+        this.init(this.$route.params.num, this.$route.params.id)
     },
     mixins: [http],
 }

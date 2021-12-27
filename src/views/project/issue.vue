@@ -186,17 +186,79 @@
                     <Col span="24">
                         <Card :bordered="false" class="version-item">
                             <p slot="title">
-                                <strong>任务燃尽图</strong>
+                                <strong>{{ projectIssue.title }}</strong>
                             </p>
-                        <ve-line
-                                v-if="!burnoutMap.loading"
-                                :data="burnoutMap.chartData"
-                                :settings="burnoutMap.chartSettings"
-                                :extend="burnoutMap.chartExtend"
-                                :series="burnoutMap.series"
-                                :legend-visible="false"
-                                height="200px"
-                        ></ve-line>
+                             <Row>
+                                <Col span="18">
+                                    <ButtonGroup class="m-r-15">
+                                        <Button type="primary">
+                                            <Icon type="md-create" />
+                                            编辑
+                                        </Button>
+                                    </ButtonGroup>
+                                    <ButtonGroup class="m-r-15">
+                                        <Button type="primary">
+                                            <Icon type="ios-text" />
+                                            备注
+                                        </Button>
+                                    </ButtonGroup>
+                                    <ButtonGroup class="m-r-15">
+                                        <Button type="primary">
+                                            分配
+                                        </Button>
+                                        <Button type="primary">
+                                            <Dropdown>
+                                                更多 <Icon type="ios-arrow-down"></Icon>
+                                                <DropdownMenu slot="list">
+                                                    <DropdownItem>工作日志</DropdownItem>
+                                                    <DropdownItem divided>附加文件</DropdownItem>
+                                                    <DropdownItem divided>移动</DropdownItem>
+                                                    <DropdownItem>链接</DropdownItem>
+                                                    <DropdownItem>复制</DropdownItem>
+                                                    <DropdownItem>编辑标签</DropdownItem>
+                                                </DropdownMenu>
+                                            </Dropdown>
+                                        </Button>
+                                    </ButtonGroup>
+                                    <ButtonGroup>
+                                        <Button type="primary">
+                                            完成
+                                        </Button>
+                                        <Button type="primary">
+                                            进行中
+                                        </Button>
+                                        <Button type="primary">
+                                            <Dropdown>
+                                                更多工作流动作 <Icon type="ios-arrow-down"></Icon>
+                                                <DropdownMenu slot="list">
+                                                    <DropdownItem>关闭</DropdownItem>
+                                                    <DropdownItem>分配任务</DropdownItem>
+                                                    <DropdownItem>已转需求</DropdownItem>
+                                                </DropdownMenu>
+                                            </Dropdown>
+                                        </Button>
+                                    </ButtonGroup>
+                                </Col>
+                                <Col span="6" style="text-align:right;">
+                                    <ButtonGroup>
+                                        <Button type="primary">
+                                            <Icon type="md-share-alt" />
+                                            分享
+                                        </Button>
+                                        <Button type="primary">
+                                            <Dropdown>
+                                                <Icon type="md-download" /> 导出 <Icon type="ios-arrow-down"></Icon>
+                                                <DropdownMenu slot="list">
+                                                    <DropdownItem>XML</DropdownItem>
+                                                    <DropdownItem>JSON</DropdownItem>
+                                                    <DropdownItem>Word</DropdownItem>
+                                                    <DropdownItem>打印预览</DropdownItem>
+                                                </DropdownMenu>
+                                            </Dropdown>
+                                        </Button>
+                                    </ButtonGroup>
+                                </Col>
+                            </Row>
                         </Card>
                     </Col>
                 </Row>
@@ -206,7 +268,7 @@
                             <Col span="24">
                                 <Card :bordered="false" class="version-item">
                                     <p slot="title">
-                                        <strong>项目信息</strong>
+                                        <strong>问题详情</strong>
                                     </p>
                                 </Card>
                             </Col>
@@ -215,21 +277,67 @@
                             <Col span="24">
                                 <Card :bordered="false" class="version-item">
                                     <p slot="title">
-                                        <strong>项目动态</strong>
+                                        <strong>描述</strong>
+                                    </p>
+                                </Card>
+                            </Col>
+                        </Row>
+                        <Row :gutter="16" class="m-t-10">
+                            <Col span="24">
+                                <Card :bordered="false" class="version-item">
+                                    <p slot="title">
+                                        <strong>附件</strong>
+                                    </p>
+                                </Card>
+                            </Col>
+                        </Row>
+                        <Row :gutter="16" class="m-t-10">
+                            <Col span="24">
+                                <Card :bordered="false" class="version-item">
+                                    <p slot="title">
+                                        <strong>问题链接</strong>
+                                    </p>
+                                </Card>
+                            </Col>
+                        </Row>
+                        <Row :gutter="16" class="m-t-10">
+                            <Col span="24">
+                                <Card :bordered="false" class="version-item">
+                                    <p slot="title">
+                                        <strong>子任务</strong>
+                                    </p>
+                                </Card>
+                            </Col>
+                        </Row>
+                        <Row :gutter="16" class="m-t-10">
+                            <Col span="24">
+                                <Card :bordered="false" class="version-item">
+                                    <p slot="title">
+                                        <strong>活动</strong>
                                     </p>
                                 </Card>
                             </Col>
                         </Row>
                     </Col>
-                     <Col span="6">
-                        <Card :bordered="false" class="version-item">
-                            <p slot="title">
-                                <strong>项目情况</strong>
-                            </p>
-                            <p>vilson 创建于 2021年07月27日</p>
-                            <p>项目周期</p>
-                            <p>项目统计</p>
-                        </Card>
+                    <Col span="6">
+                        <Row :gutter="16">
+                            <Col span="24">
+                                <Card :bordered="false" class="version-item">
+                                    <p slot="title">
+                                        <strong>用户</strong>
+                                    </p>
+                                </Card>
+                            </Col>
+                        </Row>
+                        <Row :gutter="16" class="m-t-10">
+                            <Col span="24">
+                                <Card :bordered="false" class="version-item">
+                                    <p slot="title">
+                                        <strong>日期</strong>
+                                    </p>
+                                </Card>
+                            </Col>
+                        </Row>
                     </Col>
                 </Row>
             </div>

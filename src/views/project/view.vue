@@ -253,7 +253,7 @@
                                             <Icon :type="element.project_type_icon.icon" :color="element.project_type_icon.color" />
                                             <span :class="element.completed_bool ? 'item-removed' : ''">{{ element.num }}</span>
                                             <Icon type="ios-copy-outline" />
-                                            <Icon @click.native="viewTask(element.id)" type="md-eye" />
+                                            <Icon @click.native="viewTask(element.num)" type="md-eye" />
                                         </div>
                                         <!-- <a href="javascript:void(0);" class="close-item" slot="extra" @click.prevent="delTask(index,k, element.id)">
                                             <Icon color="#808695" size="18" type="md-close"></Icon>
@@ -265,7 +265,7 @@
                                                 </a>
                                                 <DropdownMenu slot="list">
                                                     <DropdownItem
-                                                        @click.native="viewTask(element.id)"
+                                                        @click.native="viewTask(element.num)"
                                                     >
                                                         查看
                                                     </DropdownItem>
