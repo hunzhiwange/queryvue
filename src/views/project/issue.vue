@@ -270,6 +270,64 @@
                                     <p slot="title">
                                         <strong>问题详情</strong>
                                     </p>
+                                    <Row>
+                                        <Col span="5">
+                                            类型:
+                                        </Col>
+                                        <Col span="7">
+                                            y
+                                        </Col>
+                                        <Col span="5">
+                                            状态:
+                                        </Col>
+                                        <Col span="7">
+                                            y
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col span="5">
+                                            优先级:
+                                        </Col>
+                                        <Col span="7">
+                                            y
+                                        </Col>
+                                        <Col span="5">
+                                            解决结果:
+                                        </Col>
+                                        <Col span="7">
+                                            y
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col span="5">
+                                            影响版本:
+                                        </Col>
+                                        <Col span="7">
+                                            y
+                                        </Col>
+                                        <Col span="5">
+                                            解决版本:
+                                        </Col>
+                                        <Col span="7">
+                                            y
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col span="5">
+                                            模块:
+                                        </Col>
+                                        <Col span="19">
+                                            y
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col span="5">
+                                            标签:
+                                        </Col>
+                                        <Col span="19">
+                                            y
+                                        </Col>
+                                    </Row>
                                 </Card>
                             </Col>
                         </Row>
@@ -279,6 +337,7 @@
                                     <p slot="title">
                                         <strong>描述</strong>
                                     </p>
+                                    <p v-html="projectIssue.project_content.content"></p>
                                 </Card>
                             </Col>
                         </Row>
@@ -326,6 +385,38 @@
                                     <p slot="title">
                                         <strong>用户</strong>
                                     </p>
+                                    <Row>
+                                        <Col span="8">
+                                            经办人:
+                                        </Col>
+                                        <Col span="16">
+                                            y
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col span="8">
+                                            报告人:
+                                        </Col>
+                                        <Col span="16">
+                                            y
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col span="8">
+                                            投票:
+                                        </Col>
+                                        <Col span="16">
+                                            y
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col span="8">
+                                            关注人:
+                                        </Col>
+                                        <Col span="16">
+                                            y
+                                        </Col>
+                                    </Row>
                                 </Card>
                             </Col>
                         </Row>
@@ -335,6 +426,30 @@
                                     <p slot="title">
                                         <strong>日期</strong>
                                     </p>
+                                    <Row>
+                                        <Col span="8">
+                                            创建:
+                                        </Col>
+                                        <Col span="16">
+                                            {{ projectIssue.create_at }}
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col span="8">
+                                            更新:
+                                        </Col>
+                                        <Col span="16">
+                                            {{ projectIssue.update_at }}
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col span="8">
+                                            解决:
+                                        </Col>
+                                        <Col span="16">
+                                            {{ 2 == projectIssue.completed ? projectIssue.completed_date : ''}}
+                                        </Col>
+                                    </Row>
                                 </Card>
                             </Col>
                         </Row>
