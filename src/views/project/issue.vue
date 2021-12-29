@@ -271,60 +271,60 @@
                                         <strong>问题详情</strong>
                                     </p>
                                     <Row>
-                                        <Col span="5">
+                                        <Col span="4">
                                             类型:
                                         </Col>
-                                        <Col span="7">
+                                        <Col span="8">
                                             y
                                         </Col>
-                                        <Col span="5">
+                                        <Col span="4">
                                             状态:
                                         </Col>
-                                        <Col span="7">
+                                        <Col span="8">
                                             y
                                         </Col>
                                     </Row>
                                     <Row>
-                                        <Col span="5">
+                                        <Col span="4">
                                             优先级:
                                         </Col>
-                                        <Col span="7">
+                                        <Col span="8">
                                             y
                                         </Col>
-                                        <Col span="5">
+                                        <Col span="4">
                                             解决结果:
                                         </Col>
-                                        <Col span="7">
+                                        <Col span="8">
                                             y
                                         </Col>
                                     </Row>
                                     <Row>
-                                        <Col span="5">
+                                        <Col span="4">
                                             影响版本:
                                         </Col>
-                                        <Col span="7">
+                                        <Col span="8">
                                             y
                                         </Col>
-                                        <Col span="5">
+                                        <Col span="4">
                                             解决版本:
                                         </Col>
-                                        <Col span="7">
+                                        <Col span="8">
                                             y
                                         </Col>
                                     </Row>
                                     <Row>
-                                        <Col span="5">
+                                        <Col span="4">
                                             模块:
                                         </Col>
-                                        <Col span="19">
+                                        <Col span="20">
                                             y
                                         </Col>
                                     </Row>
                                     <Row>
-                                        <Col span="5">
+                                        <Col span="4">
                                             标签:
                                         </Col>
-                                        <Col span="19">
+                                        <Col span="20">
                                             y
                                         </Col>
                                     </Row>

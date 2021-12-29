@@ -168,6 +168,16 @@ let appRouterData = [
         component: layout,
         children: [
             {
+                path: 'issue',
+                icon: '',
+                name: 'project_issue_index',
+                meta: {
+                    title: __('项目问题'),
+                    par: ['project'],
+                },
+                component: importRouter('project-issue/index'),
+            },
+            {
                 path: 'project',
                 icon: '',
                 name: 'project_index',
