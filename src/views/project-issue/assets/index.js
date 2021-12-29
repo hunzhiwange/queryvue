@@ -31,10 +31,11 @@ export default {
                 {
                     title: this.__('标题'),
                     key: 'title',
-                    width: 300,
-                    ellipsis: true,
+                    width: 400,
                     render: (h, params) => {
-                        return <router-link to={'/board/issue/' + params.row.num}>{params.row.title}</router-link>
+                        return <router-link to={'/board/issue/' + params.row.num}>
+                                    {params.row.title}
+                                </router-link>
                     },
                 },
                 {
@@ -74,13 +75,19 @@ export default {
                 {
                     title: this.__('操作'),
                     key: 'action',
-                    width: 135,
+                    width: 185,
                     fixed: 'right',
                     align: 'left',
                     render: (h, params) => {
                         return (
                             <div>
                                 <buttonGroup size="small" shape="circle">
+                                    <i-button
+                                        type="text"
+                                        onClick={() => this.view(params)}
+                                        v-show={utils.permission('project_issue_view_button')}>
+                                        {this.__('查看')}
+                                    </i-button>
                                     <i-button
                                         type="text"
                                         onClick={() => this.edit(params)}
@@ -132,6 +139,11 @@ export default {
             this.page = data.page.current_page
             this.pageSize = data.page.per_page
             this.loadingTable = false
+        },
+        view(params) {
+            this.$router.push({
+                path: '/board/issue/'+params.row.num,
+            })
         },
         edit(params) {
             let row = params.row
