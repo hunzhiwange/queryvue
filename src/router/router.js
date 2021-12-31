@@ -57,6 +57,14 @@ export const commonRouter = [
         },
         component: importRouter('error-page/500'),
     },
+    {
+        path:"/project/process/:id",
+        meta: {
+            title: __('流程图'),
+        },
+        name: 'board_process',
+        component: importRouter('project/process'),
+    },
 ]
 
 // 作为 layout 组件的子页面展示但是不在左侧菜单显示的路由写在 otherRouter 里
