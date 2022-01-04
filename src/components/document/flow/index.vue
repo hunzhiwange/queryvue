@@ -8,10 +8,10 @@
 <style lang="less" scoped>
     .flow-content {
         position: absolute;
-        top: 0;
+        top: 30px;
         left: 0;
         width: 100%;
-        height: 100%;
+        height: calc(100% - 30px);
         .flow-iframe {
             position: absolute;
             top: 0;
@@ -54,8 +54,8 @@
             return {
                 loadIng: true,
                 flow: null,
-                url: 'http://localhost:3000/?dev=1&edit=1',
-                url2: window.location.origin + '/js/grapheditor/' + (this.readOnly ? 'viewer' : 'index') + '.html',
+                //url: 'http://localhost:5000/?dev=1'+(this.readOnly ? '&lightbox=1' : ''),
+                url: window.location.origin + '/process/index.html' + (this.readOnly ? '?lightbox=1' : ''),
             }
         },
         mounted() {
@@ -83,7 +83,7 @@
 
                     case 'change':
                         this.$emit('input', data.params.data)
-                        this.$emit('saveData')
+                        this.$emit('saveData', data.params)
                         break
 
                     case 'save':

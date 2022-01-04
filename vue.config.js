@@ -61,6 +61,9 @@ module.exports = {
                 {
                     from: 'src/views/layout/theme-switch/theme',
                 },
+                {
+                    from: 'public/process', to: 'process',
+                },
             ]),
         ],
     },

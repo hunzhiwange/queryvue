@@ -48,6 +48,10 @@ const projectTypeIcon = {
         'icon': 'ios-document-outline',
         'color': 'red',
     },
+    'process': {
+        'icon': 'ios-document-outline',
+        'color': 'red',
+    },
 }
 
 const resetFormUser = {}
@@ -807,6 +811,11 @@ export default {
                         }
                     )
                 }
+            })
+        },
+        editProcess(num) {
+            this.$router.push({
+                path: '/project/process/'+num,
             })
         },
     },

@@ -48,6 +48,10 @@ const projectTypeIcon = {
         'icon': 'ios-document-outline',
         'color': 'red',
     },
+    'process': {
+        'icon': 'ios-document-outline',
+        'color': 'red',
+    },
 }
 
 const resetFormUser = {}

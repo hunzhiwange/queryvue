@@ -65,6 +65,14 @@ export const commonRouter = [
         name: 'board_process',
         component: importRouter('project/process'),
     },
+    {
+        path:"/board/process/:id",
+        meta: {
+            title: __('查看流程图'),
+        },
+        name: 'board_process2',
+        component: importRouter('project/process_view'),
+    },
 ]
 
 // 作为 layout 组件的子页面展示但是不在左侧菜单显示的路由写在 otherRouter 里

@@ -337,6 +337,12 @@
                                     <p slot="title">
                                         <strong>描述</strong>
                                     </p>
+                                    <p>
+                                        <Button type="primary" @click="editProcess(projectIssue.num)">
+                                            <Icon type="md-create" />
+                                            编辑
+                                        </Button>
+                                    </p>
                                     <p v-html="projectIssue.project_content.content"></p>
                                 </Card>
                             </Col>
