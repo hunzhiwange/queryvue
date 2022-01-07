@@ -774,8 +774,8 @@ export default {
         },
         saveData(data) {
             var formData = {
-                'content': data.content,
-                'sub_title': data.title,
+                content: data.data,
+                sub_title: data.title,
             }
             var projectIssueId = this.projectIssue.id
             this.apiPut('project-issue', projectIssueId+'/content', formData).then(
