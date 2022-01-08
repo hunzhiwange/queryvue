@@ -64,108 +64,6 @@ export default {
     },
     data() {
         return {
-            columns: [
-                {
-                    type: 'selection',
-                    width: 60,
-                    align: 'center',
-                    className: 'table-selection',
-                },
-                {
-                    type: 'index',
-                    width: 55,
-                    align: 'center',
-                    className: 'table-index',
-                },
-                {
-                    title: this.__('名字'),
-                    key: 'name',
-                },
-                {
-                    title: this.__('编号'),
-                    key: 'num',
-                    render: (h, params) => {
-                        return <tag color="default">{params.row.num}</tag>
-                    },
-                },
-                {
-                    title: this.__('创建时间'),
-                    key: 'create_at',
-                },
-                {
-                    title: this.__('进度'),
-                    key: 'progress',
-                    render: (h, params) => {
-                        return <Progress percent={params.row.progress/100} stroke-width={10} />
-                    },
-                },
-                {
-                    title: this.__('状态'),
-                    key: 'status_enum',
-                    width: 120,
-                    render: (h, params) => {
-                        return <Badge status={1 === params.row.status ? 'success' : 'default'} text={params.row.status_enum} />
-                    },
-                },
-                {
-                    title: this.__('操作'),
-                    key: 'action',
-                    width: 250,
-                    fixed: 'right',
-                    align: 'left',
-                    render: (h, params) => {
-                        return (
-                            <div>
-                                <buttonGroup size="small" shape="circle">
-                                    <i-button
-                                        type="text"
-                                        onClick={() => this.user(params)}
-                                        v-show={utils.permission('project_role_button')}>
-                                        {this.__('成员')}
-                                    </i-button>
-                                    <i-button
-                                        type="text"
-                                        onClick={() => this.edit(params)}
-                                        v-show={utils.permission('project_edit_button')}>
-                                        {this.__('设置')}
-                                    </i-button>
-                                    <i-button
-                                        type="text"
-                                        onClick={() => this.favor(params)}
-                                        v-show={!this.favorProjectIds.includes(params.row.id) && utils.permission('project_edit_button')}>
-                                        {this.__('收藏')}
-                                    </i-button>
-                                    <i-button
-                                        type="text"
-                                        onClick={() => this.cancelFavor(params)}
-                                        v-show={this.favorProjectIds.includes(params.row.id) && utils.permission('project_edit_button')}>
-                                        {this.__('取消收藏')}
-                                    </i-button>
-                                    <i-button
-                                        type="text"
-                                        onClick={() => this.remove(params)}
-                                        v-show={utils.permission('project_delete_button')}>
-                                        {this.__('删除')}
-                                    </i-button>
-                                </buttonGroup>
-                            </div>
-                        )
-                    },
-                },
-            ],
-            total: 0,
-            page: 1,
-            pageSize: 10,
-            data: [],
-            loadingTable: true,
-            formItem: Object.assign({}, resetForm),
-            minForm: false,
-            minUser: false,
-            minUserProjectId: 0,
-            searchUserForm: Object.assign({}, resetUserForm),
-            userTotal: 0,
-            userPage: 1,
-            userPageSize: 10,
             loadingUserTable: true,
             rules: {
                 name: [
@@ -184,95 +82,6 @@ export default {
                     },
                 ],
             },
-            loading: false,
-            selectedData: [],
-            roles: [],
-            viewDetail: {},
-            rightForm: false,
-            styles: {
-                height: 'calc(100% - 55px)',
-                overflow: 'auto',
-                paddingBottom: '53px',
-                position: 'static',
-            },
-            formCommonUser: resetFormCommonUser,
-            loadingCommonUser: false,
-            commonUsers: [],
-            userTotal: 0,
-            userPage: 1,
-            userPageSize: 10,
-            userPermissionId: 0,
-            userSearchKey: '',
-            userColumns: [
-                {
-                    title: this.__('用户名'),
-                    key: 'user.name'
-                },
-                {
-                    title: this.__('用户编号'),
-                    key: 'user.num',
-                    render: (h, params) => {
-                        return <tag color="default">{params.row['user.num']}</tag>
-                    },
-                },
-                {
-                    title: this.__('成员类型'),
-                    key: 'extend_type_enum'
-                },
-                {
-                    title: this.__('加入时间'),
-                    key: 'create_at'
-                },
-                {
-                    title: this.__('操作'),
-                    key: 'action',
-                    width: 160,
-                    fixed: 'right',
-                    align: 'left',
-                    render: (h, params) => {
-                        return (
-                            <div>
-                                <buttonGroup size="small" shape="circle">
-                                    <i-button
-                                        type="text"
-                                        onClick={() => this.setMember(params)}
-                                        v-show={2 === params.row.extend_type && utils.permission('project_role_button')}>
-                                        {this.__('设为成员')}
-                                    </i-button>
-                                    <i-button
-                                        type="text"
-                                        onClick={() => this.setAdministrator(params)}
-                                        v-show={1 === params.row.extend_type && utils.permission('project_role_button')}>
-                                        {this.__('设为管理')}
-                                    </i-button>
-                                    <i-button
-                                        type="text"
-                                        onClick={() => this.deleteUser(params)}
-                                        v-show={utils.permission('project_delete_button')}>
-                                        {this.__('删除')}
-                                    </i-button>
-                                </buttonGroup>
-                            </div>
-                        )
-                    },
-                }
-            ],
-            userData: [],
-            commonUserRules: {
-                selectUser: [
-                    {
-                        required: true,
-                        message: this.__('请选择用户'),
-                    },
-                ],
-            },
-            favorProjectIds: [],
-            projectTemplate: projectTemplate,
-            seletedProjectTemplate: 'soft',
-            dragList: [],
-            editable: true,
-            order: 1000,
-            single: false,
             projectLabels: [],
             projects: [],
             project: {
@@ -386,9 +195,40 @@ export default {
                 }
             },
             projectIssue: {},
+            issueModulesEdit: false,
+            projectModules: [],
+            issueEditModules: [],
         }
     },
     methods: {
+        editTaskModules() {
+            this.issueModulesEdit = true
+            this.issueEditModules = []
+            this.projectIssue.project_modules.forEach (item => {
+                this.issueEditModules.push(item.id)
+            })
+        },
+        cancelIssueModulesForm() {
+            this.issueModulesEdit = false
+        },
+        updateTaskModules () {
+            var formData = {
+                modules : this.issueEditModules,
+            }
+            this.apiPut('project-issue', this.projectIssue.id+'/module', formData).then(
+                res => {
+                    this.issueModulesEdit = false
+                    this.refreshIssue()
+                },
+                () => {
+                }
+            )
+        },
+        refreshIssue() {
+            this.apiGet('project-issue/show', {num: this.projectIssue.num}).then(res => {
+                this.projectIssue = res
+            })
+        },
         getProjectReport() {
             let rows = [];
             overdata.date.forEach(v => {
@@ -585,7 +425,6 @@ export default {
             this.selectedData = ids
         },
         init: function(num, id) {
-            this.getProjectReport()
             this.apiGet('project', {status: 1}).then(res => {
                 this.projects = res.data
             })
@@ -594,6 +433,9 @@ export default {
                 this.apiGet('project-label', {project_ids: [res.id]}).then(res => {
                     this.projectLabels = res.data
                     this.$refs.search.search()
+                })
+                this.apiGet('project-module', {project_ids: [res.id]}).then(res => {
+                    this.projectModules = res.data
                 })
             })
             this.apiGet('project-issue/show', {num: num+'-'+id}).then(res => {

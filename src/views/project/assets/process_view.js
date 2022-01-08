@@ -502,6 +502,10 @@ export default {
         },
         init: function(id) {
             this.apiGet('project-issue/show', {num: id}).then(res => {
+                if (res.project_type.content_type != 6) {
+                    utils.error(this.__('非流程图文档'))
+                    return
+                }
                 this.projectIssue = res
                 this.docContent.title = res.title,
                 this.docContent.content = res.project_content.content
