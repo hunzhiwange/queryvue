@@ -4,6 +4,7 @@ import search from '../../project-issue/search/index'
 import projectTemplate from './template'
 //see https://github.com/SortableJS/Vue.Draggable
 import draggable from 'vuedraggable'
+import board_header from './../board_header'
 
 const resetForm = {
     name: '',
@@ -56,6 +57,7 @@ export default {
     components: {
         search,
         draggable,
+        board_header,
     },
     data() {
         return {

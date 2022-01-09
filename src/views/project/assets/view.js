@@ -4,6 +4,7 @@ import search from '../../project-issue/search/index'
 import projectTemplate from './template'
 //see https://github.com/SortableJS/Vue.Draggable
 import draggable from 'vuedraggable'
+import board_header from './../board_header'
 
 const resetForm = {
     name: '',
@@ -63,6 +64,7 @@ export default {
     components: {
         search,
         draggable,
+        board_header,
     },
     data() {
         return {
@@ -737,9 +739,6 @@ export default {
             this.selectedData = ids
         },
         init: function(num) {
-            this.apiGet('project', {status: 1}).then(res => {
-                this.projects = res.data
-            })
             this.apiGet('project/show', {num: num}).then(res => {
                 this.project = res
                 this.apiGet('project-label', {project_ids: [res.id]}).then(res => {

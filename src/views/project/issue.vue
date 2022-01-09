@@ -1,59 +1,7 @@
 <template>
     <div class="body">
         <div class="wrap">
-            <div class="fixed-footer-offset2">
-                <div class="project-navigation">
-                    <Menu mode="horizontal" theme2="light" active-name="issue">
-                        <Row>
-                            <Col span="18">
-                                <Submenu name="project">
-                                    <template slot="title">
-                                        <Icon type="md-git-branch" />
-                                        {{ project.name }}
-                                    </template>
-                                    <MenuItem :to="'/board/'+item.num" v-for="item in projects" :key="item.id" :name="'project-'+item.id">{{ item.name }}</MenuItem>
-                                </Submenu>
-                                <MenuItem name="issue" :to="'/board/issue/'+project.num+'-'+$route.params.id">
-                                    <Icon type="ios-document" />
-                                    {{ project.num+'-'+$route.params.id }}
-                                </MenuItem>
-                                <MenuItem name="index" :to="'/board/'+project.num">
-                                    <Icon type="md-list-box" />
-                                    任务
-                                </MenuItem>
-                                <MenuItem name="attachement" :to="'/board/'+project.num+'/attachement'">
-                                    <Icon type="md-document" />
-                                    文件
-                                </MenuItem>
-                                <MenuItem name="overview" :to="'/board/'+project.num+'/overview'">
-                                    <Icon type="md-globe" />
-                                    概览
-                                </MenuItem>
-                                <MenuItem name="release" :to="'/board/'+project.num+'/release'">
-                                    <Icon type="ios-happy" />
-                                    版本
-                                </MenuItem>
-                            </Col>
-                            <Col span="6" >
-                                <div class="pull-right">
-                                    <MenuItem name="11">
-                                        <Icon type="md-search" />
-                                        筛选
-                                    </MenuItem>
-                                    <MenuItem name="22">
-                                        <Icon type="ios-people" />
-                                        用户
-                                    </MenuItem>
-                                    <MenuItem name="33">
-                                        <Icon type="ios-construct" />
-                                        菜单
-                                    </MenuItem>
-                                </div>
-                            </Col>
-                            </Row>
-                    </Menu>
-                </div>
-            </div>
+            <board_header ref="board_header" :project="project" active-name="issue" :issueNum="projectIssue.num"></board_header>
             <div class="project-navigation2 m-t-10">
                 <Row :gutter="16">
                     <Col span="24">

@@ -1,6 +1,7 @@
 import http from '@/utils/http'
 import {validateAlphaDash} from '@/utils/validate'
 import search from '../../project-issue/search/index'
+import board_header from './../board_header'
 import projectTemplate from './template'
 //see https://github.com/SortableJS/Vue.Draggable
 import draggable from 'vuedraggable'
@@ -61,6 +62,7 @@ export default {
         search,
         draggable,
         VeLine,
+        board_header,
     },
     data() {
         return {
@@ -425,9 +427,6 @@ export default {
             this.selectedData = ids
         },
         init: function(num, id) {
-            this.apiGet('project', {status: 1}).then(res => {
-                this.projects = res.data
-            })
             this.apiGet('project/show', {num: num}).then(res => {
                 this.project = res
                 this.apiGet('project-label', {project_ids: [res.id]}).then(res => {

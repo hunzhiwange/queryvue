@@ -5,6 +5,7 @@ import projectTemplate from './template'
 //see https://github.com/SortableJS/Vue.Draggable
 import draggable from 'vuedraggable'
 import VeLine from 'v-charts/lib/line.common'
+import board_header from './../board_header'
 
 const jsondata = '{"date":["08-24","08-25","08-26","08-27","08-28","08-29","08-30","08-31","09-01","09-02"],"task":[66,60,60,61,61,0,0,54,0,55],"undoneTask":[37,14,16,17,6,0,0,9,0,10],"baseLineList":[37,32.9,28.799999999999997,24.699999999999996,20.599999999999994,16.499999999999993,12.399999999999993,8.299999999999994,4.199999999999994,0]}'
 const overdata = JSON.parse(jsondata)
@@ -61,6 +62,7 @@ export default {
         search,
         draggable,
         VeLine,
+        board_header,
     },
     data() {
         return {
@@ -585,9 +587,6 @@ export default {
         },
         init: function(num) {
             this.getProjectReport()
-            this.apiGet('project', {status: 1}).then(res => {
-                this.projects = res.data
-            })
             this.apiGet('project/show', {num: num}).then(res => {
                 this.project = res
                 this.apiGet('project-label', {project_ids: [res.id]}).then(res => {
