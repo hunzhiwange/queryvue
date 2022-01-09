@@ -84,8 +84,7 @@
                                             <Checkbox v-model="element.completed_bool" @on-change="completeTask(index,k, element.id)"><em></em></Checkbox>
                                             <Icon :type="element.project_type_icon.icon" :color="element.project_type_icon.color" />
                                             <span :class="element.completed_bool ? 'item-removed' : ''">{{ element.num }}</span>
-                                            <Icon type="ios-copy-outline" />
-                                            <Icon @click.native="viewTask(element.num)" type="md-eye" />
+                                            <Icon type="ios-copy-outline" class="m-l-5" />
                                         </div>
                                         <!-- <a href="javascript:void(0);" class="close-item" slot="extra" @click.prevent="delTask(index,k, element.id)">
                                             <Icon color="#808695" size="18" type="md-close"></Icon>
