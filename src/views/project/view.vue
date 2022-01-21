@@ -83,7 +83,7 @@
                                             <!-- <label data-v-5cb2b31c="" class="ivu-checkbox-wrapper ivu-checkbox-wrapper-checked ivu-checkbox-default"><span class="ivu-checkbox ivu-checkbox-checked"><span class="ivu-checkbox-inner"></span> <input type="checkbox" class="ivu-checkbox-input"></span></label> -->
                                             <Checkbox v-model="element.completed_bool" @on-change="completeTask(index,k, element.id)"><em></em></Checkbox>
                                             <Icon :type="element.project_type_icon.icon" :color="element.project_type_icon.color" />
-                                            <span :class="element.completed_bool ? 'item-removed' : ''">{{ element.num }}</span>
+                                            <a class="m-l-5" @click="viewTask(element.num)"><span :class="element.completed_bool ? 'item-removed' : ''">{{ element.num }}</span></a>
                                             <Icon type="ios-copy-outline" class="m-l-5" />
                                         </div>
                                         <!-- <a href="javascript:void(0);" class="close-item" slot="extra" @click.prevent="delTask(index,k, element.id)">

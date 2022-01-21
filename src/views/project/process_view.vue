@@ -6,8 +6,8 @@
                     <Row>
                         <Col span="12">
                             <div style="text-align:center;">
-                                <MenuItem name="1">
-                                    <Icon type="md-document" />
+                                <MenuItem name="1" :to="'/board/issue/'+projectIssue.num">
+                                    <Icon type="md-arrow-round-back" />
                                     {{ projectIssue.title }}
                                 </MenuItem>
                             </div>
