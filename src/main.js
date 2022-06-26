@@ -13,9 +13,12 @@ import utils from './utils'
 import extend from './utils/extend'
 import './errorLog' // error log
 import 'assets/css/global.css'
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 
 Vue.use(ViewUI)
 Vue.use(extend)
+Vue.use(mavonEditor)
 
 window.axios = axios
 
