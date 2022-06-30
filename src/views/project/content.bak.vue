@@ -1,9 +1,19 @@
 <template>
     <div class="layout">
         <Layout>
-            <!-- <div class="header">
+            <div class="header">
                 <Menu mode="horizontal" theme="dark" active-name="1">
                     <Row>
+                        <Col span="6">
+                            <MenuItem name="2" :to="'/board/'+projectIssue.project.num">
+                                <Icon type="md-list" />
+                                {{ projectIssue.project.name }}
+                            </MenuItem>
+                            <MenuItem name="4">
+                                <Icon type="md-time" />
+                                历史版本
+                            </MenuItem>
+                        </Col>
                         <Col span="12">
                             <div style="text-align:center;">
                                 <MenuItem name="1" :to="'/board/issue/'+projectIssue.num">
@@ -12,8 +22,13 @@
                                 </MenuItem>
                             </div>
                         </Col>
-                        <Col span="12">
+                        <Col span="6">
                             <div class="pull-right">
+                                <Button type="primary" icon="ios-search"  @click="saveContent()">保存</Button>
+                                <MenuItem name="3" :to="'/board/process/'+projectIssue.num">
+                                    <Icon type="md-eye" />
+                                    浏览
+                                </MenuItem>
                                 <MenuItem name="4">
                                     <Icon type="md-share" />
                                     分享
@@ -22,8 +37,13 @@
                         </Col>
                     </Row>
                 </Menu>
-            </div> -->
-            <Flow ref="myFlow" class="body-flow2" :title="projectIssue.sub_title" v-model="docContent.content" @saveData="saveData" :readOnly="true"></Flow>
+            </div>
+            <div class="doc-content">
+                <mavon-editor
+                    v-model="projectIssue.project_content.content"
+                    previewBackground="#FFFFFF"
+                />
+            </div>
         </Layout>
     </div>
 </template>
@@ -45,5 +65,5 @@
 }
 </style>
 
-<script src="./assets/process_view.js"></script>
-<style lang="less" src="./assets/process_view.less"></style>
+<script src="./assets/content.js"></script>
+<style lang="less" src="./assets/content.less"></style>

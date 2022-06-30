@@ -503,7 +503,7 @@ export default {
         },
         init: function(id) {
             this.apiGet('project-issue/show', {num: id}).then(res => {
-                if (res.project_type.content_type != 6) {
+                if (res.project_type && res.project_type.content_type != 6) {
                     utils.error(this.__('非流程图文档'))
                     return
                 }

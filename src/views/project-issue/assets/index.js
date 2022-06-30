@@ -31,7 +31,6 @@ export default {
                 {
                     title: this.__('标题'),
                     key: 'title',
-                    width: 400,
                     render: (h, params) => {
                         return <router-link to={'/board/issue/' + params.row.num}>
                                     {params.row.title}

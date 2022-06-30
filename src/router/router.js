@@ -139,6 +139,14 @@ export const otherRouter = {
             name: 'board_issue_content',
             component: importRouter('project/issue'),
         },
+        {
+            path:"/project/content/:id",
+            meta: {
+                title: __('内容'),
+            },
+            name: 'board_content',
+            component: importRouter('project/content'),
+        },
     ],
 }
 

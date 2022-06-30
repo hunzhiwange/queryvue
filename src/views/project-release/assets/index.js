@@ -30,7 +30,6 @@ export default {
                 },
                 {
                     title: this.__('名字'),
-                    width: 240,
                     key: 'name',
                 },
                 {

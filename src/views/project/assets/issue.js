@@ -1,6 +1,5 @@
 import http from '@/utils/http'
 import {validateAlphaDash} from '@/utils/validate'
-import search from '../../project-issue/search/index'
 import board_header from './../board_header'
 import projectTemplate from './template'
 //see https://github.com/SortableJS/Vue.Draggable
@@ -59,7 +58,6 @@ const resetFormUser = {}
 
 export default {
     components: {
-        search,
         draggable,
         VeLine,
         board_header,
@@ -196,10 +194,22 @@ export default {
                     }
                 }
             },
-            projectIssue: {},
+            projectIssue: {
+                project_type: {
+                    content_type: 1,
+                },
+                project_content: {
+                    content: '',
+                },
+                project: {
+                    name: '',
+                    num: '',
+                }
+            },
             issueModulesEdit: false,
             projectModules: [],
             issueEditModules: [],
+            processUrl: '',
         }
     },
     methods: {
@@ -231,207 +241,11 @@ export default {
                 this.projectIssue = res
             })
         },
-        getProjectReport() {
-            let rows = [];
-            overdata.date.forEach(v => {
-                rows.push({'日期': v})
-            })
-            this.burnoutMap.loading = false
-            this.burnoutMap.chartData.rows = rows
-            this.burnoutMap.series[0].data = overdata.undoneTask
-            this.burnoutMap.series[1].data = overdata.baseLineList
-        },
-        orderList() {
-            this.list = this.list.sort((one, two) => {
-                return one.order - two.order;
-            });
-        },
-        onMove({
-            relatedContext,
-            draggedContext
-        }) {
-            const relatedElement = relatedContext.element;
-            const draggedElement = draggedContext.element;
-            return (
-                (!relatedElement || !relatedElement.fixed) && !draggedElement.fixed
-            );
-        },
-        // 添加任务
-        addTask(index) {
-            var order = this.order++;
-            this.dragList[index].list.push({
-                name: '新增任务' + order,
-                order: order,
-                fixed: false
-            })
-        },
-        // 删除任务
-        delTask(index, k) {
-            this.dragList[index].list.splice(k, 1);
-        },
-        // 添加任务阶段
-        addStage() {
-            var order = this.order++;
-            this.dragList.push({
-                'list': [],
-                'order': order,
-                'name': "新增任务阶段" + order,
-                'fixed': false
-            });
-        },
-        // 删除任务阶段
-        delStage(index) {
-            this.dragList.splice(index, 1);
-        },
-        getDataFromSearch(data) {
-            // this.data = data.data
-            // this.total = data.page.total_record
-            // this.page = data.page.current_page
-            // this.pageSize = data.page.per_page
-            // this.loadingTable = false
-
-            let map = {}
-            data.data.forEach ((item, key) => {
-                if (!map.hasOwnProperty(item.project_label_id)) {
-                    map[item.project_label_id] = []
-                }
-                map[item.project_label_id].push({
-                    name: item.title,
-                    num: item.num,
-                    create_at: item.create_at,
-                    completed: item.completed,
-                    completed_bool: 2 === item.completed,
-                    completed_date: item.completed_date,
-                    project_releases: item.project_releases,
-                    project_tags: item.project_tags,
-                    project_modules: item.project_modules,
-                    project_type: item.project_type,
-                    project_type_icon: {
-                        icon: projectTypeIcon[item.project_type.icon]['icon'],
-                        color: projectTypeIcon[item.project_type.icon]['color'],
-                    },
-                    order: item.sort,
-                    fixed: false,
-                })
-            })
-
-            let hello = []
-            this.projectLabels.forEach((item, key) => {
-                hello.push({
-                    label_id: item.id,
-                    order: item.sort,
-                    name: item.name,
-                    fixed: false,
-                    list: map.hasOwnProperty(item.id) ? map[item.id] : [],
-                })
-            })
-
-            this.dragList = hello
-        },
-        getProjectFavorDataFromSearch(data) {
-            let favorProjectIds = []
-            data.data.forEach(item => {
-                favorProjectIds.push(item.id)
-            })
-            this.favorProjectIds = favorProjectIds
-        },
-        edit(params) {
-            let row = params.row
-            this.minForm = true
-            this.formItem.id = row.id
-            Object.keys(this.formItem).forEach(key => {
-                if (row.hasOwnProperty(key)) {
-                    this.formItem[key] = row[key]
-                }
-            })
-        },
-        add: function() {
-            this.minForm = true
-            this.formItem.id = ''
-            this.reset()
-        },
-        remove(params) {
-            this.$Modal.confirm({
-                title: this.__('提示'),
-                content: this.__('确认删除该项目?'),
-                onOk: () => {
-                    this.loadingTable = !this.loadingTable
-                    this.apiDelete('project', params.row.id).then(res => {
-                        this.loadingTable = !this.loadingTable
-                        this.data.splice(params.index, 1)
-                    }, () => {
-                        this.loadingTable = !this.loadingTable
-                    })
-                },
-                onCancel: () => {},
-            })
-        },
-        favor(params) {
-            let data = {
-                project_id: params.row.id,
-            }
-            this.loadingTable = !this.loadingTable
-            this.apiPost('project/favor', data).then(res => {
-                if (!this.favorProjectIds.includes(data.project_id)) {
-                    this.favorProjectIds.push(data.project_id)
-                }
-                this.loadingTable = !this.loadingTable
-            }, () => {
-                this.loadingTable = !this.loadingTable
-            })
-        },
-        cancelFavor(params) {
-            let data = {
-                project_id: params.row.id,
-            }
-            this.loadingTable = !this.loadingTable
-            this.apiPost('project/cancel-favor', data).then(res => {
-                if (this.favorProjectIds.includes(data.project_id)) {
-                    let deleteProjectIndex = this.favorProjectIds.indexOf(data.project_id)
-                    if (deleteProjectIndex > -1) {
-                        this.favorProjectIds.splice(deleteProjectIndex, 1)
-                    }
-                }
-                this.loadingTable = !this.loadingTable
-            }, () => {
-                this.loadingTable = !this.loadingTable
-            })
-        },
-        statusMany(type) {
-            let selected = this.selectedData
-
-            if (!selected.length) {
-                utils.warning(this.__('请勾选数据'))
-                return
-            }
-
-            let data = {
-                ids: selected,
-                status: type,
-            }
-
-            this.apiPost('project/status', data).then(res => {
-                this.data.forEach((item, index) => {
-                    if (selected.includes(item.id)) {
-                        this.$set(this.data[index], 'status', type)
-                        this.$set(this.data[index], 'status_enum', 1 === type ? this.__('启用') : this.__('禁用'))
-                    }
-                })
-            })
-        },
-        onSelectionChange(data) {
-            let ids = []
-
-            data.forEach(item => ids.push(item.id))
-
-            this.selectedData = ids
-        },
         init: function(num, id) {
             this.apiGet('project/show', {num: num}).then(res => {
                 this.project = res
                 this.apiGet('project-label', {project_ids: [res.id]}).then(res => {
                     this.projectLabels = res.data
-                    this.$refs.search.search()
                 })
                 this.apiGet('project-module', {project_ids: [res.id]}).then(res => {
                     this.projectModules = res.data
@@ -659,6 +473,11 @@ export default {
                 path: '/project/process/'+num,
             })
         },
+        editContent(num) {
+            this.$router.push({
+                path: '/project/content/'+num,
+            })
+        },
     },
     watch: {
         $route(to, from) {
@@ -666,6 +485,17 @@ export default {
         }
     },
     computed: {
+        editProp () {
+            let data = {
+                subfield: false,// 单双栏模式
+                defaultOpen: 'preview',//edit： 默认展示编辑区域 ， preview： 默认展示预览区域
+                editable: false,
+                toolbarsFlag: false,
+                scrollStyle: true,
+                boxShadow: false,
+            }
+            return data
+        },
         seletedProjectTemplateData: function () {
             let selecedData = this.projectTemplate.find(item => {
                 return item.key === this.seletedProjectTemplate;
@@ -685,7 +515,7 @@ export default {
             return JSON.stringify(this.dragList, null, 2);
         },
     },
-    mounted: function() {
+    created: function() {
         this.init(this.$route.params.num, this.$route.params.id)
     },
     mixins: [http],

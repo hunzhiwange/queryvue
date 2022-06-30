@@ -30,16 +30,16 @@
 }
 
 
-.doc-content-view {
+.doc-content {
+    position: absolute;
+    top: 30px;
+    left: 0;
     width: 100%;
-    max-height: 500px;
+    height: calc(100% - 30px);
     overflow-y:auto;
 
     .v-note-wrapper {
-        border:none;
-
-        .v-note-panel .v-note-show .v-show-content {
-            padding:0;
-        }
+        z-index: 0;
     }
 }
+

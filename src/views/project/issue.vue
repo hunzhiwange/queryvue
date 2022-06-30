@@ -12,7 +12,11 @@
                              <Row>
                                 <Col span="18">
                                     <ButtonGroup class="m-r-15">
-                                        <Button type="primary">
+                                        <Button type="primary" v-if="projectIssue.project_type.content_type == 6" @click="editProcess(projectIssue.num)">
+                                            <Icon type="md-create" />
+                                            编辑
+                                        </Button>
+                                        <Button type="primary" v-if="projectIssue.project_type.content_type != 6" @click="editContent(projectIssue.num)">
                                             <Icon type="md-create" />
                                             编辑
                                         </Button>
@@ -174,13 +178,22 @@
                                     <p slot="title">
                                         <strong>描述</strong>
                                     </p>
-                                    <p>
-                                        <Button type="primary" @click="editProcess(projectIssue.num)">
-                                            <Icon type="md-create" />
-                                            编辑
-                                        </Button>
-                                    </p>
-                                    <p v-html="projectIssue.project_content.content"></p>
+                                    <div class="doc-content-view" v-if="projectIssue.project_type.content_type == 6">
+                                        <iframe class="process-view-iframe" :src="processUrl"></iframe>
+                                    </div>
+                                    <div class="doc-content-view">
+                                        <mavon-editor
+                                            v-if="projectIssue.project_type.content_type != 6"
+                                            v-model="projectIssue.project_content.content"
+                                            :subfield = "editProp.subfield"
+                                            :defaultOpen = "editProp.defaultOpen"
+                                            :toolbarsFlag = "editProp.toolbarsFlag"
+                                            :editable="editProp.editable"
+                                            :scrollStyle="editProp.scrollStyle"
+                                            :boxShadow="editProp.boxShadow"
+                                            previewBackground="#FFFFFF"
+                                         />
+                                    </div>
                                 </Card>
                             </Col>
                         </Row>
