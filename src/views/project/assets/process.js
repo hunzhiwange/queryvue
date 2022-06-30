@@ -501,8 +501,12 @@ export default {
             this.releaseData.pageSize = pageSize
             this.searchRelease()
         },
-        init: function(id) {
-            this.apiGet('project-issue/show', {num: id}).then(res => {
+        init: function(num, id) {
+            this.apiGet('project/show', {num: num}).then(res => {
+                this.project = res
+            })
+
+            this.apiGet('project-issue/show', {num: num+'-'+id}).then(res => {
                 if (res.project_type && res.project_type.content_type != 6) {
                     utils.error(this.__('非流程图文档'))
                     return
@@ -922,7 +926,7 @@ export default {
     },
     mounted: function() {
         //this.refresh()
-        this.init(this.$route.params.id)
+        this.init(this.$route.params.num, this.$route.params.id)
         this.flow = this.$refs.myFlow.contentWindow
     },
     mixins: [http],

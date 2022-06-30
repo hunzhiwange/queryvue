@@ -1,6 +1,10 @@
 import http from '@/utils/http'
+import board_header from './../board_header'
 
 export default {
+    components: {
+        board_header,
+    },
     data() {
         return {
             projectIssue: {
@@ -14,11 +18,19 @@ export default {
                     num: '',
                 }
             },
+            project: {
+                id: 0,
+                num: '',
+                name: this.__('请选择项目'),
+            },
         }
     },
     methods: {
-        init: function(id) {
-            this.apiGet('project-issue/show', {num: id}).then(res => {
+        init: function(num, id) {
+            this.apiGet('project/show', {num: num}).then(res => {
+                this.project = res
+            })
+            this.apiGet('project-issue/show', {num: num+'-'+id}).then(res => {
                 if (res.project_type && res.project_type.content_type == 6) {
                     utils.error(this.__('非内容文档'))
                     return
@@ -28,6 +40,11 @@ export default {
         },
         refresh() {
             this.init(this.$route.params.num)
+        },
+        backIssue() {
+            this.$router.push({
+                path: '/board/issue/'+this.projectIssue.num,
+            })
         },
         saveData(data) {
             var formData = {
@@ -56,8 +73,8 @@ export default {
     },
     computed: {
     },
-    mounted: function() {
-        this.init(this.$route.params.id)
+    created: function() {
+        this.init(this.$route.params.num, this.$route.params.id)
 
     },
     mixins: [http],

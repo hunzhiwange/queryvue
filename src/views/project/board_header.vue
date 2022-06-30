@@ -11,7 +11,7 @@
                             </template>
                             <MenuItem :to="'/board/'+item.num" v-for="item in projects" :key="item.id" :name="'project-'+item.id">{{ item.name }}</MenuItem>
                         </Submenu>
-                        <MenuItem v-if="issueNum !=''" name="issue">
+                        <MenuItem v-if="issueNum !=''" name="issue" :to="'/board/issue/'+issueNum">
                             <Icon type="ios-document" />
                             {{ issueNum }}
                         </MenuItem>

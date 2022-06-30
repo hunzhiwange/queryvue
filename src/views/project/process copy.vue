@@ -51,8 +51,8 @@
     height: 100%;
 }
 .layout .ivu-menu-horizontal {
-    /* height: 30px;
-    line-height: 30px; */
+    height: 30px;
+    line-height: 30px;
 }
 .layout-footer-center{
     text-align: center;

@@ -2,7 +2,7 @@
     <div class="layout">
         <Layout>
             <div class="header">
-                <Menu mode="horizontal" theme="light" active-name="1">
+                <Menu mode="horizontal" theme="dark" active-name="1">
                     <Row>
                         <Col span="6">
                             <MenuItem name="2" :to="'/board/'+projectIssue.project.num">
@@ -24,6 +24,7 @@
                         </Col>
                         <Col span="6">
                             <div class="pull-right">
+                                <Button type="primary" icon="ios-search"  @click="saveContent()">保存</Button>
                                 <MenuItem name="3" :to="'/board/process/'+projectIssue.num">
                                     <Icon type="md-eye" />
                                     浏览
@@ -37,7 +38,12 @@
                     </Row>
                 </Menu>
             </div>
-            <Flow ref="myFlow" class="body-flow" :title="projectIssue.sub_title" v-model="docContent.content" @saveData="saveData"></Flow>
+            <div class="doc-content">
+                <mavon-editor
+                    v-model="projectIssue.project_content.content"
+                    previewBackground="#FFFFFF"
+                />
+            </div>
         </Layout>
     </div>
 </template>
@@ -51,13 +57,13 @@
     height: 100%;
 }
 .layout .ivu-menu-horizontal {
-    /* height: 30px;
-    line-height: 30px; */
+    height: 30px;
+    line-height: 30px;
 }
 .layout-footer-center{
     text-align: center;
 }
 </style>
 
-<script src="./assets/process.js"></script>
-<style lang="less" src="./assets/process.less"></style>
+<script src="./assets/content.js"></script>
+<style lang="less" src="./assets/content.less"></style>

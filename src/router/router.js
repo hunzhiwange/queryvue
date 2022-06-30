@@ -58,14 +58,6 @@ export const commonRouter = [
         component: importRouter('error-page/500'),
     },
     {
-        path:"/project/process/:id",
-        meta: {
-            title: __('流程图'),
-        },
-        name: 'board_process',
-        component: importRouter('project/process'),
-    },
-    {
         path:"/board/process/:id",
         meta: {
             title: __('查看流程图'),
@@ -140,12 +132,20 @@ export const otherRouter = {
             component: importRouter('project/issue'),
         },
         {
-            path:"/project/content/:id",
+            path:"/project/content/:num-:id",
             meta: {
                 title: __('内容'),
             },
             name: 'board_content',
             component: importRouter('project/content'),
+        },
+        {
+            path:"/project/process/:num-:id",
+            meta: {
+                title: __('流程图'),
+            },
+            name: 'board_process',
+            component: importRouter('project/process'),
         },
     ],
 }

@@ -8,7 +8,7 @@
 <style lang="less" scoped>
     .flow-content {
         position: absolute;
-        top: 30px;
+        top: 20px;
         left: 0;
         width: 100%;
         height: calc(100% - 30px);
