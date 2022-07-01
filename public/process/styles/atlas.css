@@ -130,13 +130,14 @@ html body .geSidebarContainer .geTitle {
 	padding:8px 0px 8px 16px;
 }
 html body .geMenubarContainer * {
-	color: #DEEBFF;
+	color: #3a3a3a;
 }
 html body .geMenubarContainer .geStatus {
 	color: rgb(179, 179, 179);
 }
 .geMenubarContainer .geItem:hover {
-	background-color: rgba(9, 30, 66, 0.48) !important;
+	background-color: #d7d7d7 !important;
+    color: #000000;
 }
 html body .geToolbarContainer .geLabel {
 	margin:0px;
@@ -153,7 +154,7 @@ html body .geToolbarContainer .geLabel {
 	transition: none;
 }
 html body .geMenubarContainer {
-	background-color: #0049B0;
+	background-color: #d7d7d7;
 	color: #ffffff;
 	font-size: 14px;
 	padding-top:6px;

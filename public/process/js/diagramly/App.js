@@ -1693,7 +1693,7 @@ App.prototype.init = function()
 				
 				if (urlParams['extAuth'] != '1' && (mode == App.MODE_DEVICE || mode == App.MODE_BROWSER))
 				{
-					this.showDownloadDesktopBanner();
+					//this.showDownloadDesktopBanner();
 				}
 				else if (urlParams['embed'] != '1' && this.getServiceName() == 'draw.io')
 
@@ -1767,18 +1767,18 @@ App.prototype.init = function()
 			this.toggleElement.style.display = 'none';
 		}
 		
-		this.icon = document.createElement('img');
-		this.icon.setAttribute('src', IMAGE_PATH + '/logo-flat-small.png');
-		this.icon.setAttribute('title', mxResources.get('draw.io'));
-		this.icon.style.padding = urlParams['atlas'] == '1'? '7px' : '6px';
-		this.icon.style.cursor = 'pointer';
+		// this.icon = document.createElement('img');
+		// this.icon.setAttribute('src', IMAGE_PATH + '/logo-flat-small.png');
+		// this.icon.setAttribute('title', mxResources.get('draw.io'));
+		// this.icon.style.padding = urlParams['atlas'] == '1'? '7px' : '6px';
+		// this.icon.style.cursor = 'pointer';
 		
-		mxEvent.addListener(this.icon, 'click', mxUtils.bind(this, function(evt)
-		{
-			this.appIconClicked(evt);
-		}));
+		// mxEvent.addListener(this.icon, 'click', mxUtils.bind(this, function(evt)
+		// {
+		// 	this.appIconClicked(evt);
+		// }));
 		
-		this.menubar.container.insertBefore(this.icon, this.menubar.container.firstChild);
+		// this.menubar.container.insertBefore(this.icon, this.menubar.container.firstChild);
 	}
 	
 	if (this.editor.graph.isViewer())
@@ -4999,7 +4999,8 @@ App.prototype.fileCreated = function(file, libs, replace, done, clibs)
 					done();
 				}
 				
-				window.openWindow(url, null, fn2);
+                window.location.href = url
+				//window.openWindow(url, null, fn2);
 			}
 			else
 			{
@@ -6857,13 +6858,13 @@ App.prototype.updateHeader = function()
 		
 		if (urlParams['embed'] != '1')
 		{
-			this.menubarContainer.appendChild(this.appIcon);
+			//this.menubarContainer.appendChild(this.appIcon);
 		}
 	
 		this.fnameWrapper = document.createElement('div');
 		this.fnameWrapper.style.position = 'absolute';
 		this.fnameWrapper.style.right = '120px';
-		this.fnameWrapper.style.left = '60px';
+		this.fnameWrapper.style.left = '0px';
 		this.fnameWrapper.style.top = '9px';
 		this.fnameWrapper.style.height = '26px';
 		this.fnameWrapper.style.display = 'none';
@@ -6909,7 +6910,7 @@ App.prototype.updateHeader = function()
 			this.menubarContainer.appendChild(this.fnameWrapper);
 		
 			this.menubar.container.style.position = 'absolute';
-			this.menubar.container.style.paddingLeft = '59px';
+			this.menubar.container.style.paddingLeft = '0px';
 			this.toolbar.container.style.paddingLeft = '16px';
 			this.menubar.container.style.boxSizing = 'border-box';
 			this.menubar.container.style.top = '34px';
