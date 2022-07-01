@@ -5,31 +5,33 @@
                 <Col span="24">
                     <div class="header">
                         <Menu mode="horizontal" theme="light" active-name="1">
-                            <Row>
+                            <Row type="flex" justify="center" align="middle">
                                 <Col span="6">
-                                    <MenuItem name="2" :to="'/board/' + projectIssue.project.num">
-                                        <Icon type="md-list" />
-                                        {{ projectIssue.project.name }}
-                                    </MenuItem>
+                                    <MenuItem name="4">
+                                        <Button
+                                            type="primary"
+                                            :loading="saveLoading"
+                                            icon="ios-search"
+                                            @click="saveContent()"
+                                            >保存</Button
+                                        ></MenuItem
+                                    >
                                     <MenuItem name="4">
                                         <Icon type="md-time" />
                                         历史版本
                                     </MenuItem>
                                 </Col>
                                 <Col span="12">
-                                    <div style="text-align: center">
-                                        <MenuItem name="1" :to="'/board/issue/' + projectIssue.num">
-                                            <Icon type="md-arrow-round-back" />
-                                            {{ projectIssue.title }}
-                                        </MenuItem>
-                                    </div>
+                                    <MenuItem name="1" :to="'/board/issue/' + projectIssue.num">
+                                        <Icon type="md-arrow-round-back" />
+                                        {{ projectIssue.title }}
+                                    </MenuItem>
                                 </Col>
                                 <Col span="6">
                                     <div class="pull-right">
-                                        <Button type="text" icon="ios-search" @click="saveContent()">保存</Button>
-                                        <MenuItem name="3" :to="'/board/process/' + projectIssue.num">
-                                            <Icon type="md-eye" />
-                                            浏览
+                                        <MenuItem name="2" :to="'/board/' + projectIssue.project.num">
+                                            <Icon type="md-list" />
+                                            {{ projectIssue.project.name }}
                                         </MenuItem>
                                         <MenuItem name="4">
                                             <Icon type="md-share" />
@@ -40,8 +42,13 @@
                             </Row>
                         </Menu>
                     </div>
-                    <div class="doc-content" style="margin-top:-3px;">
-                        <mavon-editor v-model="projectIssue.project_content.content" previewBackground="#FFFFFF" />
+                    <div class="doc-content" style="margin-top: -3px">
+                        <mavonEditor
+                        v-model="projectIssue.project_content.content"
+                        @imgAdd="imageUpload"
+                        ref="projectContent"
+                        previewBackground="#FFFFFF"
+                        />
                     </div>
                 </Col>
             </Row>

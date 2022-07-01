@@ -187,7 +187,7 @@
                                         <iframe class="process-view-iframe" :src="processUrl"></iframe>
                                     </div>
                                     <div class="doc-content-view">
-                                        <mavon-editor
+                                        <mavonEditor
                                             v-if="projectIssue.project_type.content_type != 6"
                                             v-model="projectIssue.project_content.content"
                                             :subfield="editProp.subfield"

@@ -1,18 +1,9 @@
 import axios from 'axios'
 import isJSON from 'validator/lib/isJSON'
-import {lock} from '@/utils/auth'
+import { lock } from '@/utils/auth'
 import Vue from 'vue'
 import qs from 'qs'
-import {createSignature} from './signature'
-
-// 设置 axios 为 form-data
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
-axios.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded'
-axios.defaults.transformRequest = [
-    function(data) {
-        return qs.stringify(data)
-    },
-]
+import { createSignature } from './signature'
 
 Vue.prototype.$axios = axios
 
@@ -22,42 +13,63 @@ const service = axios.create({
     timeout: 15000, // 请求超时时间
 })
 
+function package_params(requestData) {
+    let baseData = {
+        format: 'json',
+        app_key: process.env.VUE_APP_KEY,
+        timestamp: new Date().getTime(),
+        method: 'set_or_get.module.demo',
+        signature_method: 'hmac_sha256',
+    }
+
+    let apiToken = bus.$store.state.user.token
+    if (apiToken) {
+        baseData['token'] = apiToken;
+    }
+
+    if (requestData instanceof FormData) {
+        if (!requestData.has('v1')) {
+            baseData['version'] = 'v1'
+        }
+        baseData['signature'] = createSignature(baseData, process.env.VUE_APP_SECRET)
+
+        for (let key in baseData) {
+            requestData.append(key, baseData[key])
+        }
+    } else {
+        Object.assign(requestData, baseData)
+        if (!requestData.hasOwnProperty('version')) {
+            requestData['version'] = 'v1'
+        }
+        requestData['signature'] = createSignature(requestData, process.env.VUE_APP_SECRET)
+    }
+}
+
 // request 拦截器
 service.interceptors.request.use(
     config => {
+        if (config.method == 'post' && !config.headers.hasOwnProperty('Content-Type')) {
+            config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+        }
+
+        if (config.method == 'get') {
+            config.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+        }
+
+        if (!(config.headers.hasOwnProperty('Content-Type') && config.headers['Content-Type'] == 'multipart/form-data')) {
+            config.transformRequest = [
+                function (data) {
+                    return qs.stringify(data)
+                },
+            ]
+        }
+
         let methods = ['get', 'delete']
-        let baseData = {
-            format: 'json',
-            app_key: process.env.VUE_APP_KEY,
-            timestamp: new Date().getTime(),
-            method: 'set_or_get.module.demo',
-            signature_method: 'hmac_sha256',
-        }
-
-        let apiToken = bus.$store.state.user.token
-
-        // 使用 header 传递 token
-        // 会多一次 OPTIONS 请求
-        // if (apiToken) {
-        //     config.headers['token'] = apiToken
-        // }
-
-        if (apiToken) {
-            baseData['token'] = apiToken;
-        }
 
         if (methods.includes(config.method)) {
-            Object.assign(config.params, baseData)
-            if (!config.params.hasOwnProperty('version')) {
-                config.params['version'] = 'v1'
-            }
-            config.params['signature'] = createSignature(config.params, process.env.VUE_APP_SECRET)
+            package_params(config.params)
         } else {
-            Object.assign(config.data, baseData)
-            if (!config.data.hasOwnProperty('version')) {
-                config.data['version'] = 'v1'
-            }
-            config.data['signature'] = createSignature(config.data, process.env.VUE_APP_SECRET)
+            package_params(config.data)
         }
 
         return config

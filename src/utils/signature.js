@@ -18,15 +18,15 @@ function parseParamsString(params, appSecret) {
     }
 
     // 解析表单键为 `hello[foo][bar]` 此类数据为对象
-    params = qs.parse(qs.stringify(params))
+    let paramsNew = qs.parse(qs.stringify(params))
     // 按键排序数据
-    params = ksort(params)
+    paramsNew = ksort(paramsNew)
 
     let tmpParams = [appSecret];
-    for (let i in params) {
-        let value = params[i]
-        if (typeof params[i] == 'object' || params[i] instanceof Array) {
-            value = JSON.stringify(params[i])
+    for (let i in paramsNew) {
+        let value = paramsNew[i]
+        if (typeof paramsNew[i] == 'object' || paramsNew[i] instanceof Array) {
+            value = JSON.stringify(paramsNew[i])
         }
         tmpParams.push(i + value)
     }
