@@ -47,13 +47,49 @@
                         </Menu>
                     </div>
                     <div class="doc-content">
-                        <mavonEditor
-                            v-model="projectIssue.project_content.content"
-                            @imgAdd="imageUpload"
-                            ref="projectContent"
-                            previewBackground="#FFFFFF"
-                            :navigation="true"
-                        />
+                        <Row :gutter="16" class="m-t-10">
+                            <Col :span="projectIssue.project_type.content_type == 7 ? 12 : 24">
+                                <mavonEditor
+                                    v-model="projectIssue.project_content.content"
+                                    @imgAdd="imageUpload"
+                                    ref="projectContent"
+                                    previewBackground="#FFFFFF"
+                                    @change="editorChange"
+                                    :defaultOpen="projectIssue.project_type.content_type == 7 ? 'edit' : ''"
+                                />
+                            </Col>
+                            <Col span="12" v-if="projectIssue.project_type.content_type == 7">
+                                <Card :bordered="false">
+                                    <ButtonGroup>
+                                        <Button @click="zoomIn"><Icon type="md-add" /> 放大</Button>
+                                        <Button @click="zoomOut"><Icon type="md-remove" /> 缩小</Button>
+                                        <Button @click="fit"><Icon type="md-contract" /> 自适应</Button>
+                                    </ButtonGroup>
+
+                                    <ColorPicker
+                                        class="m-l-10"
+                                        v-model="optionsMindMap.color"
+                                        alpha
+                                        recommend
+                                        @on-change="mindMap"
+                                    ></ColorPicker>
+
+                                    <Select
+                                        class="m-l-10"
+                                        v-model="currentLevelMindMap"
+                                        prefix="md-menu"
+                                        style="width: 80px"
+                                        @on-change="mindMap"
+                                    >
+                                        <Option v-for="item in levelMindMap" :value="item.value" :key="item.value">{{
+                                            item.label
+                                        }}</Option>
+                                    </Select>
+
+                                    <svg id="markmap" style="width: 100%; height:985px;"></svg>
+                                </Card>
+                            </Col>
+                        </Row>
                     </div>
                 </Col>
             </Row>

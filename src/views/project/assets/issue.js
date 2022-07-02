@@ -249,7 +249,7 @@ export default {
                     label: '五级'
                 }
             ],
-            currentLevelMindMap: 0,
+            currentLevelMindMap: 1,
         }
     },
     methods: {
