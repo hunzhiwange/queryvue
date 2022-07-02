@@ -2689,23 +2689,23 @@ EditorUi.prototype.initCanvas = function()
 	
 			if (this.editor.editButtonLink != null || this.editor.editButtonFunc != null)
 			{
-				addButton(mxUtils.bind(this, function(evt)
-				{
-					if (this.editor.editButtonFunc != null) 
-					{
-						this.editor.editButtonFunc();
-					} 
-					else if (this.editor.editButtonLink == '_blank')
-					{
-						this.editor.editAsNew(this.getEditBlankXml());
-					}
-					else
-					{
-						graph.openLink(this.editor.editButtonLink, 'editWindow');
-					}
+				// addButton(mxUtils.bind(this, function(evt)
+				// {
+				// 	if (this.editor.editButtonFunc != null) 
+				// 	{
+				// 		this.editor.editButtonFunc();
+				// 	} 
+				// 	else if (this.editor.editButtonLink == '_blank')
+				// 	{
+				// 		this.editor.editAsNew(this.getEditBlankXml());
+				// 	}
+				// 	else
+				// 	{
+				// 		graph.openLink(this.editor.editButtonLink, 'editWindow');
+				// 	}
 					
-					mxEvent.consume(evt);
-				}), Editor.editImage, mxResources.get('edit'));
+				// 	mxEvent.consume(evt);
+				// }), Editor.editImage, mxResources.get('edit'));
 			}
 			
 			if (this.lightboxToolbarActions != null)

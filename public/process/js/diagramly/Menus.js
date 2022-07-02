@@ -3732,11 +3732,11 @@
 				this.addMenuItems(menu, ['spellCheck'], parent);	
 			}
 
-			this.addMenuItems(menu, ['copyConnect', 'collapseExpand', '-'], parent);
+			this.addMenuItems(menu, ['collapseExpand', '-'], parent);
 			
 			if (urlParams['embed'] != '1' && (isLocalStorage || mxClient.IS_CHROMEAPP))
 			{
-				this.addMenuItems(menu, ['showStartScreen'], parent);
+				//this.addMenuItems(menu, ['showStartScreen'], parent);
 			}
 
 			if (urlParams['embed'] != '1')
