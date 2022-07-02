@@ -16,6 +16,10 @@
                                             >保存</Button
                                         ></MenuItem
                                     >
+                                    <MenuItem name="2" :to="'/board/' + projectIssue.project.num">
+                                        <Icon type="md-list" />
+                                        {{ projectIssue.project.name }}
+                                    </MenuItem>
                                     <MenuItem name="4">
                                         <Icon type="md-time" />
                                         历史版本
@@ -29,9 +33,9 @@
                                 </Col>
                                 <Col span="6">
                                     <div class="pull-right">
-                                        <MenuItem name="2" :to="'/board/' + projectIssue.project.num">
-                                            <Icon type="md-list" />
-                                            {{ projectIssue.project.name }}
+                                        <MenuItem name="3" :to="'/board/content/' + projectIssue.num">
+                                            <Icon type="md-eye" />
+                                            浏览
                                         </MenuItem>
                                         <MenuItem name="4">
                                             <Icon type="md-share" />
@@ -42,12 +46,12 @@
                             </Row>
                         </Menu>
                     </div>
-                    <div class="doc-content" style="margin-top: -3px">
+                    <div class="doc-content">
                         <mavonEditor
-                        v-model="projectIssue.project_content.content"
-                        @imgAdd="imageUpload"
-                        ref="projectContent"
-                        previewBackground="#FFFFFF"
+                            v-model="projectIssue.project_content.content"
+                            @imgAdd="imageUpload"
+                            ref="projectContent"
+                            previewBackground="#FFFFFF"
                         />
                     </div>
                 </Col>

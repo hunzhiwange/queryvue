@@ -216,6 +216,16 @@ export default {
         }
     },
     methods: {
+        previewProcess() {
+            this.$router.push({
+                path: '/board/process/'+this.projectIssue.num,
+            })
+        },
+        previewContent() {
+            this.$router.push({
+                path: '/board/content/'+this.projectIssue.num,
+            })
+        },
         editTaskModules() {
             this.issueModulesEdit = true
             this.issueEditModules = []

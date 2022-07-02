@@ -164,7 +164,29 @@
                                     <p slot="title">
                                         <strong>描述</strong>
                                     </p>
+
                                     <Button
+                                        type="default"
+                                        v-if="projectIssue.project_type.content_type != 6"
+                                        @click="previewContent"
+                                        slot="extra"
+                                    >
+                                        <Icon type="md-document" />
+                                        查看
+                                    </Button>
+
+                                    <Button
+                                        type="default"
+                                        v-if="projectIssue.project_type.content_type == 6"
+                                        @click="previewProcess"
+                                        slot="extra"
+                                    >
+                                        <Icon type="md-document" />
+                                        查看
+                                    </Button>
+
+                                    <Button
+                                        class="m-l-10"
                                         type="default"
                                         v-if="projectIssue.project_type.content_type == 6"
                                         @click="editProcess(projectIssue.num)"
@@ -175,6 +197,7 @@
                                     </Button>
 
                                     <Button
+                                        class="m-l-10"
                                         type="default"
                                         v-if="projectIssue.project_type.content_type != 6"
                                         @click="editContent(projectIssue.num)"
@@ -183,8 +206,16 @@
                                         <Icon type="md-create" />
                                         编辑
                                     </Button>
+
                                     <div class="doc-content-view" v-if="projectIssue.project_type.content_type == 6">
-                                        <iframe class="process-view-iframe" :src="processUrl"></iframe>
+                                        <Card :bordered="false" style="height: 180px;cursor: pointer;" @click.native="previewProcess">
+                                            <div style="text-align:center">
+                                                <Icon type="ios-water" size="120"/>
+                                                <h4>
+                                                    流程图预览
+                                                </h4>
+                                            </div>
+                                        </Card>
                                     </div>
                                     <div class="doc-content-view">
                                         <mavonEditor
