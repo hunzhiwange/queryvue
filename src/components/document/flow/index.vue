@@ -1,7 +1,7 @@
 <template>
     <div class="flow-content">
-        <iframe ref="myFlow" class="flow-iframe" :src="url" allow="clipboard-read; clipboard-write"></iframe>
-        <div v-if="loadIng" class="flow-loading"><w-loading></w-loading></div>
+        <iframe ref="currentFlow" class="flow-iframe" :src="url" allow="clipboard-read; clipboard-write"></iframe>
+        <div v-if="loading" class="flow-loading"><Button type="primary" loading>加载中...</Button></div>
     </div>
 </template>
 
@@ -36,6 +36,8 @@
 </style>
 
 <script>
+import { setTimeout } from 'timers';
+
     export default {
         name: "Flow",
         props: {
@@ -52,7 +54,7 @@
         },
         data() {
             return {
-                loadIng: true,
+                loading: true,
                 flow: null,
                 //url: 'http://localhost:5000/?dev=1'+(this.readOnly ? '&lightbox=1' : ''),
                 url: window.location.origin + '/process/index.html' + (this.readOnly ? '?lightbox=1' : ''),
@@ -60,18 +62,17 @@
         },
         mounted() {
             window.addEventListener('message', this.handleMessage)
-            this.flow = this.$refs.myFlow.contentWindow;
+            this.flow = this.$refs.currentFlow.contentWindow;
         },
         activated() {
-            window.addEventListener('message', this.handleMessage)
-            this.flow = this.$refs.myFlow.contentWindow;
+            // window.addEventListener('message', this.handleMessage)
+            // this.flow = this.$refs.currentFlow.contentWindow;
         },
         methods: {
             handleMessage (event) {
                 const data = event.data;
                 switch (data.act) {
                     case 'ready':
-                        //this.loadIng = false;
                         this.flow.postMessage({
                             act: 'setData',
                             params: {
@@ -79,48 +80,17 @@
                                 data: this.value,
                             }
                         }, '*')
+                        setTimeout(() => this.loading = false, 300)
                         break
 
                     case 'change':
-                        this.$emit('input', data.params.data)
+                        if (this.loading) {
+                            return
+                        }
                         this.$emit('saveData', data.params)
-                        break
-
-                    case 'save':
-                        this.$emit('saveData');
-                        break
-
-                    case 'imageContent':
-                        let pdf = new JSPDF({
-                            format: [data.params.width, data.params.height]
-                        });
-                        pdf.addImage(data.params.content, 'PNG', 0, 0, 0, 0);
-                        pdf.save(`${data.params.name}.pdf`);
                         break
                 }
             },
-
-            exportPNG(name, scale = 10) {
-                this.flow.postMessage({
-                    act: 'exportPNG',
-                    params: {
-                        name: name || this.$L('无标题'),
-                        scale: scale,
-                        type: 'png',
-                    }
-                }, '*')
-            },
-
-            exportPDF(name, scale = 10) {
-                this.flow.postMessage({
-                    act: 'exportPNG',
-                    params: {
-                        name: name || this.$L('无标题'),
-                        scale: scale,
-                        type: 'imageContent',
-                    }
-                }, '*')
-            }
         },
     }
 </script>
