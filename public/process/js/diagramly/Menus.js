@@ -849,7 +849,7 @@
 		}));
 
 		// Disabled in Safari as operation is not allowed
-		action.visible = Editor.enableNativeCipboard && editorUi.isExportToCanvas() && !mxClient.IS_SF;
+		//action.visible = Editor.enableNativeCipboard && editorUi.isExportToCanvas() && !mxClient.IS_SF;
 		
 		action = editorUi.actions.put('shadowVisible', new Action(mxResources.get('shadow'), function()
 		{
@@ -3585,7 +3585,7 @@
 		this.put('edit', new Menu(mxUtils.bind(this, function(menu, parent)
 		{
 			this.addMenuItems(menu, ['undo', 'redo', '-', 'cut', 'copy', 'copyAsImage', 'paste',
-				'delete', '-', 'duplicate', '-', 'findReplace', '-', 'editData', 'editTooltip', '-',
+				'delete', '-', 'findReplace', '-', 'editData', 'editTooltip', '-',
 				'editStyle',  'editGeometry', '-', 'edit', '-', 'editLink', 'openLink', '-',
                 'selectVertices', 'selectEdges', 'selectAll', 'selectNone', '-', 'lockUnlock']);
 		})));
@@ -3878,9 +3878,9 @@
 						this.addMenuItems(menu, ['exportOptionsDisabled'], parent);
 					}
 					
-					this.addMenuItems(menu, ['save', '-', 'share'], parent);
+					this.addMenuItems(menu, ['save'], parent);
 					
-					var item = this.addMenuItem(menu, 'synchronize', parent);
+					//var item = this.addMenuItem(menu, 'synchronize', parent);
 					
 					// if (!editorUi.isOffline() || mxClient.IS_CHROMEAPP || EditorUi.isElectronApp)
 					// {
@@ -3894,7 +3894,7 @@
 					this.addMenuItems(menu, ['new'], parent);
 				}
 				
-				this.addSubmenu('openFrom', menu, parent);
+				//this.addSubmenu('openFrom', menu, parent);
 
 				if (isLocalStorage)
 				{
@@ -3911,8 +3911,8 @@
 						file != null && (file.constructor != LocalFile ||
 						file.fileHandle != null))
 					{	
-						menu.addSeparator(parent);
-						var item = this.addMenuItem(menu, 'synchronize', parent);
+					//	menu.addSeparator(parent);
+					//	var item = this.addMenuItem(menu, 'synchronize', parent);
 						
 						// if (!editorUi.isOffline() || mxClient.IS_CHROMEAPP || EditorUi.isElectronApp)
 						// {
@@ -3926,7 +3926,7 @@
 						editorUi.getServiceName() == 'draw.io' &&
 						!editorUi.isOfflineApp() && file != null)
 					{
-						this.addMenuItems(menu, ['share', '-'], parent);
+						this.addMenuItems(menu, [], parent);
 					}
 					
 					this.addMenuItems(menu, ['rename'], parent);
