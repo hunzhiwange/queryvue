@@ -1,6 +1,6 @@
 <template>
     <div class="flow-content">
-        <iframe ref="myFlow" class="flow-iframe" :src="url"></iframe>
+        <iframe ref="myFlow" class="flow-iframe" :src="url" allow="clipboard-read; clipboard-write"></iframe>
         <div v-if="loadIng" class="flow-loading"><w-loading></w-loading></div>
     </div>
 </template>
@@ -8,7 +8,7 @@
 <style lang="less" scoped>
     .flow-content {
         position: absolute;
-        top: 20px;
+        top: 61px;
         left: 0;
         width: 100%;
         height: calc(100% - 30px);
