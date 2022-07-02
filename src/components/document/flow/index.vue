@@ -11,7 +11,7 @@
         top: 61px;
         left: 0;
         width: 100%;
-        height: calc(100% - 30px);
+        height: calc(100% - 84px);
         .flow-iframe {
             position: absolute;
             top: 0;

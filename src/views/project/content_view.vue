@@ -35,7 +35,6 @@
                     </div>
                     <div class="doc-content">
                         <mavonEditor
-                            style="height:90000px"
                             v-model="projectIssue.project_content.content"
                             :subfield="editProp.subfield"
                             :defaultOpen="editProp.defaultOpen"
