@@ -126,7 +126,7 @@ export const otherRouter = {
         {
             path:"/project/content/:num-:id",
             meta: {
-                title: __('内容'),
+                title: __('编辑内容'),
             },
             name: 'board_content',
             component: importRouter('project/content'),
@@ -134,7 +134,7 @@ export const otherRouter = {
         {
             path:"/project/process/:num-:id",
             meta: {
-                title: __('流程图'),
+                title: __('编辑流程图'),
             },
             name: 'board_process',
             component: importRouter('project/process'),
