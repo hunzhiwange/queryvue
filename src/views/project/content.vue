@@ -52,6 +52,7 @@
                             @imgAdd="imageUpload"
                             ref="projectContent"
                             previewBackground="#FFFFFF"
+                            :navigation="true"
                         />
                     </div>
                 </Col>

@@ -35,7 +35,7 @@
                     </div>
                     <div class="doc-content">
                         <mavonEditor
-                            v-if="projectIssue.project_type.content_type != 6"
+                            style="height:90000px"
                             v-model="projectIssue.project_content.content"
                             :subfield="editProp.subfield"
                             :defaultOpen="editProp.defaultOpen"
@@ -44,6 +44,8 @@
                             :scrollStyle="editProp.scrollStyle"
                             :boxShadow="editProp.boxShadow"
                             previewBackground="#FFFFFF"
+                            :navigation="true"
+                           __navigationToggle="onAddUrl"
                         />
                     </div>
                 </Col>

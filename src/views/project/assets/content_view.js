@@ -80,6 +80,23 @@ export default {
                     this.$refs.projectContent.$img2Url(pos, url.file_url)
                 })
         },
+        onAddUrl() {
+            // https://blog.csdn.net/qq_38667939/article/details/123908281
+            this.$nextTick(function () {
+                let _aList = document.querySelectorAll(".v-note-navigation-content a");
+                for (let i = 0; i < _aList.length; i++) {
+                    let _aParent = _aList[i].parentNode;
+                    let _a = _aParent.firstChild;
+                    if (!_a.id) continue; // 把不属于导航中的a标签去掉，否则会报错
+                    let _text = _aParent.lastChild;
+                    let text = _text.textContent;
+                    _a.href = "#" + _a.id;
+                    _a.innerText = text;
+                    _aParent.removeChild(_text);
+                    // _a.style.color = "red";
+                }
+            });
+        },
     },
     watch: {
         $route(to, from) {
@@ -87,7 +104,7 @@ export default {
         }
     },
     computed: {
-        editProp () {
+        editProp() {
             let data = {
                 subfield: false,// 单双栏模式
                 defaultOpen: 'preview',//edit： 默认展示编辑区域 ， preview： 默认展示预览区域
