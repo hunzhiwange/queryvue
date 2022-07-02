@@ -56,6 +56,10 @@ const projectTypeIcon = {
         'icon': 'ios-document-outline',
         'color': 'red',
     },
+    'mind': {
+        'icon': 'ios-document-outline',
+        'color': 'red',
+    },
 }
 
 const resetFormUser = {}

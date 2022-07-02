@@ -7,6 +7,8 @@ import draggable from 'vuedraggable'
 import VeLine from 'v-charts/lib/line.common'
 import { mavonEditor } from "mavon-editor"
 import "mavon-editor/dist/css/index.css"
+import { Transformer } from 'markmap-lib'
+import * as markmap from 'markmap-view'
 
 const jsondata = '{"date":["08-24","08-25","08-26","08-27","08-28","08-29","08-30","08-31","09-01","09-02"],"task":[66,60,60,61,61,0,0,54,0,55],"undoneTask":[37,14,16,17,6,0,0,9,0,10],"baseLineList":[37,32.9,28.799999999999997,24.699999999999996,20.599999999999994,16.499999999999993,12.399999999999993,8.299999999999994,4.199999999999994,0]}'
 const overdata = JSON.parse(jsondata)
@@ -51,6 +53,10 @@ const projectTypeIcon = {
         'color': 'red',
     },
     'process': {
+        'icon': 'ios-document-outline',
+        'color': 'red',
+    },
+    'mind': {
         'icon': 'ios-document-outline',
         'color': 'red',
     },
@@ -213,9 +219,76 @@ export default {
             projectModules: [],
             issueEditModules: [],
             processUrl: '',
+            instanceMarkmap:null,
+            optionsMindMap: {
+                color: null,
+            },
+            levelMindMap: [
+                {
+                    value: 0,
+                    label: '节点'
+                },
+                {
+                    value: 1,
+                    label: '一级'
+                },
+                {
+                    value: 2,
+                    label: '二级'
+                },
+                {
+                    value: 3,
+                    label: '三级'
+                },
+                {
+                    value: 4,
+                    label: '四级'
+                },
+                {
+                    value: 5,
+                    label: '五级'
+                }
+            ],
+            currentLevelMindMap: 0,
         }
     },
     methods: {
+        zoomIn() {
+            this.instanceMarkmap.rescale(1.25)
+        },
+        zoomOut() {
+            this.instanceMarkmap.rescale(0.8)
+        },
+        fit() {
+            this.instanceMarkmap.fit()
+        },
+        mindMap() {
+            const transformer = new Transformer()
+
+            // 1. transform markdown
+            const { root, features } = transformer.transform(this.projectIssue.project_content.content)
+
+            //const { markmap } = window;
+            const { Markmap, loadCSS, loadJS } = markmap
+
+            let options = {
+                embedAssets: true,
+                maxWidth: 300,
+            }
+
+            if (this.currentLevelMindMap) {
+                options['initialExpandLevel'] = this.currentLevelMindMap
+            }
+
+            if (this.optionsMindMap.color) {
+                options['color'] = () => this.optionsMindMap.color
+            }
+
+            const mindMapContainer = document.querySelector('#markmap')
+            mindMapContainer.innerHTML = ''
+            let instanceMarkmap = Markmap.create(mindMapContainer, options, root)
+            this.instanceMarkmap = instanceMarkmap
+        },
         previewProcess() {
             this.$router.push({
                 path: '/board/process/'+this.projectIssue.num,
@@ -266,6 +339,11 @@ export default {
             })
             this.apiGet('project-issue/show', {num: num+'-'+id}).then(res => {
                 this.projectIssue = res
+                if (this.projectIssue.project_type.content_type == 7) {
+                    setTimeout(() => {
+                        this.mindMap()
+                    }, 500)
+                }
             })
         },
         handleSubmit(form) {

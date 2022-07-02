@@ -17,9 +17,7 @@
                             <Row>
                                 <Col span="18">
                                     <ButtonGroup class="m-r-15">
-                                        <Button
-                                            type="primary"
-                                        >
+                                        <Button type="primary">
                                             <Icon type="md-create" />
                                             编辑
                                         </Button>
@@ -208,18 +206,55 @@
                                     </Button>
 
                                     <div class="doc-content-view" v-if="projectIssue.project_type.content_type == 6">
-                                        <Card :bordered="false" style="height: 180px;cursor: pointer;" @click.native="previewProcess">
-                                            <div style="text-align:center">
-                                                <Icon type="ios-water" size="120"/>
-                                                <h4>
-                                                    流程图预览
-                                                </h4>
+                                        <Card
+                                            :bordered="false"
+                                            style="height: 180px; cursor: pointer"
+                                            @click.native="previewProcess"
+                                        >
+                                            <div style="text-align: center">
+                                                <Icon type="ios-water" size="120" />
+                                                <h4>流程图预览</h4>
                                             </div>
                                         </Card>
                                     </div>
-                                    <div class="doc-content-view">
+
+                                    <div v-else-if="projectIssue.project_type.content_type == 7">
+                                        <ButtonGroup>
+                                            <Button @click="zoomIn"><Icon type="md-add" /> 放大</Button>
+                                            <Button @click="zoomOut"><Icon type="md-remove" /> 缩小</Button>
+                                            <Button @click="fit"><Icon type="md-contract" /> 自适应</Button>
+                                        </ButtonGroup>
+
+                                        <ColorPicker
+                                            class="m-l-10"
+                                            v-model="optionsMindMap.color"
+                                            alpha
+                                            recommend
+                                            @on-change="mindMap"
+                                        ></ColorPicker>
+
+                                        <Select
+                                            class="m-l-10"
+                                            v-model="currentLevelMindMap"
+                                            prefix="md-menu"
+                                            style="width: 80px"
+                                            @on-change="mindMap"
+                                        >
+                                            <Option
+                                                v-for="item in levelMindMap"
+                                                :value="item.value"
+                                                :key="item.value"
+                                                >{{ item.label }}</Option
+                                            >
+                                        </Select>
+
+                                        <div id="markmap-wrapper">
+                                            <svg id="markmap" style="width: 100%; height: 500px"></svg>
+                                        </div>
+                                    </div>
+
+                                    <div class="doc-content-view" v-else>
                                         <mavonEditor
-                                            v-if="projectIssue.project_type.content_type != 6"
                                             v-model="projectIssue.project_content.content"
                                             :subfield="editProp.subfield"
                                             :defaultOpen="editProp.defaultOpen"
@@ -330,5 +365,7 @@
     </div>
 </template>
 
+<script src="https://cdn.jsdelivr.net/npm/d3@6"></script>
+<script src="https://cdn.jsdelivr.net/npm/markmap-view"></script>
 <script src="./assets/issue.js"></script>
 <style lang="less" src="./assets/issue.less"></style>
