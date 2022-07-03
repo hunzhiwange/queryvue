@@ -2,11 +2,13 @@ import http from '@/utils/http'
 import board_header from './../board_header'
 import { mavonEditor } from "mavon-editor"
 import "mavon-editor/dist/css/index.css"
+import Swagger from '../../../components/document/swagger/index'
 
 export default {
     components: {
         board_header,
         mavonEditor,
+        Swagger,
     },
     data() {
         return {
@@ -19,6 +21,9 @@ export default {
                 project: {
                     name: '',
                     num: '',
+                },
+                project_type: {
+                    content_type: 1,
                 }
             },
             project: {

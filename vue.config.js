@@ -64,6 +64,9 @@ module.exports = {
                 {
                     from: 'public/process', to: 'process',
                 },
+                {
+                    from: 'public/swagger', to: 'swagger',
+                },
             ]),
         ],
     },

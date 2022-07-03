@@ -60,6 +60,14 @@ const projectTypeIcon = {
         'icon': 'ios-document-outline',
         'color': 'red',
     },
+    'swagger': {
+        'icon': 'ios-document-outline',
+        'color': 'red',
+    },
+    'swagger_url': {
+        'icon': 'ios-document-outline',
+        'color': 'red',
+    },
 }
 
 const resetFormUser = {}

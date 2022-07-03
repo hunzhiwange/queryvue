@@ -33,7 +33,14 @@
                             </Row>
                         </Menu>
                     </div>
-                    <div class="doc-content">
+
+                    <div class="doc-content" v-if="projectIssue.project_type.content_type == 8" style="height:1100px;">
+                        <Swagger ref="mySwagger" class="body-swagger" v-model="projectIssue.project_content.content"></Swagger>
+                    </div>
+                    <div class="doc-content" v-else-if="projectIssue.project_type.content_type == 9" style="height:1100px;">
+                        <Swagger ref="mySwagger" class="body-swagger" v-model="projectIssue.project_content.content" :isUrl="true"></Swagger>
+                    </div>
+                    <div class="doc-content" v-else>
                         <mavonEditor
                             v-model="projectIssue.project_content.content"
                             :subfield="editProp.subfield"

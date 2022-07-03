@@ -218,6 +218,33 @@
                                         </Card>
                                     </div>
 
+                                    <div class="doc-content-view" v-else-if="projectIssue.project_type.content_type == 8">
+                                        <Card
+                                            :bordered="false"
+                                            style="height: 180px; cursor: pointer"
+                                            @click.native="previewContent"
+                                        >
+                                            <div style="text-align: center">
+                                                <Icon type="ios-water" size="120" />
+                                                <h4>Swagger 内容预览</h4>
+                                            </div>
+                                        </Card>
+                                    </div>
+
+                                    <div class="doc-content-view" v-else-if="projectIssue.project_type.content_type == 9">
+                                        <Card
+                                            :bordered="false"
+                                            style="height: 180px; cursor: pointer"
+                                            @click.native="previewContent"
+                                        >
+                                            <div style="text-align: center">
+                                                <Icon type="ios-water" size="120" />
+                                                <h4>Swagger 网址预览</h4>
+                                                <p>{{ projectIssue.project_content.content }}</p>
+                                            </div>
+                                        </Card>
+                                    </div>
+
                                     <div v-else-if="projectIssue.project_type.content_type == 7">
                                         <ButtonGroup>
                                             <Button @click="zoomIn"><Icon type="md-add" /> 放大</Button>
