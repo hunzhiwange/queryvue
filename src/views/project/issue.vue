@@ -91,16 +91,16 @@
                                         <strong>问题详情</strong>
                                     </p>
                                     <Row>
-                                        <Col span="4"> 类型: </Col>
-                                        <Col span="8"> y </Col>
-                                        <Col span="4"> 状态: </Col>
-                                        <Col span="8"> y </Col>
+                                        <Col span="4">类型:</Col>
+                                        <Col span="8">{{ projectIssue.project_type.content_type_enum }}</Col>
+                                        <Col span="4">状态:</Col>
+                                        <Col span="8">{{ projectIssue.project_label.name }}</Col>
                                     </Row>
                                     <Row>
-                                        <Col span="4"> 优先级: </Col>
-                                        <Col span="8"> y </Col>
-                                        <Col span="4"> 解决结果: </Col>
-                                        <Col span="8"> y </Col>
+                                        <Col span="4">优先级:</Col>
+                                        <Col span="8">{{ projectIssue.level_enum }}</Col>
+                                        <Col span="4">解决结果:</Col>
+                                        <Col span="8">{{ projectIssue.completed_enum }}</Col>
                                     </Row>
                                     <Row>
                                         <Col span="4"> 影响版本: </Col>
