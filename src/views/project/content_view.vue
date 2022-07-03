@@ -34,11 +34,55 @@
                         </Menu>
                     </div>
 
-                    <div class="doc-content" v-if="projectIssue.project_type.content_type == 8" style="height:1100px;">
-                        <Swagger ref="mySwagger" class="body-swagger" v-model="projectIssue.project_content.content"></Swagger>
+                    <div class="doc-content" v-if="projectIssue.project_type.content_type == 8" style="height: 1100px">
+                        <Swagger
+                            ref="mySwagger"
+                            class="body-swagger"
+                            v-model="projectIssue.project_content.content"
+                        ></Swagger>
                     </div>
-                    <div class="doc-content" v-else-if="projectIssue.project_type.content_type == 9" style="height:1100px;">
-                        <Swagger ref="mySwagger" class="body-swagger" v-model="projectIssue.project_content.content" :isUrl="true"></Swagger>
+                    <div
+                        class="doc-content"
+                        v-else-if="projectIssue.project_type.content_type == 9"
+                        style="height: 1100px"
+                    >
+                        <Swagger
+                            ref="mySwagger"
+                            class="body-swagger"
+                            v-model="projectIssue.project_content.content"
+                            :isUrl="true"
+                        ></Swagger>
+                    </div>
+                    <div class="doc-content" v-else-if="projectIssue.project_type.content_type == 7">
+                        <Card :bordered="false">
+                            <ButtonGroup>
+                                <Button @click="zoomIn"><Icon type="md-add" /> 放大</Button>
+                                <Button @click="zoomOut"><Icon type="md-remove" /> 缩小</Button>
+                                <Button @click="fit"><Icon type="md-contract" /> 自适应</Button>
+                            </ButtonGroup>
+
+                            <ColorPicker
+                                class="m-l-10"
+                                v-model="optionsMindMap.color"
+                                alpha
+                                recommend
+                                @on-change="mindMap"
+                            ></ColorPicker>
+
+                            <Select
+                                class="m-l-10"
+                                v-model="currentLevelMindMap"
+                                prefix="md-menu"
+                                style="width: 80px"
+                                @on-change="mindMap"
+                            >
+                                <Option v-for="item in levelMindMap" :value="item.value" :key="item.value">{{
+                                    item.label
+                                }}</Option>
+                            </Select>
+
+                            <svg id="markmap" style="width: 100%; height:990px;"></svg>
+                        </Card>
                     </div>
                     <div class="doc-content" v-else>
                         <mavonEditor
@@ -51,7 +95,7 @@
                             :boxShadow="editProp.boxShadow"
                             previewBackground="#FFFFFF"
                             :navigation="true"
-                           __navigationToggle="onAddUrl"
+                            __navigationToggle="onAddUrl"
                         />
                     </div>
                 </Col>

@@ -3,6 +3,8 @@ import board_header from './../board_header'
 import { mavonEditor } from "mavon-editor"
 import "mavon-editor/dist/css/index.css"
 import Swagger from '../../../components/document/swagger/index'
+import { Transformer } from 'markmap-lib'
+import * as markmap from 'markmap-view'
 
 export default {
     components: {
@@ -32,9 +34,76 @@ export default {
                 name: this.__('请选择项目'),
             },
             saveLoading: false,
+            instanceMarkmap:null,
+            optionsMindMap: {
+                color: null,
+            },
+            levelMindMap: [
+                {
+                    value: 0,
+                    label: '节点'
+                },
+                {
+                    value: 1,
+                    label: '一级'
+                },
+                {
+                    value: 2,
+                    label: '二级'
+                },
+                {
+                    value: 3,
+                    label: '三级'
+                },
+                {
+                    value: 4,
+                    label: '四级'
+                },
+                {
+                    value: 5,
+                    label: '五级'
+                }
+            ],
+            currentLevelMindMap: 0,
         }
     },
     methods: {
+        zoomIn() {
+            this.instanceMarkmap.rescale(1.25)
+        },
+        zoomOut() {
+            this.instanceMarkmap.rescale(0.8)
+        },
+        fit() {
+            this.instanceMarkmap.fit()
+        },
+        mindMap() {
+            const transformer = new Transformer()
+
+            // 1. transform markdown
+            const { root, features } = transformer.transform(this.projectIssue.project_content.content)
+
+            //const { markmap } = window;
+            const { Markmap, loadCSS, loadJS } = markmap
+
+            let options = {
+                embedAssets: true,
+                maxWidth: 300,
+            }
+
+            if (this.currentLevelMindMap) {
+                options['initialExpandLevel'] = this.currentLevelMindMap
+            }
+
+            if (this.optionsMindMap.color) {
+                options['color'] = () => this.optionsMindMap.color
+            }
+
+            const mindMapContainer = document.querySelector('#markmap')
+            mindMapContainer.innerHTML = ''
+            let instanceMarkmap = Markmap.create(mindMapContainer, options, root)
+            this.instanceMarkmap = instanceMarkmap
+        },
         init: function (num, id) {
             this.apiGet('project/show', { num: num }).then(res => {
                 this.project = res
@@ -45,6 +114,11 @@ export default {
                     return
                 }
                 this.projectIssue = res
+                if (this.projectIssue.project_type.content_type == 7) {
+                    setTimeout(() => {
+                        this.mindMap()
+                    }, 500)
+                }
             })
         },
         refresh() {
