@@ -105,7 +105,11 @@ window.addEventListener("message", function(event){
     switch (data.act) {
         case 'setData':
             if (data.params.type == 'content') {
-                data.params.data = JSON.parse(data.params.data)
+                try {
+                    data.params.data = JSON.parse(data.params.data)
+                } catch (error) {
+                    alert('Swagger 文档内容非 JSON 数据')
+                }
             }
             ui_init(data.params.data, data.params.type)
             break;
