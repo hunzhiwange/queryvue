@@ -501,6 +501,7 @@ export default {
         init: function(num) {
             this.apiGet('project/show', {num: num}).then(res => {
                 this.project = res
+                document.title = '[' + this.project.num + ']' +  this.project.name + ' - ' + document.title
                 this.searchRelease()
             })
             this.apiGet('search', {

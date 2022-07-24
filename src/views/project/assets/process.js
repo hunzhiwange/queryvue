@@ -514,6 +514,7 @@ export default {
                 this.projectIssue = res
                 this.docContent.title = res.title,
                 this.docContent.content = res.project_content.content
+                document.title = '[' + this.projectIssue.num + ']' +  this.projectIssue.title + ' - ' + document.title
             })
         },
         searchRelease() {

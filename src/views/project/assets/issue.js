@@ -347,6 +347,7 @@ export default {
             })
             this.apiGet('project-issue/show', {num: num+'-'+id}).then(res => {
                 this.projectIssue = res
+                document.title = '[' + this.projectIssue.num + ']' +  this.projectIssue.title + ' - ' + document.title
                 if (this.projectIssue.project_type.content_type == 7) {
                     setTimeout(() => {
                         this.mindMap()

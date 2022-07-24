@@ -117,6 +117,7 @@ export default {
                     return
                 }
                 this.projectIssue = res
+                document.title = '[' + this.projectIssue.num + ']' +  this.projectIssue.title + ' - ' + document.title
                 // if (this.projectIssue.project_type.content_type == 7) {
                 //     setTimeout(() => {
                 //         this.mindMap()
