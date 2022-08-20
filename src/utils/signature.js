@@ -26,7 +26,9 @@ function parseParamsString(params, appSecret) {
     for (let i in paramsNew) {
         let value = paramsNew[i]
         if (typeof paramsNew[i] == 'object' || paramsNew[i] instanceof Array) {
-            value = JSON.stringify(paramsNew[i])
+            value = createSignature(paramsNew[i], appSecret)
+        } else if (typeof value == 'string' && value.constructor == String) {
+            value = value.replace(/^\s+/, '').replace(/\s+$/, '')
         }
         tmpParams.push(i + value)
     }
