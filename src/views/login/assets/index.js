@@ -46,16 +46,16 @@ export default {
                         message: this.__('请输入验证码'),
                         trigger: 'blur',
                     },
-                    {
-                        min: 4,
-                        max: 4,
-                        message: this.__('长度为 %d 个字符', 4),
-                        trigger: 'blur',
-                    },
-                    {
-                        validator: validateAlpha,
-                        trigger: 'blur',
-                    },
+                    // {
+                    //     min: 4,
+                    //     max: 4,
+                    //     message: this.__('长度为 %d 个字符', 4),
+                    //     trigger: 'blur',
+                    // },
+                    // {
+                    //     validator: validateAlpha,
+                    //     trigger: 'blur',
+                    // },
                 ],
             },
             checked: false,
