@@ -5,6 +5,7 @@ import "mavon-editor/dist/css/index.css"
 import Swagger from '../../../components/document/swagger/index'
 import { Transformer } from 'markmap-lib'
 import * as markmap from 'markmap-view'
+import moment from 'moment'
 
 export default {
     components: {
@@ -76,6 +77,19 @@ export default {
         },
         fit() {
             this.instanceMarkmap.fit()
+        },
+        downloadAsSvg() {
+            let svgContent = document.querySelector('#markmap').innerHTML
+            svgContent = '<svg xmlns="http://www.w3.org/2000/svg" class="w-screen h-screen leading-none markmap mm-cowe6a-1" style="">'+svgContent+'</svg>'
+            svgContent = btoa(unescape(encodeURIComponent(svgContent)))
+            svgContent = 'data:application/octet-stream;base64,' + svgContent
+
+            const aLink = document.createElement('a')
+            aLink.href = svgContent
+            aLink.setAttribute('download', this.projectIssue.title+moment().format('YYYY-MM-DD')+'.svg' )
+            document.body.appendChild(aLink)
+            aLink.click()
+            document.body.removeChild(aLink)
         },
         mindMap() {
             const transformer = new Transformer()

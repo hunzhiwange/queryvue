@@ -9,6 +9,7 @@ import { mavonEditor } from "mavon-editor"
 import "mavon-editor/dist/css/index.css"
 import { Transformer } from 'markmap-lib'
 import * as markmap from 'markmap-view'
+import moment from 'moment'
 
 const jsondata = '{"date":["08-24","08-25","08-26","08-27","08-28","08-29","08-30","08-31","09-01","09-02"],"task":[66,60,60,61,61,0,0,54,0,55],"undoneTask":[37,14,16,17,6,0,0,9,0,10],"baseLineList":[37,32.9,28.799999999999997,24.699999999999996,20.599999999999994,16.499999999999993,12.399999999999993,8.299999999999994,4.199999999999994,0]}'
 const overdata = JSON.parse(jsondata)
@@ -269,6 +270,19 @@ export default {
         },
         fit() {
             this.instanceMarkmap.fit()
+        },
+        downloadAsSvg() {
+            let svgContent = document.querySelector('#markmap').innerHTML
+            svgContent = '<svg xmlns="http://www.w3.org/2000/svg" class="w-screen h-screen leading-none markmap mm-cowe6a-1" style="">'+svgContent+'</svg>'
+            svgContent = btoa(unescape(encodeURIComponent(svgContent)))
+            svgContent = 'data:application/octet-stream;base64,' + svgContent
+
+            const aLink = document.createElement('a')
+            aLink.href = svgContent
+            aLink.setAttribute('download', this.projectIssue.title+moment().format('YYYY-MM-DD')+'.svg' )
+            document.body.appendChild(aLink)
+            aLink.click()
+            document.body.removeChild(aLink)
         },
         mindMap() {
             const transformer = new Transformer()
