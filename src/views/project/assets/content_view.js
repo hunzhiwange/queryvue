@@ -88,6 +88,7 @@ export default {
                 }
             ],
             currentLevelMindMap: 0,
+            currentHeightMindMap: 1000,
         }
     },
     methods: {
@@ -123,6 +124,11 @@ export default {
              let svgNode = tempNode.firstChild
 
             svgDownload(svgNode, svg.clientWidth, svg.clientHeight, this.projectIssue.title+moment().format('YYYY-MM-DD')+'.png');
+        },
+        changeCurrentHeightMindMap() {
+            setTimeout(() => {
+                this.fit()
+            }, 0)
         },
         mindMap() {
             const transformer = new Transformer()

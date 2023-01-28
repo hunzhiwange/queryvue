@@ -62,6 +62,17 @@
                                 <Button @click="downloadAsSvg"><Icon type="md-arrow-down" /> 下载为 SVG</Button>
                                 <Button @click="downloadAsPng"><Icon type="md-images" /> 下载为 PNG</Button>
                             </ButtonGroup>
+
+                            <InputNumber
+                                class="m-l-10"
+                                :precision="0"
+                                :max="30000"
+                                :step="500"
+                                v-model="currentHeightMindMap"
+                                style="width:100px;"
+                                @on-blur="changeCurrentHeightMindMap()"
+                            ></InputNumber>
+
                             <ColorPicker
                                 class="m-l-10"
                                 v-model="optionsMindMap.color"
@@ -82,7 +93,7 @@
                                 }}</Option>
                             </Select>
 
-                            <svg id="markmap" style="width: 100%; height:990px;"></svg>
+                            <svg id="markmap" :style="{width: '100%', height: currentHeightMindMap+'px'}"></svg>
                         </Card>
                     </div>
                     <div class="doc-content" v-else>
