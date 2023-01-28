@@ -250,7 +250,8 @@
                                             <Button @click="zoomIn"><Icon type="md-add" /> 放大</Button>
                                             <Button @click="zoomOut"><Icon type="md-remove" /> 缩小</Button>
                                             <Button @click="fit"><Icon type="md-contract" /> 自适应</Button>
-                                            <Button @click="downloadAsSvg"><Icon type="md-down" /> 下载为 SVG</Button>
+                                            <Button @click="downloadAsSvg"><Icon type="md-arrow-down" /> 下载为 SVG</Button>
+                                            <Button @click="downloadAsPng"><Icon type="md-images" /> 下载为 PNG</Button>
                                         </ButtonGroup>
 
                                         <ColorPicker

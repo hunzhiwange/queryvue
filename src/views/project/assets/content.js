@@ -6,6 +6,28 @@ import { Transformer } from 'markmap-lib'
 import * as markmap from 'markmap-view'
 import moment from 'moment'
 
+function svgDownload(svg, clientWidth, clientHeight, title) {
+    let svgContent = new XMLSerializer().serializeToString(svg);
+    svgContent = btoa(unescape(encodeURIComponent(svgContent)));
+    svgContent = 'data:image/svg+xml;base64,' + svgContent;
+
+    let image = new Image()
+    image.src = svgContent
+    image.onload = function() {
+        const canvas = document.createElement('canvas')
+        canvas.width = clientWidth
+        canvas.height = clientHeight
+        const context = canvas.getContext("2d")
+        context.drawImage(image, 0, 0)
+
+        const a = document.createElement("a")
+        a.download = title
+        a.href = canvas.toDataURL("image/png")
+        document.body.appendChild(a)
+        a.click()
+    }
+}
+
 export default {
     components: {
         board_header,
@@ -88,6 +110,17 @@ export default {
             document.body.appendChild(aLink)
             aLink.click()
             document.body.removeChild(aLink)
+        },
+        downloadAsPng() {
+            let svg = document.querySelector('#markmap')
+            let svgContent = svg.innerHTML
+            svgContent = '<svg xmlns="http://www.w3.org/2000/svg" class="w-screen h-screen leading-none markmap mm-cowe6a-1" style="">'+svgContent+'</svg>'
+
+            let tempNode = document.createElement('div')
+            tempNode.innerHTML = svgContent
+            let svgNode = tempNode.firstChild
+
+            svgDownload(svgNode, svg.clientWidth, svg.clientHeight, this.projectIssue.title+moment().format('YYYY-MM-DD')+'.png');
         },
         mindMap() {
             const transformer = new Transformer()
