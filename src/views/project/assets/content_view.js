@@ -115,6 +115,7 @@ export default {
                 a.href = canvas.toDataURL("image/png")
                 document.body.appendChild(a)
                 a.click()
+                document.body.removeChild(a)
             }
         },
         changeCurrentHeightMindMap(value) {
