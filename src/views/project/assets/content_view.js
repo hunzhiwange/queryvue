@@ -88,14 +88,14 @@ export default {
 
             const aLink = document.createElement('a')
             aLink.href = svgContent
-            aLink.setAttribute('download', this.projectIssue.title+moment().format('YYYY-MM-DD')+'.svg' )
+            aLink.setAttribute('download', this.projectIssue.title+'-'+moment().format('YYYY-MM-DD')+'.svg' )
             document.body.appendChild(aLink)
             aLink.click()
             document.body.removeChild(aLink)
         },
         downloadAsPng() {
             let svg = document.querySelector('#markmap')
-            let title = this.projectIssue.title+moment().format('YYYY-MM-DD')+'.png'
+            let title = this.projectIssue.title+'-'+moment().format('YYYY-MM-DD')+'.png'
 
             let svgContent = new XMLSerializer().serializeToString(svg);
             svgContent = btoa(unescape(encodeURIComponent(svgContent)));
