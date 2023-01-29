@@ -7,28 +7,6 @@ import { Transformer } from 'markmap-lib'
 import * as markmap from 'markmap-view'
 import moment from 'moment'
 
-function svgDownload(svg, title) {
-    let svgContent = new XMLSerializer().serializeToString(svg);
-    svgContent = btoa(unescape(encodeURIComponent(svgContent)));
-    svgContent = 'data:image/svg+xml;base64,' + svgContent;
-
-    let image = new Image()
-    image.src = svgContent
-    image.onload = function() {
-        const canvas = document.createElement('canvas')
-        canvas.width = svg.clientWidth
-        canvas.height = svg.clientHeight
-        const context = canvas.getContext("2d")
-        context.drawImage(image, 0, 0)
-
-        const a = document.createElement("a")
-        a.download = title
-        a.href = canvas.toDataURL("image/png")
-        document.body.appendChild(a)
-        a.click()
-    }
-}
-
 export default {
     components: {
         board_header,
@@ -104,15 +82,7 @@ export default {
         },
         downloadAsSvg() {
             let svg = document.querySelector('#markmap')
-            // svg.setAttribute('width', width);
-            // svg.setAttribute('height', height);
-         //   svg.setAttribute('viewBox', [0, 0, 9000, 5000]);
-            // console.log(svg)
-            // let svgContent = svg.innerHTML
-            // console.log(1)
-
-
-            let svgContent = new XMLSerializer().serializeToString(svg);
+            let svgContent = new XMLSerializer().serializeToString(svg)
             svgContent = btoa(unescape(encodeURIComponent(svgContent)))
             svgContent = 'data:application/octet-stream;base64,' + svgContent
 
@@ -125,7 +95,27 @@ export default {
         },
         downloadAsPng() {
             let svg = document.querySelector('#markmap')
-            svgDownload(svg, this.projectIssue.title+moment().format('YYYY-MM-DD')+'.png');
+            let title = this.projectIssue.title+moment().format('YYYY-MM-DD')+'.png'
+
+            let svgContent = new XMLSerializer().serializeToString(svg);
+            svgContent = btoa(unescape(encodeURIComponent(svgContent)));
+            svgContent = 'data:image/svg+xml;base64,' + svgContent;
+
+            let image = new Image()
+            image.src = svgContent
+            image.onload = function() {
+                const canvas = document.createElement('canvas')
+                canvas.width = svg.clientWidth
+                canvas.height = svg.clientHeight
+                const context = canvas.getContext("2d")
+                context.drawImage(image, 0, 0)
+
+                const a = document.createElement("a")
+                a.download = title
+                a.href = canvas.toDataURL("image/png")
+                document.body.appendChild(a)
+                a.click()
+            }
         },
         changeCurrentHeightMindMap(value) {
             utils.once(() => {

@@ -66,6 +66,7 @@
                             <InputNumber
                                 class="m-l-10"
                                 :precision="0"
+                                :min="0"
                                 :max="30000"
                                 :step="1000"
                                 :value="tempHeightMindMap"
