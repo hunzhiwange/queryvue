@@ -68,7 +68,7 @@
                                 :precision="0"
                                 :max="30000"
                                 :step="1000"
-                                :value="1000"
+                                :value="tempHeightMindMap"
                                 style="width:100px;"
                                 @on-change="changeCurrentHeightMindMap"
                             ></InputNumber>

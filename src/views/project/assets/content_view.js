@@ -89,6 +89,7 @@ export default {
             ],
             currentLevelMindMap: 0,
             currentHeightMindMap: 1000,
+            tempHeightMindMap: 1000,
         }
     },
     methods: {
@@ -172,6 +173,14 @@ export default {
                 this.projectIssue = res
                 document.title = '[' + this.projectIssue.num + ']' +  this.projectIssue.title + ' - ' + document.title
                 if (this.projectIssue.project_type.content_type == 7) {
+                    let docContent = this.projectIssue.project_content.content
+                    let docContentHeight = docContent.split('\n').length*35
+                    let tempHeight = docContentHeight%500
+                    if (tempHeight > 0) {
+                        docContentHeight += 500-tempHeight
+                    }
+
+                    this.tempHeightMindMap = this.currentHeightMindMap = docContentHeight
                     setTimeout(() => {
                         this.mindMap()
                     }, 500)
