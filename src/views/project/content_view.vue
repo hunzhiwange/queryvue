@@ -93,7 +93,7 @@
                                 }}</Option>
                             </Select>
 
-                            <svg id="markmap" :style="{width: '100%', height: currentHeightMindMap+'px'}"></svg>
+                            <svg id="markmap" xmlns="http://www.w3.org/2000/svg" class="w-screen h-screen leading-none markmap mm-cowe6a-1" :style="{width: '100%', height: currentHeightMindMap+'px'}"></svg>
                         </Card>
                     </div>
                     <div class="doc-content" v-else>
