@@ -125,10 +125,13 @@ export default {
 
             svgDownload(svgNode, svg.clientWidth, svg.clientHeight, this.projectIssue.title+moment().format('YYYY-MM-DD')+'.png');
         },
-        changeCurrentHeightMindMap() {
-            setTimeout(() => {
-                this.fit()
-            }, 0)
+        changeCurrentHeightMindMap(value) {
+            utils.once(() => {
+                this.currentHeightMindMap = value
+                setTimeout(() => {
+                    this.fit()
+                }, 0)
+            }, 500)
         },
         mindMap() {
             const transformer = new Transformer()

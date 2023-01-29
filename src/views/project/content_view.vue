@@ -67,10 +67,10 @@
                                 class="m-l-10"
                                 :precision="0"
                                 :max="30000"
-                                :step="500"
-                                v-model="currentHeightMindMap"
+                                :step="1000"
+                                :value="1000"
                                 style="width:100px;"
-                                @on-blur="changeCurrentHeightMindMap()"
+                                @on-change="changeCurrentHeightMindMap"
                             ></InputNumber>
 
                             <ColorPicker
