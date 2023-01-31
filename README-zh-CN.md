@@ -23,6 +23,7 @@ cp .env.example .env.production
 接着
 
 ```bas
+node -v v14.17.4
 npm install -g cnpm --registry=https://registry.npm.taobao.org // Just once
 cnpm install
 npm run serve # npm run dev
