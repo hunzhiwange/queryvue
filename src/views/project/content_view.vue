@@ -62,17 +62,34 @@
                                 <Button @click="downloadAsSvg"><Icon type="md-arrow-down" /> 下载为 SVG</Button>
                                 <Button @click="downloadAsPng"><Icon type="md-images" /> 下载为 PNG</Button>
                             </ButtonGroup>
+                            <span class="m-l-10">
+                                宽度
+                                <InputNumber
+                                    class="m-l-10"
+                                    :precision="0"
+                                    :min="0"
+                                    :max="500"
+                                    :step="50"
+                                    :value="tempWidthMindMap"
+                                    style="width:65px;"
+                                    @on-change="changeCurrentWidthMindMap"
+                                ></InputNumber>
+                                %
+                            </span>
 
-                            <InputNumber
-                                class="m-l-10"
-                                :precision="0"
-                                :min="0"
-                                :max="30000"
-                                :step="1000"
-                                :value="tempHeightMindMap"
-                                style="width:100px;"
-                                @on-change="changeCurrentHeightMindMap"
-                            ></InputNumber>
+                            <span class="m-l-10">
+                                高度
+                                <InputNumber
+                                    :precision="0"
+                                    :min="0"
+                                    :max="30000"
+                                    :step="1000"
+                                    :value="tempHeightMindMap"
+                                    style="width:80px;"
+                                    @on-change="changeCurrentHeightMindMap"
+                                ></InputNumber>
+                                px
+                            </span>
 
                             <ColorPicker
                                 class="m-l-10"
@@ -94,7 +111,9 @@
                                 }}</Option>
                             </Select>
 
-                            <svg id="markmap" xmlns="http://www.w3.org/2000/svg" class="w-screen h-screen leading-none markmap mm-cowe6a-1" :style="{width: '100%', height: currentHeightMindMap+'px'}"></svg>
+                            <div class="svg_box">
+                                <svg id="markmap" xmlns="http://www.w3.org/2000/svg" class="w-screen h-screen leading-none markmap mm-cowe6a-1" :style="{width: currentWidthMindMap+'%', height: currentHeightMindMap+'px'}"></svg>
+                            </div>
                         </Card>
                     </div>
                     <div class="doc-content" v-else>

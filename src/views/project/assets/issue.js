@@ -255,7 +255,11 @@ export default {
                 {
                     value: 5,
                     label: '五级'
-                }
+                },
+                {
+                    value: 6,
+                    label: '六级'
+                },
             ],
             currentLevelMindMap: 1,
         }

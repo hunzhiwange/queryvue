@@ -63,11 +63,17 @@ export default {
                 {
                     value: 5,
                     label: '五级'
-                }
+                },
+                {
+                    value: 6,
+                    label: '六级'
+                },
             ],
             currentLevelMindMap: 0,
             currentHeightMindMap: 1000,
             tempHeightMindMap: 1000,
+            currentWidthMindMap: 100,
+            tempWidthMindMap: 100,
         }
     },
     methods: {
@@ -121,6 +127,14 @@ export default {
         changeCurrentHeightMindMap(value) {
             utils.once(() => {
                 this.currentHeightMindMap = value
+                setTimeout(() => {
+                    this.fit()
+                }, 0)
+            }, 500)
+        },
+        changeCurrentWidthMindMap(value) {
+            utils.once(() => {
+                this.currentWidthMindMap = value
                 setTimeout(() => {
                     this.fit()
                 }, 0)
