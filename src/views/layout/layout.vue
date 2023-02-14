@@ -34,7 +34,7 @@
                         type="text"
                         @click="toggleClick"
                     >
-                        <Icon type="md-return-left" size="22"></Icon>
+                        <Icon type="md-return-left" size="18"></Icon>
                     </i-button>
                 </div>
                 <div class="header-middle-con">
