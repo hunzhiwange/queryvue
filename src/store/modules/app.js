@@ -125,6 +125,10 @@ const app = {
                 state.pageOpenedList.unshift(state.pageOpenedList.splice(get.index , 1)[0]);
             }
 
+            if (state.pageOpenedList.length > 9) {
+                state.pageOpenedList.pop()
+            }
+
             localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList)
         },
         clearAllTags(state, vm) {
@@ -287,6 +291,11 @@ const app = {
             }
 
             state.pageOpenedList.unshift(tagObj)
+
+            if (state.pageOpenedList.length > 9) {
+                state.pageOpenedList.pop()
+            }
+
             localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList)
         },
     },
