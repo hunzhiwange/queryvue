@@ -95,11 +95,11 @@
         </div>
         <div class="single-page-con" :style="{left: shrink ? '40px' : '200px'}">
             <div class="single-page">
-                <Row>
-                    <div class="main-breadcrumb">
-                        <breadcrumb-nav :currentPath="currentPath"></breadcrumb-nav>
-                    </div>
-                </Row>
+<!--                <Row>-->
+<!--                    <div class="main-breadcrumb">-->
+<!--                        <breadcrumb-nav :currentPath="currentPath"></breadcrumb-nav>-->
+<!--                    </div>-->
+<!--                </Row>-->
                 <keep-alive :include="cachePage">
                     <router-view></router-view>
                 </keep-alive>
