@@ -1,13 +1,13 @@
 <template>
     <div class="main" :class="{'main-hide-text': shrink}">
-        <div slot="top" class="logo-con" :style="{width: tmpShrink && shrink ? '50px' : '200px'}">
+        <div slot="top" class="logo-con" :style="{width: tmpShrink && shrink ? '50px' : '160px'}">
             <img v-show="!(shrink && tmpShrink)" :src="img_logo" key="max-logo" />
             <img v-show="tmpShrink && shrink" :src="img_mini_logo" key="min-logo" />
         </div>
         <div
             class="sidebar-menu-con"
             :style="{
-                width: tmpShrink && shrink ? '50px' : '200px',
+                width: tmpShrink && shrink ? '50px' : '160px',
                 overflow: tmpShrink && shrink ? 'visible' : 'auto',
             }"
         >
@@ -24,7 +24,7 @@
             >
             </shrinkable-menu>
         </div>
-        <div class="main-header-con" :style="{paddingLeft: shrink ? '50px' : '200px'}">
+        <div class="main-header-con" :style="{paddingLeft: shrink ? '50px' : '160px'}">
             <div class="main-header">
                 <div class="navicon-con">
                     <i-button
@@ -93,7 +93,7 @@
                 </div>
             </div>
         </div>
-        <div class="single-page-con" :style="{left: shrink ? '40px' : '200px'}">
+        <div class="single-page-con" :style="{left: shrink ? '40px' : '150px'}">
             <div class="single-page">
 <!--                <Row>-->
 <!--                    <div class="main-breadcrumb">-->
