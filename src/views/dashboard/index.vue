@@ -7,7 +7,7 @@
                         <Icon type="flag"></Icon>
                         QueryPHP <Icon type="ios-heart" color="red"></Icon> Vue
                     </p>
-                    <i-button slot="extra" type="text" @click="officeSite()">{{ __('官方网站') }}</i-button>
+                    <i-button size="small" slot="extra" type="text" @click="officeSite()">{{ __('官方网站') }}</i-button>
 
                     <div>
                         <Row :gutter="16">

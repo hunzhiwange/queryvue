@@ -1,7 +1,7 @@
 <template>
     <div class="body">
         <div class="wrap layout2">
-            <Row :gutter="16" class="m-t-10">
+            <Row :gutter="16" class="m-t-10-x">
                 <Col span="24">
                     <div class="header">
                         <Menu mode="horizontal" theme="light" active-name="1">

@@ -8,7 +8,7 @@
 <style lang="less" scoped>
     .swagger-content {
         position: absolute;
-        top: 61px;
+        top: 31px;
         left: 0;
         width: 100%;
         height: calc(100% - 84px);

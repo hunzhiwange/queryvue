@@ -164,6 +164,7 @@
                                     </p>
 
                                     <Button
+                                        size="small"
                                         type="default"
                                         v-if="projectIssue.project_type.content_type != 6"
                                         @click="previewContent"
@@ -174,6 +175,7 @@
                                     </Button>
 
                                     <Button
+                                        size="small"
                                         type="default"
                                         v-if="projectIssue.project_type.content_type == 6"
                                         @click="previewProcess"
@@ -184,6 +186,7 @@
                                     </Button>
 
                                     <Button
+                                        size="small"
                                         class="m-l-10"
                                         type="default"
                                         v-if="projectIssue.project_type.content_type == 6"
@@ -197,6 +200,7 @@
                                     <Button
                                         class="m-l-10"
                                         type="default"
+                                        size="small"
                                         v-if="projectIssue.project_type.content_type != 6"
                                         @click="editContent(projectIssue.num)"
                                         slot="extra"
