@@ -165,7 +165,7 @@
 
                                     <Button
                                         size="small"
-                                        type="default"
+                                        type="text"
                                         v-if="projectIssue.project_type.content_type != 6"
                                         @click="previewContent"
                                         slot="extra"
@@ -176,7 +176,7 @@
 
                                     <Button
                                         size="small"
-                                        type="default"
+                                        type="text"
                                         v-if="projectIssue.project_type.content_type == 6"
                                         @click="previewProcess"
                                         slot="extra"
@@ -188,7 +188,7 @@
                                     <Button
                                         size="small"
                                         class="m-l-10"
-                                        type="default"
+                                        type="text"
                                         v-if="projectIssue.project_type.content_type == 6"
                                         @click="editProcess(projectIssue.num)"
                                         slot="extra"
@@ -199,7 +199,7 @@
 
                                     <Button
                                         class="m-l-10"
-                                        type="default"
+                                        type="text"
                                         size="small"
                                         v-if="projectIssue.project_type.content_type != 6"
                                         @click="editContent(projectIssue.num)"

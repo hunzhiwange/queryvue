@@ -9,7 +9,7 @@
                                 <Col span="6">
                                     <MenuItem name="4">
                                         <Button
-                                            type="primary"
+                                            type="text"
                                             size="small"
                                             :loading="saveLoading"
                                             icon="ios-search"
