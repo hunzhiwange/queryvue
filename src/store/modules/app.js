@@ -120,7 +120,11 @@ const app = {
             if (get.query) {
                 openedPage.query = get.query
             }
-            state.pageOpenedList.splice(get.index, 1, openedPage)
+
+            if(get.index!=0){
+                state.pageOpenedList.unshift(state.pageOpenedList.splice(get.index , 1)[0]);
+            }
+
             localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList)
         },
         clearAllTags(state, vm) {
