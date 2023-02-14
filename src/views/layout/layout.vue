@@ -93,7 +93,7 @@
                 </div>
             </div>
         </div>
-        <div class="single-page-con" :style="{left: shrink ? '60px' : '200px'}">
+        <div class="single-page-con" :style="{left: shrink ? '40px' : '200px'}">
             <div class="single-page">
                 <Row>
                     <div class="main-breadcrumb">
