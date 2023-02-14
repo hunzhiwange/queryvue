@@ -282,7 +282,7 @@ const app = {
                 localStorage.cachePage = JSON.stringify(state.cachePage)
             }
 
-            state.pageOpenedList.push(tagObj)
+            state.pageOpenedList.unshift(tagObj)
             localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList)
         },
     },
