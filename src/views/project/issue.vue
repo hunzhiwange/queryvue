@@ -293,6 +293,7 @@
                                             :editable="editProp.editable"
                                             :scrollStyle="editProp.scrollStyle"
                                             :boxShadow="editProp.boxShadow"
+                                            :navigation="false"
                                             previewBackground="#FFFFFF"
                                         />
                                     </div>

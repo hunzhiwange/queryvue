@@ -57,6 +57,7 @@
                                     previewBackground="#FFFFFF"
                                     @change="editorChange"
                                     :defaultOpen="projectIssue.project_type.content_type == 7 ? 'edit' : ''"
+                                    :navigation="false"
                                 />
                             </Col>
                             <Col span="12" v-if="projectIssue.project_type.content_type == 7">

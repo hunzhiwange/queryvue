@@ -126,7 +126,7 @@
                             :scrollStyle="editProp.scrollStyle"
                             :boxShadow="editProp.boxShadow"
                             previewBackground="#FFFFFF"
-                            :navigation="true"
+                            :navigation="false"
                             __navigationToggle="onAddUrl"
                         />
                     </div>
