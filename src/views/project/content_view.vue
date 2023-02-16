@@ -1,8 +1,8 @@
 <template>
     <div class="body">
-        <div class="wrap layout2">
-            <Row :gutter="16" class="m-t-10-x">
-                <Col span="24">
+        <div class="wrap layout2" :style="{'overflow-y': [8,9].includes(projectIssue.project_type.content_type) ? 'hidden' : 'auto'}">
+            <Row :gutter="16" class="m-t-10-x h-100p">
+                <Col span="24" class="h-100p">
                     <div class="header">
                         <Menu mode="horizontal" theme="light" active-name="1">
                             <Row type="flex" justify="center" align="middle">
@@ -34,7 +34,7 @@
                         </Menu>
                     </div>
 
-                    <div class="doc-content" v-if="projectIssue.project_type.content_type == 8" style="height: 1100px">
+                    <div class="doc-content h-100p" v-if="projectIssue.project_type.content_type == 8">
                         <Swagger
                             ref="mySwagger"
                             class="body-swagger"
@@ -42,9 +42,8 @@
                         ></Swagger>
                     </div>
                     <div
-                        class="doc-content"
+                        class="doc-content h-100p"
                         v-else-if="projectIssue.project_type.content_type == 9"
-                        style="height: 1100px"
                     >
                         <Swagger
                             ref="mySwagger"
@@ -53,7 +52,7 @@
                             :isUrl="true"
                         ></Swagger>
                     </div>
-                    <div class="doc-content" v-else-if="projectIssue.project_type.content_type == 7">
+                    <div class="doc-content h-100p" v-else-if="projectIssue.project_type.content_type == 7">
                         <Card :bordered="false">
                             <ButtonGroup>
                                 <Button @click="zoomIn"><Icon type="md-add" /> 放大</Button>
@@ -116,7 +115,7 @@
                             </div>
                         </Card>
                     </div>
-                    <div class="doc-content" v-else>
+                    <div class="doc-content h-100p" v-else>
                         <mavonEditor
                             v-model="projectIssue.project_content.content"
                             :subfield="editProp.subfield"

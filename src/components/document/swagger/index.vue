@@ -1,5 +1,5 @@
 <template>
-    <div class="swagger-content">
+    <div class="swagger-content h-100p">
         <iframe ref="currentSwgger" class="swagger-iframe" :src="url"></iframe>
         <div v-if="loading" class="swagger-loading"><Button type="primary" loading>加载中...</Button></div>
     </div>
@@ -7,24 +7,16 @@
 
 <style lang="less" scoped>
     .swagger-content {
-        position: absolute;
-        top: 31px;
         left: 0;
-        width: 100%;
-        height: calc(100% - 84px);
         .swagger-iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
             background: 0 0;
             border: 0;
             float: none;
-            margin: -1px 0 0;
             max-width: none;
             outline: 0;
-            padding: 0;
+            padding-bottom: 26px;
         }
         .swagger-loading {
             position: absolute;
