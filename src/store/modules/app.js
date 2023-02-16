@@ -180,7 +180,7 @@ const app = {
             localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList)
 
             vm.$router.push({
-                name: state.pageOpenedList.length > 0 ? state.pageOpenedList[currentIndex - 1].name : 'dashboard',
+                name: state.pageOpenedList.length > 0 ? state.pageOpenedList[0].name : 'dashboard',
             })
         },
         clearRightsTag(state, vm) {
