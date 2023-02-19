@@ -9,7 +9,7 @@
                     <DropdownItem name="refreshTag">
                         <Icon type="md-refresh" size="22" /> {{ __('刷新') }}
                     </DropdownItem>
-                    <DropdownItem name="clearTag"><Icon type="md-close" /> {{ __('关闭标签') }}</DropdownItem>
+                    <DropdownItem name="clearTag"><Icon type="md-close" /> {{ __('关闭') }}</DropdownItem>
                     <DropdownItem name="clearOthers"><Icon type="md-trash" /> {{ __('关闭其他') }}</DropdownItem>
 <!--                    <DropdownItem name="clearRights"><Icon type="md-return-right" /> {{ __('关闭右侧') }}</DropdownItem>-->
 <!--                    <DropdownItem name="clearLefts"><Icon type="md-return-left" /> {{ __('关闭左侧') }}</DropdownItem>-->
@@ -26,7 +26,7 @@
                     <DropdownItem name="refreshTag">
                         <Icon type="md-refresh" size="22" /> {{ __('刷新') }}
                     </DropdownItem>
-                    <DropdownItem name="clearTag"><Icon type="md-close" /> {{ __('关闭标签') }}</DropdownItem>
+                    <DropdownItem name="clearTag"><Icon type="md-close" /> {{ __('关闭') }}</DropdownItem>
                     <DropdownItem name="clearOthers"><Icon type="md-trash" /> {{ __('关闭其他') }}</DropdownItem>
 <!--                    <DropdownItem name="clearRights"><Icon type="md-return-right" /> {{ __('关闭右侧') }}</DropdownItem>-->
 <!--                    <DropdownItem name="clearLefts"><Icon type="md-return-left" /> {{ __('关闭左侧') }}</DropdownItem>-->
