@@ -1,62 +1,16 @@
-# view-ui-project-vite
-This project build for Vue3, Vue-router, Vuex, ViewUIPlus and Vite.
-## Install
-```shell
-npm install
-```
-## Run
-```shell
-npm run serve
-```
-## Build
-### Build for Production
-```shell
-npm run build
-```
-### Build for Staging
-```shell
-npm run build:staging
-```
-## Preview
-### Preview for Production
-```shell
-npm run preview
-```
-### Preview for Staging
-```shell
-npm run preview:staging
-```
-## Run Eslint
-### Run without Fixing
-
-- This operation will also run before git-commit.
-```shell
-npm run lint
-```
-### Run with Fixing
-```shell
-npm run lint:fix
-```
-## .env Description
-
-- This project exposes environment variables on `import.meta.env` object.
-- Different modes (development/staging/production) correspond to different environment files (.env.*).
-- .env file is always included, duplicate variables are overwritten by the specific mode file (.env.*).
-
-
 # QueryVue
 
 <a href="./README.md">English</a> | <a href="./README-zh-CN.md">中文</a>
 
-This will help php developer to use QueryPHP.
+这个应用可以帮助你更好地使用 QueryPHP.
 
-This app is base on [VueThink](https://github.com/honraytech/VueThink)、[VueElementAdmin](https://github.com/PanJiaChen/vue-element-admin)、[IViewAdmin](https://github.com/iview/iview-admin)，thanks
+本应用基于 [VueThink](https://github.com/honraytech/VueThink)、[VueElementAdmin](https://github.com/PanJiaChen/vue-element-admin)、[IViewAdmin](https://github.com/iview/iview-admin)，感谢这些优秀的应用。
 
 ## Development
 
-Backend project <https://github.com/hunzhiwange/queryphp>。
+后端项目 <https://github.com/hunzhiwange/queryphp>。
 
-First to create config file.
+首先创建配置文件。
 
 ```
 # local
@@ -66,7 +20,7 @@ cp .env.example .env.local
 cp .env.example .env.production
 ```
 
-Then
+接着
 
 ```bas
 node -v v14.17.4
@@ -74,27 +28,27 @@ npm install -g cnpm --registry=https://registry.npm.taobao.org // Just once
 cnpm install
 npm run serve # npm run dev
 ```
-View http://127.0.0.1:9528
+访问 http://127.0.0.1:9528
 
-## Publish
+## 发布
 
 ```bash
 npm run build
 ```
 
-## Run tests
+## 运行测试文件
 
 ```
 npm run test
 ```
 
-## Style format
+## 统一团队代码风格
 
 ```
 sh ./style.sh // All
 ```
 
-With git
+配置 Git Hook 来格式化
 
 See `./build/pre-commit.sh`
 
@@ -119,9 +73,9 @@ git update-index -g
 
 ```
 
-## I18n workflow
+## 语言工作流
 
-First use gulp to extract i18n.
+使用 Gulp 导出语言包.
 
 ```
 ./node_modules/.bin/gulp
@@ -135,7 +89,7 @@ Saved src_utils_request.js.tmp.i18n.js
 ...
 ```
 
-Then use poedit to extract po file.
+使用 poedit 软件导出 po 语言包.
 
 ```
 ./tmp-i18n/*
@@ -149,7 +103,7 @@ __('权限不足')
 src/i18n/zh-CN/default.po
 ```
 
-Then po to json.
+将 po 语言包转为 json.
 
 ```
 ./node_modules/.bin/gulp po
