@@ -1,0 +1,57 @@
+.i-layout-header-color-primary {
+    background: #d31b32;
+    background: linear-gradient(90deg, #be1930, rgba(186, 40, 53, 1), #d31b32);
+}
+
+.i-layout-header-color-primary .i-layout-header-trigger:hover {
+    background: #fad65c !important;
+    color: #71400b;
+}
+
+.i-layout-header-color-primary .i-layout-header-trigger-min-light,
+.i-layout-header-color-dark .i-layout-header-trigger-min-light {
+    background: #fad65c !important;
+    color: #71400b;
+}
+
+.i-layout-header-color-primary .i-layout-header-menu-light,
+.i-layout-header-color-dark .i-layout-header-menu-light{
+    color: #71400b !important;
+}
+
+.ivu-btn-primary {
+    border-color: #fad65c;
+}
+
+.ivu-btn-primary:hover{
+    border-color: #f5d466;
+}
+
+.ivu-menu-dark.ivu-menu-vertical .ivu-menu-submenu .ivu-menu-item-active,
+.ivu-menu-dark.ivu-menu-vertical .ivu-menu-submenu .ivu-menu-item-active:hover {
+    border-right: none;
+    color: #71400b !important;
+    background: #fad65c!important;
+}
+
+.i-layout-header-color-light .i-layout-header-menu-light{
+    color: rgba(186, 40, 53, 1) !important;
+}
+
+.ivu-checkbox-wrapper-checked.ivu-checkbox-border,
+:not(.ivu-checkbox-wrapper-disabled).ivu-checkbox-border:hover,
+.ivu-radio-wrapper-checked.ivu-radio-border,
+:not(.ivu-radio-wrapper-disabled).ivu-radio-border:hover{
+    border-color: #fad65c;
+    color: #71400b;
+    background: #fad65c;
+}
+
+.i-layout-header-color-primary .tags-outer-scroll-con .left-move-tag-con {
+  background: #bd2431 !important;
+  color: #fff;
+}
+.i-layout-header-color-primary .tags-outer-scroll-con .right-move-tag-con {
+  background: #ce2832 !important;
+  color: #fff;
+}

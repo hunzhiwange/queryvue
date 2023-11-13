@@ -1,0 +1,110 @@
+<!DOCTYPE html><html lang=""><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1"><link rel="icon" href="dist/logo.ico"><title>思绪思维导图</title><script>// 自定义静态资源的路径
+      window.externalPublicPath = './dist/'
+
+      function debounce(func, wait) {
+        var timer;
+        return function () {
+            var context = this;
+            var e = arguments;
+            clearTimeout(timer)
+            timer = setTimeout(function(){
+                func.apply(context,e) // 修复 this、e 指向问题
+            }, wait);
+        }
+      }
+
+      // 接管应用
+      window.takeOverApp = true</script><link href="dist/css/chunk-vendors.css?5474f3af824df790192d" rel="stylesheet"><link href="dist/css/app.css?5474f3af824df790192d" rel="stylesheet"></head><body><noscript><strong>We're sorry but thoughts doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div><script>const getDataFromBackend = (dataJson) => {
+        return new Promise((resolve, reject) => {
+            resolve({
+              mindMapData: dataJson || {
+                root:{
+                  "data": {
+                      "text": "根节点"
+                  },
+                  "children": []
+                },
+                theme:{
+                  "template":"avocado",
+                  "config":{}
+                },
+                layout:"logicalStructure",
+                config: {},
+                view: null,
+              },
+              lang: 'zh',
+              localConfig: null,
+            })
+        })
+      }
+      window.isInit = false
+      const setTakeOverAppMethods = (data) => {
+        window.takeOverAppMethods = {}
+        // 获取思维导图数据的函数
+        window.takeOverAppMethods.getMindMapData = () => {
+          return data.mindMapData
+        }
+        // 保存思维导图数据的函数
+        window.takeOverAppMethods.saveMindMapData = debounce((data) => {
+            if (window.isInit) {
+                window.parent.postMessage({
+                  act: 'change',
+                  params: {
+                    data: JSON.stringify(data),
+                    title: 'xxxx'
+                  }
+                }, '*')
+            }
+        }, 3000)
+        // 获取语言的函数
+        window.takeOverAppMethods.getLanguage = () => {
+          return data.lang
+        }
+        // 保存语言的函数
+        window.takeOverAppMethods.saveLanguage = (lang) => {
+          //console.log(lang)
+        }
+        // 获取本地配置的函数
+        window.takeOverAppMethods.getLocalConfig = () => {
+          return data.localConfig
+        }
+        // 保存本地配置的函数
+        window.takeOverAppMethods.saveLocalConfig = (config) => {
+          console.log(config)
+        }
+      }
+      window.onload = () => {
+        window.parent.postMessage({
+          act: 'ready',
+          params: {}
+        }, '*');
+      }
+
+      window.addEventListener("message", async function(event){
+        var data = event.data;
+        switch (data.act) {
+          case 'setData':
+            //return
+            // const editData = {
+            //   data: data.params.data,
+            //   title: data.params.title,
+            // }
+            // 请求数据
+            let dataJson = null
+            try {
+              dataJson = JSON.parse(data.params.data)
+            } catch (e) {
+            }
+            const dataNew = await getDataFromBackend(dataJson)
+            // 设置全局的方法
+            setTakeOverAppMethods(dataNew)
+            window.$bus.$on('app_inited', (mindMap) => {
+              window.isInit = true
+             // mindMap.setMode('readonly')
+            })
+            window.initApp()
+            break;
+        }
+      });
+
+</script><script src="dist/js/chunk-vendors.js?5474f3af824df790192d"></script><script src="dist/js/app.js?5474f3af824df790192d"></script></body></html>

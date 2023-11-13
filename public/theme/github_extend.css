@@ -1,0 +1,39 @@
+.i-layout-header-color-primary {
+    background: #161b22;
+    background: linear-gradient(90deg, #161b22, #161b22, #161b22);
+}
+
+.i-layout-header-color-primary .i-layout-header-trigger:hover {
+    background: rgb(177 186 196 / 12%);
+    color: rgb(255 255 255 / 70%);
+}
+
+.i-layout-header-color-primary .i-layout-header-trigger-min-light,
+.i-layout-header-color-dark .i-layout-header-trigger-min-light {
+    background: rgb(177 186 196 / 12%);
+    color: rgb(255 255 255 / 70%);
+}
+
+.i-layout-header-color-primary .i-layout-header-menu-light,
+.i-layout-header-color-dark .i-layout-header-menu-light{
+    color: #2ea44f !important;
+}
+
+.i-layout-header-color-light .i-layout-header-menu-light{
+    color: #161b22 !important;
+}
+
+.ivu-checkbox-wrapper-checked.ivu-checkbox-border,
+:not(.ivu-checkbox-wrapper-disabled).ivu-checkbox-border:hover,
+.ivu-radio-wrapper-checked.ivu-radio-border,
+:not(.ivu-radio-wrapper-disabled).ivu-radio-border:hover{
+    border-color: #2ea44f;
+    color: #2ea44f;
+}
+
+.i-layout-header-color-primary .tags-outer-scroll-con .left-move-tag-con {
+  background: rgb(21 27 33) !important;
+}
+.i-layout-header-color-primary .tags-outer-scroll-con .right-move-tag-con {
+  background: rgb(21 27 33) !important;
+}

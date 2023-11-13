@@ -1,19 +1,17 @@
-import {sprintf} from 'sprintf-js'
+import { sprintf } from 'sprintf-js'
+import { isObject } from 'lodash'
 
-export default function(Vue, options) {
-    Vue.prototype.gettext = function() {
-        return this.__.apply(this, arguments)
+export default {
+  install: (app, options) => {
+    app.config.globalProperties.__ = function () {
+      if (app.config.globalProperties.$i18n.locale !== 'zh-CN') {
+        arguments[0] = app.config.globalProperties.$t(arguments[0])
+      }
+
+      if (arguments.length > 1) {
+        return sprintf.apply(null, arguments)
+      }
+      return arguments[0]
     }
-
-    Vue.prototype.__ = function() {
-        if ('zh-CN' !== this._i18n.locale) {
-            arguments[0] = this.$t(arguments[0])
-        }
-
-        if (arguments.length > 1) {
-            return sprintf.apply(null, arguments)
-        } else {
-            return arguments[0]
-        }
-    }
+  },
 }

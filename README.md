@@ -1,117 +1,44 @@
-# QueryVue
-
-<a href="./README.md">English</a> | <a href="./README-zh-CN.md">中文</a>
-
-This will help php developer to use QueryPHP.
-
-This app is base on [VueThink](https://github.com/honraytech/VueThink)、[VueElementAdmin](https://github.com/PanJiaChen/vue-element-admin)、[IViewAdmin](https://github.com/iview/iview-admin)，thanks
-
-## Development
-
-Backend project <https://github.com/hunzhiwange/queryphp>。
-
-First to create config file.
-
+# view-ui-project-vite
+This project build for Vue3, Vue-router, Vuex, ViewUIPlus and Vite.
+## Install
+```shell
+npm install
 ```
-# local
-cp .env.example .env.local
-
-# production
-cp .env.example .env.production
+## Run
+```shell
+npm run serve
 ```
-
-Then
-
-```bas
-node -v v14.17.4
-npm install -g cnpm --registry=https://registry.npm.taobao.org // Just once
-cnpm install
-npm run serve # npm run dev
-```
-View http://127.0.0.1:9528
-
-## Publish
-
-```bash
+## Build
+### Build for Production
+```shell
 npm run build
 ```
-
-## Run tests
-
+### Build for Staging
+```shell
+npm run build:staging
 ```
-npm run test
+## Preview
+### Preview for Production
+```shell
+npm run preview
 ```
-
-## Style format
-
+### Preview for Staging
+```shell
+npm run preview:staging
 ```
-sh ./style.sh // All
+## Run Eslint
+### Run without Fixing
+
+- This operation will also run before git-commit.
+```shell
+npm run lint
 ```
-
-With git
-
-See `./build/pre-commit.sh`
-
+### Run with Fixing
+```shell
+npm run lint:fix
 ```
-gulp_path=$(cd `dirname $0`; pwd)"/node_modules/.bin/gulp"
-prettier_path=$(cd `dirname $0`; pwd)"/node_modules/.bin/prettier
+## .env Description
 
-# for js
-jsfiles=$(git diff --cached --name-only --diff-filter=ACM "*.js" "*.jsx" "*.vue" "*.css" "*.less" | tr '\n' ' ')
-[ -z "$jsfiles" ] && exit 0
-
-# format iview
-$gulp_path iview --gulpfile gulpfile.js
-
-# Prettify all staged .js files
-echo "$jsfiles" | xargs $prettier_path --config .prettierrc.js --ignore-path .prettierignore --write
-
-# Add back the modified/prettified files to staging
-echo "$jsfiles" | xargs git add
-
-git update-index -g
-
-```
-
-## I18n workflow
-
-First use gulp to extract i18n.
-
-```
-./node_modules/.bin/gulp
-
-...
-[18:57:50] Using gulpfile /data/codes/queryvue/gulpfile.js
-[18:57:50] Starting 'default'...
-[18:57:50] Finished 'default' after 362 μs
-Saved src_router_router.js.tmp.i18n.js
-Saved src_utils_request.js.tmp.i18n.js
-...
-```
-
-Then use poedit to extract po file.
-
-```
-./tmp-i18n/*
-
-...
-__('登录')
-__('系统已锁定')
-__('权限不足')
-...
-
-src/i18n/zh-CN/default.po
-```
-
-Then po to json.
-
-```
-./node_modules/.bin/gulp po
-
-[21:42:09] Using gulpfile /data/codes/queryvue/gulpfile.js
-[21:42:09] Starting 'po'...
-[21:42:09] Finished 'po' after 733 μs
-Saved src/i18n/en-US/index.js
-Saved src/i18n/zh-TW/index.js
-Saved src/i18n/zh-CN/index.js
-```
+- This project exposes environment variables on `import.meta.env` object.
+- Different modes (development/staging/production) correspond to different environment files (.env.*).
+- .env file is always included, duplicate variables are overwritten by the specific mode file (.env.*).

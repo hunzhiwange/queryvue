@@ -1,40 +1,167 @@
 <template>
-    <div>
-        <template v-for="(item, index) in menuList">
-            <div style="text-align: center;" :key="index">
-                <div
-                    v-if="
-                        item.permission &&
-                            (item.children.length !== 1 ||
-                            (item.children[0].children && item.children[0].children.length >= 1))
-                    "
-                    @on-click="changeMenu"
+  <div style="background: red">
+    <Menu
+      :theme="currentTheme"
+      class="i-layout-menu-side i-scrollbar-hide i-layout-menu-side-collapse"
+      style="width: auto"
+      :active-name="$route.name"
+    >
+      <template v-for="(item, index) in menuList" :key="index">
+        <Poptip
+          v-if="
+            item.permission &&
+            item.children.length > 1 &&
+            !item.children[0].children
+          "
+          placement="right-start"
+          trigger="hover"
+          width="150"
+          theme="light"
+          :key="index_first"
+          :content="itemTitle(item.children[0])"
+          :id="'menu_poptip_' + item.name"
+        >
+          <div class="i-layout-menu-side-collapse-top">
+            <MenuItem
+              :name="item.name"
+              class="i-layout-menu-side-collapse-top-item"
+            >
+              <span
+                class="i-layout-menu-side-title i-layout-menu-side-title-with-collapse"
+              >
+                <span
+                  class="i-layout-menu-side-title-icon i-layout-menu-side-title-icon-single"
                 >
-                    <i-button style="width: 70px;margin-left: -5px;padding:10px 0;" type="text">
-                        <Icon
-                            :v-if="item.icon"
-                            :size="16"
-                            :color="iconColor"
-                            :type="item.icon"
-                        ></Icon>
-                    </i-button>
-                </div>
-                <div v-else-if="item.permission" @on-click="changeMenu">
-                    <i-button
-                        @click="changeMenu(item.children[0].name)"
-                        style="width: 70px;margin-left: -5px;padding:10px 0;"
-                        type="text"
+                  <Icon
+                    :v-if="item.icon"
+                    :size="20"
+                    c2olor="iconColor"
+                    :type="item.icon"
+                  ></Icon>
+                </span>
+                {{ itemTitle(item) }}
+              </span>
+            </MenuItem>
+          </div>
+          <template #content>
+            <List header="" :border="false" :split="false" size="small">
+              <template v-for="(children, i) in item.children">
+                <ListItem
+                  v-if="children.permission"
+                  @click="changeMenu(children.name, item.name)"
+                >
+                  <a>
+                    <!--                    <Icon :v-if="children.icon" :type="children.icon"></Icon>-->
+                    {{ itemTitle(children) }}
+                  </a>
+                </ListItem>
+              </template>
+            </List>
+          </template>
+        </Poptip>
+        <Poptip
+          v-else-if="
+            item.permission &&
+            item.children.length >= 1 &&
+            item.children[0].children
+          "
+          placement="right-start"
+          trigger="hover"
+          :width="150 * item.children.length"
+          theme="light"
+          :key="index + '_2'"
+          :content="itemTitle(item.children[0])"
+          :id="'menu_poptip_' + item.name"
+        >
+          <div class="i-layout-menu-side-collapse-top">
+            <MenuItem
+              :name="item.name"
+              class="i-layout-menu-side-collapse-top-item"
+            >
+              <span
+                class="i-layout-menu-side-title i-layout-menu-side-title-with-collapse"
+              >
+                <span
+                  class="i-layout-menu-side-title-icon i-layout-menu-side-title-icon-single"
+                >
+                  <Icon
+                    :v-if="item.icon"
+                    :size="20"
+                    c2olor="iconColor"
+                    :type="item.icon"
+                  ></Icon>
+                </span>
+                {{ itemTitle(item) }}
+              </span>
+            </MenuItem>
+          </div>
+          <template #content>
+            <Row>
+              <template v-for="(child, i) in item.children">
+                <Col
+                  :span="Math.round(24 / item.children.length)"
+                  v-if="child.permission"
+                >
+                  <List header="" :border="false" :split="false" size="small">
+                    <template #header>
+                      <Text type="secondary">
+                        <!--                        <Icon-->
+                        <!--                          :v-if="child.icon"-->
+                        <!--                          :type="child.icon"-->
+                        <!--                          v-if="child.icon"-->
+                        <!--                        ></Icon>-->
+                        {{ itemTitle(child) }}
+                      </Text>
+                    </template>
+                    <template
+                      v-for="childsub in child.children"
+                      :name="childsub.name"
                     >
-                        <Icon
-                            :size="16"
-                            :color="iconColor"
-                            :type="item.icon"
-                        ></Icon>
-                    </i-button>
-                </div>
-            </div>
-        </template>
-    </div>
+                      <ListItem
+                        v-if="childsub.permission"
+                        @click="changeMenu(childsub.name, item.name)"
+                      >
+                        <a>
+                          <!--                          <Icon-->
+                          <!--                            :v-if="childsub.icon"-->
+                          <!--                            :type="childsub.icon"-->
+                          <!--                            v-if="childsub.icon"-->
+                          <!--                          ></Icon>-->
+                          {{ itemTitle(childsub) }}
+                        </a>
+                      </ListItem>
+                    </template>
+                  </List>
+                </Col>
+              </template>
+            </Row>
+          </template>
+        </Poptip>
+        <Tooltip
+          v-else-if="item.permission"
+          :key="index + '_3'"
+          :content="itemTitle(item.children[0])"
+          placement="right"
+          theme="light"
+        >
+          <MenuItem
+            :name="item.name"
+            class="i-layout-menu-side-collapse-top-item"
+            @click="changeMenu(item.children[0].name, item.name)"
+          >
+            <span class="i-layout-menu-side-title">
+              <span
+                class="i-layout-menu-side-title-icon i-layout-menu-side-title-icon-single"
+              >
+                <Icon :size="20" co2lor="iconColor" :type="item.icon"></Icon>
+              </span>
+              {{ itemTitle(item) }}
+            </span>
+          </MenuItem>
+        </Tooltip>
+      </template>
+    </Menu>
+  </div>
 </template>
 
-<script src="./assets/sidebarMenuShrink.js"></script>
+<script src="./assets/sidebarMenuShrink.js" lang="tsx"></script>

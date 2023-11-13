@@ -1,0 +1,10 @@
+/** extended css */
+.i-layout-sider .ivu-shrinkable-menu .ivu-menu-dark {
+    background: #161b22;
+    background-image: linear-gradient(to bottom, #161b22, #0d1117);
+}
+
+.i-layout-sider .ivu-menu-dark.ivu-menu-vertical .ivu-menu-item:hover,
+.i-layout-sider .ivu-menu-dark.ivu-menu-vertical .ivu-menu-submenu-title:hover {
+    background: #2ea44f;
+}

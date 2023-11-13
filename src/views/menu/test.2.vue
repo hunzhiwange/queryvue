@@ -1,11 +1,11 @@
 <template>
-    <div><Alert>menu test.2</Alert></div>
+  <div><Alert>menu test.2</Alert></div>
 </template>
 <script>
 export default {
-    data() {
-        return {}
-    },
+  data() {
+    return {}
+  },
 }
 </script>
 

@@ -1,49 +1,25 @@
-import http from '@/utils/http'
+import search from '@/utils/search'
 
 const resetForm = {
-    key: '',
-    status: '',
-    page: 1,
-    size: 10,
+  key: '',
+  status: '',
+  page: 1,
+  page_size: 30,
 }
 
 export default {
-    data() {
-        return {
-            searchForm: Object.assign({}, resetForm),
-            searchRule: {},
-            searchItem: {
-                status: [{value: '1', title: this.__('启用')}, {value: '0', title: this.__('禁用')}],
-            },
-            searchShow: false,
-        }
-    },
-    methods: {
-        search(page, pageSize) {
-            this.searchForm.page = resetForm.page
-
-            if (page) {
-                this.searchForm.page = page
-            }
-
-            if (pageSize) {
-                this.searchForm.size = pageSize
-            }
-
-            this.apiGet('resource', this.searchForm).then(res => {
-                this.$emit('getDataFromSearch', res)
-            })
-        },
-        reset() {
-            Object.assign(this.searchForm, resetForm)
-            this.search()
-        },
-        add() {
-            this.$emit('add')
-        },
-        toggleShow() {
-            this.searchShow = !this.searchShow
-        },
-    },
-    mixins: [http],
+  data() {
+    return {
+      resetForm: resetForm,
+      searchRule: {},
+      searchItem: {
+        status: [
+          { value: '1', title: this.__('启用') },
+          { value: '0', title: this.__('禁用') },
+        ],
+      },
+      searchApi: 'resource',
+    }
+  },
+  mixins: [search],
 }

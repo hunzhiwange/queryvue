@@ -1,0 +1,58 @@
+{
+  "development": {
+    "APP_BASE_API":"http://127.0.0.1:9530",
+    "APP_KEY":"785436"
+  },
+  "production": {
+    "APP_BASE_API":"http://127.0.0.1:9530",
+    "APP_KEY":"785436"
+  },
+  "testing": {
+    "APP_BASE_API":"http://127.0.0.1:9530",
+    "APP_KEY":"785436"
+  },
+  "staging": {
+    "APP_BASE_API":"http://127.0.0.1:9530",
+    "APP_KEY":"785436"
+  },
+  "feature1": {
+    "APP_BASE_API":"http://127.0.0.1:9530",
+    "APP_KEY":"785436"
+  },
+  "feature2": {
+    "APP_BASE_API":"http://127.0.0.1:9530",
+    "APP_KEY":"785436"
+  },
+  "feature3": {
+    "APP_BASE_API":"http://127.0.0.1:9530",
+    "APP_KEY":"785436"
+  },
+  "feature4": {
+    "APP_BASE_API":"http://127.0.0.1:9530",
+    "APP_KEY":"785436"
+  },
+  "feature5": {
+    "APP_BASE_API":"http://127.0.0.1:9530",
+    "APP_KEY":"785436"
+  },
+  "feature6": {
+    "APP_BASE_API":"http://127.0.0.1:9530",
+    "APP_KEY":"785436"
+  },
+  "feature7": {
+    "APP_BASE_API":"http://127.0.0.1:9530",
+    "APP_KEY":"785436"
+  },
+  "feature8": {
+    "APP_BASE_API":"http://127.0.0.1:9530",
+    "APP_KEY":"785436"
+  },
+  "feature9": {
+    "APP_BASE_API":"http://127.0.0.1:9530",
+    "APP_KEY":"785436"
+  },
+  "feature10": {
+    "APP_BASE_API":"http://127.0.0.1:9530",
+    "APP_KEY":"785436"
+  }
+}

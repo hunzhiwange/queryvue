@@ -1,0 +1,91 @@
+export default {
+  data() {
+    var validateConfirmPassword = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error(__('请再次输入密码')))
+      } else if (value !== this.form.new_pwd) {
+        callback(new Error(__('两次输入密码不一致!')))
+      } else {
+        callback()
+      }
+    }
+
+    return {
+      dialogVisible: false,
+      loading: false,
+      form: {
+        old_pwd: '',
+        new_pwd: '',
+        confirm_pwd: '',
+      },
+      rules: {
+        old_pwd: [
+          {
+            required: true,
+            message: __('请输入旧密码'),
+            trigger: 'blur',
+          },
+          {
+            min: 6,
+            max: 30,
+            message: __('长度在 %d 到 %d 个字符', 6, 30),
+            trigger: 'blur',
+          },
+        ],
+        new_pwd: [
+          {
+            required: true,
+            message: __('请输入新密码'),
+            trigger: 'blur',
+          },
+          {
+            min: 6,
+            max: 30,
+            message: __('长度在 %d 到 %d 个字符', 6, 30),
+            trigger: 'blur',
+          },
+        ],
+        confirm_pwd: [
+          {
+            required: true,
+            validator: validateConfirmPassword,
+            trigger: 'blur',
+          },
+          {
+            min: 6,
+            max: 30,
+            message: __('长度在 %d 到 %d 个字符', 6, 30),
+            trigger: 'blur',
+          },
+        ],
+      },
+    }
+  },
+  methods: {
+    open() {
+      this.dialogVisible = true
+    },
+    ok() {
+      this.$refs.form.validate((pass) => {
+        if (pass) {
+          this.loading = true
+          this.apiPost('app:user/user/change-password', this.form).then(
+            () => {
+              setTimeout(() => {
+                this.$emit('logout')
+              }, 1000)
+            },
+            () => {
+              this.loading = !this.loading
+            },
+          )
+        }
+      })
+    },
+    cancel() {
+      this.dialogVisible = false
+    },
+  },
+  created() {},
+  mixins: [],
+}

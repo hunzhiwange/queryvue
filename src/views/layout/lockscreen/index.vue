@@ -1,5 +1,8 @@
 <template>
-    <div @click="lockScreen"><Icon type="md-lock"></Icon> {{ __('锁屏') }}</div>
+  <DropdownItem @click="lockScreen">
+    <Icon type="md-lock"></Icon>
+    {{ __('锁屏') }}
+  </DropdownItem>
 </template>
 
-<script src="./assets/index.js"></script>
+<script src="./assets/index.js" lang="tsx"></script>
