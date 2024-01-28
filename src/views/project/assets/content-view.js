@@ -186,11 +186,11 @@ export default {
     },
   },
   watch: {
-    'docContent.content':{
-      handler(newVal, oldVal){
+    'docContent.content': {
+      handler(newVal, oldVal) {
         this.init()
       },
-      immediate:true,
+      immediate: true,
       deep: true,
     },
   },

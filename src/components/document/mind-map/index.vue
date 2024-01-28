@@ -5,7 +5,7 @@
       class="mind-map-iframe"
       :src="url"
       allow="clipboard-read; clipboard-write"
-      :style="'height: calc(100% - '+(minContent ? 32 : 16)+'px)'"
+      :style="'height: calc(100% - ' + (minContent ? 32 : 16) + 'px)'"
     ></iframe>
     <div v-if="loading" class="mind-map-loading">
       <Button type="primary" loading>加载中...</Button>
@@ -74,11 +74,11 @@ export default {
     }
   },
   watch: {
-    content:{
-      handler(newVal, oldVal){
+    content: {
+      handler(newVal, oldVal) {
         this.sendMessage()
       },
-      immediate:true,
+      immediate: true,
     },
   },
   mounted() {
@@ -103,14 +103,14 @@ export default {
         this.loading = false
 
         this.mindMap.postMessage(
-        {
-          act: 'setData',
-          params: {
-            title: this.title,
-            data: this.content,
+          {
+            act: 'setData',
+            params: {
+              title: this.title,
+              data: this.content,
+            },
           },
-        },
-        '*',
+          '*',
         )
       }
     },

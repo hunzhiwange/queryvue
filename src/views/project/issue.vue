@@ -12,7 +12,10 @@
       <Col span="24">
         <Card :bordered="false" shadow class="version-item">
           <template #title>
-            <Paragraph copyable style="width: 25px;position: absolute;right:10px;">
+            <Paragraph
+              copyable
+              style="width: 25px; position: absolute; right: 10px"
+            >
               <span style="display: none">
                 [{{ projectIssue.num }}]{{ projectIssue.title }}
               </span>
@@ -22,16 +25,13 @@
               editable
               @on-edit-end="updateIssueTitle"
               :edit-config="{ triggerType: 'text' }"
-              style="width: 50%;"
+              style="width: 50%"
             />
           </template>
           <Row>
             <Col span="18">
               <ButtonGroup class="m-r-15">
-                <Button
-                  type="primary"
-                  @click="editContent(projectIssue.num)"
-                >
+                <Button type="primary" @click="editContent(projectIssue.num)">
                   <Icon type="md-create" />
                   编辑
                 </Button>
@@ -195,17 +195,22 @@
         </Row>
         <Row :gutter="16" class="m-t-15">
           <Col span="24">
-            <Card :bordered="false" shadow :class="'issue-content'+([10,9,8,6].includes(projectIssue.project_type_id) ? ' issue-content-no-padding' : '')">
+            <Card
+              :bordered="false"
+              shadow
+              :class="
+                'issue-content' +
+                ([10, 9, 8, 6].includes(projectIssue.project_type_id)
+                  ? ' issue-content-no-padding'
+                  : '')
+              "
+            >
               <template #title>
                 <strong>描述</strong>
               </template>
 
               <template #extra>
-                <Button
-                  size="small"
-                  type="text"
-                  @click="previewContent"
-                >
+                <Button size="small" type="text" @click="previewContent">
                   <Icon type="md-document" />
                   查看
                 </Button>
@@ -214,17 +219,15 @@
                   size="small"
                   class="m-l-10"
                   type="text"
-                  @click=" editContent(projectIssue.num)"
+                  @click="editContent(projectIssue.num)"
                 >
                   <Icon type="md-create" />
                   编辑
                 </Button>
               </template>
 
-              <div
-                class="doc-content-view"
-                >
-                <div style="height: 600px;width: 100%;overflow-x: hidden;">
+              <div class="doc-content-view">
+                <div style="height: 600px; width: 100%; overflow-x: hidden">
                   <IssueContent :minContent="true" />
                 </div>
               </div>

@@ -397,12 +397,10 @@ export default {
       }
 
       let apiToken = this.$store.state.user.token
-      this.apiGet('app:user/user/info', { refresh: '1', token: apiToken }).then(
-        (res) => {
-          this.$store.dispatch('setUsers', res)
-          setCache('user_info', res, 3600 * 24)
-        },
-      )
+      this.apiGet('app:user/user/info', { token: apiToken }).then((res) => {
+        this.$store.dispatch('setUsers', res)
+        setCache('user_info', res, 3600 * 24)
+      })
     },
     toggleClick() {
       this.$store.commit('changeMenuShrink', !this.shrink)

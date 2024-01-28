@@ -4,14 +4,9 @@ import img_logo from '@/assets/images/logo_box.png'
 import login_banner1 from '@/assets/images/login_banner1.png'
 import login_banner2 from '@/assets/images/login_banner2.png'
 import login_banner3 from '@/assets/images/login_banner3.png'
-import { getCache } from '@/utils/cache'
+import getServerConfig from '@/utils/server-config'
 
-let serverConfig = getCache('server.config')
-if (!serverConfig) {
-  serverConfig = {
-    APP_BASE_API: '',
-  }
-}
+const serverConfig = await getServerConfig()
 
 export default {
   data() {

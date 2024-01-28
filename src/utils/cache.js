@@ -12,7 +12,7 @@ export function getCache(key, defaultValue = null) {
 export function setCache(key, value, expire = 86400) {
   const cacheKey = cachePrefix + key
   const wsCache = new WebStorageCache()
-  return wsCache.set(cacheKey, value, { exp: expire })
+  wsCache.set(cacheKey, value, { exp: expire })
 }
 
 export function deleteCache(key) {

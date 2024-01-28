@@ -635,14 +635,15 @@ export default {
           this.projectLabels = res.data
           this.refreshIssue()
         })
-        this.apiGet('app:project/project-type', { project_ids: [res.id], order_by: 'sort ASC,id ASC', }).then(
-          (res) => {
-            this.projectTypes = res.data
-            if (res.data.length > 0) {
-              this.issueForm.project_type_id = res.data[0].id
-            }
-          },
-        )
+        this.apiGet('app:project/project-type', {
+          project_ids: [res.id],
+          order_by: 'sort ASC,id ASC',
+        }).then((res) => {
+          this.projectTypes = res.data
+          if (res.data.length > 0) {
+            this.issueForm.project_type_id = res.data[0].id
+          }
+        })
         this.apiGet('app:project/project-tag', { project_ids: [res.id] }).then(
           (res) => {
             this.projectTags = res.data

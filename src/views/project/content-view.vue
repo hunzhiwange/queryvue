@@ -1,9 +1,5 @@
 <template>
-  <component
-    :is="minContent ? 'div' : 'Card'"
-    :bordered="false"
-    shadow
-  >
+  <component :is="minContent ? 'div' : 'Card'" :bordered="false" shadow>
     <ButtonGroup>
       <Button @click="zoomIn">
         <Icon type="md-add" />

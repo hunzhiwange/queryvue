@@ -17,7 +17,7 @@
           </Col>
           <Col span="4">
             <div class="pull-right">
-              <MenuItem name="3" :to="'/content/' + projectIssue.num+'/edit'">
+              <MenuItem name="3" :to="'/content/' + projectIssue.num + '/edit'">
                 <Icon type="md-create" />
                 编辑
               </MenuItem>

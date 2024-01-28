@@ -16,11 +16,7 @@
             {{ item.name }}
           </MenuItem>
         </Submenu>
-        <MenuItem
-          v-if="issueNum != ''"
-          name="issue"
-          :to="'/issue/' + issueNum"
-        >
+        <MenuItem v-if="issueNum != ''" name="issue" :to="'/issue/' + issueNum">
           <Icon type="ios-document" />
           {{ issueNum }}
         </MenuItem>

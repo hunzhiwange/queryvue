@@ -6,14 +6,16 @@ export default {
       }).then((res) => {
         switch (res.project_type_id) {
           case 6:
-            this.$router.replace('/content/'+num+'-'+id+'/edit-process')
-            break;
+            this.$router.replace('/content/' + num + '-' + id + '/edit-process')
+            break
           case 10:
-              this.$router.replace('/content/'+num+'-'+id+'/edit-mind-map')
-              break;
+            this.$router.replace(
+              '/content/' + num + '-' + id + '/edit-mind-map',
+            )
+            break
           default:
-            this.$router.replace('/content/'+num+'-'+id+'/edit-content')
-            break;
+            this.$router.replace('/content/' + num + '-' + id + '/edit-content')
+            break
         }
       })
     },

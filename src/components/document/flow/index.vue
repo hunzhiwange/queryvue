@@ -5,7 +5,7 @@
       class="flow-iframe"
       :src="url"
       allow="clipboard-read; clipboard-write"
-      :style="'height: calc(100% - '+(minContent ? 32 : 16)+'px)'"
+      :style="'height: calc(100% - ' + (minContent ? 32 : 16) + 'px)'"
     ></iframe>
     <div v-if="loading" class="flow-loading">
       <Button type="primary" loading>加载中...</Button>
@@ -82,11 +82,11 @@ export default {
     // this.flow = this.$refs.currentFlow.contentWindow;
   },
   watch: {
-    content:{
-      handler(newVal, oldVal){
+    content: {
+      handler(newVal, oldVal) {
         this.sendMessage()
       },
-      immediate:true,
+      immediate: true,
     },
   },
   methods: {

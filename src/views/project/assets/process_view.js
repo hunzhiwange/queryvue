@@ -35,6 +35,6 @@ export default {
   },
   mounted: function () {
     this.flow = this.$refs.myFlow.contentWindow
-   // console.log(this.docContent)
+    // console.log(this.docContent)
   },
 }

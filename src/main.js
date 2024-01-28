@@ -13,23 +13,11 @@ import utils from './utils'
 import { appRouter } from './router/router'
 import i18n from '@/i18n'
 import http from '@/utils/http'
-import { getCache, setCache } from '@/utils/cache'
 import globalMixin from './utils/global-mixin'
+import getServerConfig from './utils/server-config'
 
 window.utils = utils
 window.store = store
-
-let serverConfigUrl = window.localStorage.getItem('server.config.url')
-if (!serverConfigUrl) {
-  serverConfigUrl = '/server.config.json'
-  window.localStorage.setItem('server.config.url', serverConfigUrl)
-}
-
-let serverConfigEnv = window.localStorage.getItem('server.config.env')
-if (!serverConfigEnv) {
-  serverConfigEnv = import.meta.env.MODE
-  window.localStorage.setItem('server.config.env', serverConfigEnv)
-}
 
 const makeApp = () => {
   const app = createApp({
@@ -82,16 +70,6 @@ const makeApp = () => {
   app.provide('app', app)
 }
 
-const cacheServerConfig = getCache('server.config')
-if (!cacheServerConfig) {
-  axios.get(serverConfigUrl).then((e) => {
-    if (!e.data[serverConfigEnv]) {
-      throw new Error('Server config env not exists.')
-    }
-
-    setCache('server.config', e.data[serverConfigEnv], 3600 * 24)
-    makeApp()
-  })
-} else {
+getServerConfig().then(() => {
   makeApp()
-}
+})

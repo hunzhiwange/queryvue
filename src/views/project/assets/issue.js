@@ -121,7 +121,7 @@ export default {
     },
     editContent(num) {
       this.$router.push({
-        path: '/content/' + num+'/edit',
+        path: '/content/' + num + '/edit',
       })
     },
   },

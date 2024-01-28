@@ -17,7 +17,7 @@ import '@kangc/v-md-editor/lib/plugins/mermaid/mermaid.css'
 
 // highlightjs
 import hljs from '../../../utils/highlight'
-import VMdEditor from "_@kangc_v-md-editor@2.3.17@@kangc/v-md-editor/lib/codemirror-editor";
+import VMdEditor from '_@kangc_v-md-editor@2.3.17@@kangc/v-md-editor/lib/codemirror-editor'
 
 VMdPreview.use(githubTheme, {
   Hljs: hljs,

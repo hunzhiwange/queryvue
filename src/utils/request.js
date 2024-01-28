@@ -6,16 +6,11 @@ import { isObject } from 'lodash'
 import { lock } from '@/utils/auth'
 import { createSignature } from './signature'
 import store from '../store'
-import { getCache } from '@/utils/cache'
 import utils from './index'
 import router from '@/router'
+import getServerConfig from './server-config'
 
-let serverConfig = getCache('server.config')
-if (!serverConfig) {
-  serverConfig = {
-    APP_BASE_API: '',
-  }
-}
+const serverConfig = await getServerConfig()
 
 // 创建 axios 实例
 const service = axios.create({

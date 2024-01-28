@@ -1,6 +1,11 @@
 <template>
   <div class="swagger-content h-100p">
-    <iframe ref="currentSwgger" class="swagger-iframe" :src="url" :style="'height: calc(100% - '+(minContent ? 0 : 16)+'px)'"></iframe>
+    <iframe
+      ref="currentSwgger"
+      class="swagger-iframe"
+      :src="url"
+      :style="'height: calc(100% - ' + (minContent ? 0 : 16) + 'px)'"
+    ></iframe>
     <div v-if="loading" class="swagger-loading">
       <Button type="primary" loading>加载中...</Button>
     </div>
@@ -65,11 +70,11 @@ export default {
     // this.swgger = this.$refs.currentSwgger.contentWindow;
   },
   watch: {
-    content:{
-      handler(newVal, oldVal){
+    content: {
+      handler(newVal, oldVal) {
         this.sendMessage()
       },
-      immediate:true,
+      immediate: true,
     },
   },
   methods: {
@@ -106,7 +111,7 @@ export default {
           break
 
         case 'change':
-          if (this.loading|| this.readOnly || !this.iframeInit) {
+          if (this.loading || this.readOnly || !this.iframeInit) {
             return
           }
 
